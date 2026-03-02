@@ -27,11 +27,25 @@ export class ProtoLoader {
     /**
      * 获取 root，如果未加载则同步加载
      */
-    private static getRoot(): protobuf.Root {
+    static getRoot(): protobuf.Root {
         if (!this.root) {
             this.root = protobuf.loadSync(this.getProtoPath());
         }
         return this.root;
+    }
+
+    /**
+     * 获取所有消息类型名称
+     */
+    static getAllMessageTypes(): string[] {
+        const root = this.getRoot();
+        const types: string[] = [];
+        for (const [name, type] of Object.entries(root.nested!)) {
+            if (type instanceof protobuf.Type) {
+                types.push(name);
+            }
+        }
+        return types;
     }
 
     /**

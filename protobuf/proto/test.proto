@@ -15,6 +15,6 @@ message CEcho {
     string msg = 1;
 }
 
- message SEcho {
+message SEcho {
     string msg = 1;
 }

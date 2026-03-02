@@ -1,8 +1,10 @@
 import { PlayerSession } from './PlayerSession';
 import { ProtoLoader } from './ProtoLoader';
+import { MessageRegistry } from './MessageRegistry';
+import * as protobuf from 'protobufjs';
 
 /**
- * 消息 ID 定义
+ * 消息 ID 定义（保留用于发送响应）
  */
 export enum MessageId {
     CLogin = 1,
@@ -14,42 +16,53 @@ export enum MessageId {
 /**
  * 消息处理器
  * 负责处理各种协议消息
+ * 
+ * 使用约定：
+ * - 客户端消息类名以 C 开头（如 CLogin, CEcho）
+ * - 处理器方法名为 handle + 去掉首字母的消息名（如 handleLogin, handleEcho）
+ * - 新增协议只需添加对应的 handleXxx 方法，无需修改 handleMessage
  */
 export class MessageHandler {
     private static playerIdCounter: number = 10000;
 
     /**
+     * 初始化消息注册表
+     * 必须在服务器启动时调用
+     */
+    static init(): void {
+        MessageRegistry.autoRegisterFromProto(ProtoLoader, this);
+        console.log(`[MessageHandler] 消息注册完成，共注册 ${MessageRegistry.getAllMessageIds().length} 条消息`);
+    }
+
+    /**
      * 处理客户端消息
+     * 通过注册表自动路由到对应的处理器
      */
     static handleMessage(session: PlayerSession, data: Uint8Array): void {
         const reader = new Uint8Array(data);
         
-        // 读取消息 ID（假设第一个字节是消息 ID）
+        // 读取消息 ID（第一个字节是消息 ID）
         const messageId = reader[0];
         
         // 读取消息体
         const messageBody = data.slice(1);
 
-        switch (messageId) {
-            case MessageId.CLogin:
-                this.handleLogin(session, messageBody);
-                break;
-            case MessageId.CEcho:
-                this.handleEcho(session, messageBody);
-                break;
-            default:
-                console.warn(`未知消息 ID: ${messageId}`);
-                break;
+        // 从注册表获取处理器
+        const handlerInfo = MessageRegistry.getHandler(messageId);
+        if (handlerInfo) {
+            const { handler, protoType } = handlerInfo;
+            handler(session, messageBody, protoType);
+        } else {
+            console.warn(`未知消息 ID: ${messageId}`);
         }
     }
 
     /**
      * 处理登录请求
      */
-    private static handleLogin(session: PlayerSession, data: Uint8Array): void {
+    static handleLogin(session: PlayerSession, data: Uint8Array, protoType: protobuf.Type): void {
         try {
-            const loginType = ProtoLoader.CLogin;
-            const loginRequest = loginType.decode(data) as any;
+            const loginRequest = protoType.decode(data) as any;
             console.log(`收到登录请求 - 用户名：${loginRequest.name}, 密码：${loginRequest.password}`);
 
             // 简单的登录验证（实际项目中应该验证数据库）
@@ -79,7 +92,7 @@ export class MessageHandler {
     /**
      * 处理回显请求
      */
-    private static handleEcho(session: PlayerSession, data: Uint8Array): void {
+    static handleEcho(session: PlayerSession, data: Uint8Array, protoType: protobuf.Type): void {
         try {
             // 检查是否已登录
             if (!session.isLogin()) {
@@ -87,8 +100,7 @@ export class MessageHandler {
                 return;
             }
 
-            const echoType = ProtoLoader.CEcho;
-            const echoRequest = echoType.decode(data) as any;
+            const echoRequest = protoType.decode(data) as any;
             console.log(`收到回显请求 - 消息：${echoRequest.msg}, 玩家：${session.getName()}`);
 
             // 发送回显响应

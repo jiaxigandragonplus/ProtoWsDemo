@@ -29,6 +29,9 @@ export class GateServer {
         // 同步加载 proto 文件
         ProtoLoader.loadProtoSync();
         
+        // 初始化消息注册表
+        MessageHandler.init();
+        
         this.wss = new WebSocketServer({
             port: this.config.port,
             host: this.config.host
