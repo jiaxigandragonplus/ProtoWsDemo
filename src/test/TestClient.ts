@@ -31,7 +31,7 @@ class TestClient {
      */
     async loadProto(): Promise<void> {
         // __dirname 在编译后是 dist/src/test，需要向上三层到项目根目录
-        const protoPath = path.join(__dirname, '../../../protobuf/proto/test.proto');
+        const protoPath = path.join(__dirname, '../../../protobuf/proto/game.proto');
         this.root = await protobuf.load(protoPath);
         console.log('Proto 文件加载完成');
     }

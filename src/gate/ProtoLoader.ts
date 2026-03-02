@@ -19,7 +19,7 @@ export class ProtoLoader {
     private static getProtoPath(): string {
         if (!this.protoPath) {
             // __dirname 在编译后是 dist/src/gate，需要向上三层到项目根目录
-            this.protoPath = path.join(__dirname, '../../../protobuf/proto/test.proto');
+            this.protoPath = path.join(__dirname, '../../../protobuf/proto/game.proto');
         }
         return this.protoPath;
     }
