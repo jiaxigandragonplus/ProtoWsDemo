@@ -10,10 +10,20 @@ export class PlayerSession {
     private isLoggedIn: boolean = false;
     private name: string = '';
     private connectTime: number;
+    private gateSessionId: number;
 
     constructor(ws: WebSocket) {
         this.ws = ws;
         this.connectTime = Date.now();
+        // 生成唯一的 Gate 会话 ID
+        this.gateSessionId = this.generateSessionId();
+    }
+
+    /**
+     * 生成唯一的会话 ID
+     */
+    private generateSessionId(): number {
+        return Math.floor(Date.now() + Math.random() * 1000000);
     }
 
     /**
@@ -30,6 +40,13 @@ export class PlayerSession {
      */
     getPlayerId(): number {
         return this.playerId;
+    }
+
+    /**
+     * 获取 Gate 会话 ID
+     */
+    getGateSessionId(): number {
+        return this.gateSessionId;
     }
 
     /**

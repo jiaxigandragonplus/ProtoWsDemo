@@ -2,6 +2,8 @@ import WebSocket, { WebSocketServer } from 'ws';
 import { PlayerSession } from './PlayerSession';
 import { MessageHandler } from './MessageHandler';
 import { ProtoLoader } from './ProtoLoader';
+import { PlayerManager } from './PlayerManager';
+import { GameConnector } from './GameConnector';
 
 /**
  * Gate 服务器配置
@@ -17,8 +19,8 @@ interface GateConfig {
  */
 export class GateServer {
     private wss: WebSocketServer;
-    private sessions: Map<WebSocket, PlayerSession>;
     private config: GateConfig;
+    private gameConnector: GameConnector;
 
     constructor(config: GateConfig) {
         this.config = {
@@ -32,11 +34,13 @@ export class GateServer {
         // 初始化消息注册表
         MessageHandler.init();
         
+        // 创建 Game 连接器
+        this.gameConnector = new GameConnector('127.0.0.1', 9000);
+        
         this.wss = new WebSocketServer({
             port: this.config.port,
             host: this.config.host
         });
-        this.sessions = new Map<WebSocket, PlayerSession>();
         
         this.setupServer();
     }
@@ -44,7 +48,15 @@ export class GateServer {
     /**
      * 设置服务器事件处理
      */
-    private setupServer(): void {
+    private async setupServer(): Promise<void> {
+        // 连接到 Game 服务器
+        try {
+            await this.gameConnector.connect();
+            console.log('[GateServer] 已连接到 Game 服务器');
+        } catch (error) {
+            console.error('[GateServer] 连接 Game 服务器失败:', error);
+        }
+
         this.wss.on('connection', (ws: WebSocket) => {
             this.handleConnection(ws);
         });
@@ -64,7 +76,7 @@ export class GateServer {
         
         // 创建玩家会话
         const session = new PlayerSession(ws);
-        this.sessions.set(ws, session);
+        PlayerManager.registerSession(ws, session);
 
         // 设置消息处理
         ws.on('message', (data: Buffer) => {
@@ -88,10 +100,41 @@ export class GateServer {
     private handleMessage(session: PlayerSession, data: Buffer): void {
         try {
             const uint8Data = new Uint8Array(data);
-            MessageHandler.handleMessage(session, uint8Data);
+            
+            // 读取消息 ID
+            const messageId = uint8Data[0];
+            const messageBody = uint8Data.slice(1);
+            
+            // 转发到 Game 服务器（使用 Gate 会话 ID）
+            this.forwardToGame(session.getGateSessionId(), messageId, messageBody);
         } catch (error) {
             console.error('处理消息时出错:', error);
             session.close();
+        }
+    }
+
+    /**
+     * 转发消息到 Game 服务器
+     */
+    private forwardToGame(gateSessionId: number, messageId: number, payload: Uint8Array): void {
+        try {
+            // 构建 GateToGame 消息
+            const gateToGameType = ProtoLoader.GateToGame;
+            const gateToGame = gateToGameType.create({
+                sessionId: gateSessionId,
+                messageId: messageId,
+                payload: payload
+            });
+            const encoded = gateToGameType.encode(gateToGame).finish();
+
+            // 发送：消息 ID + 数据
+            const message = new Uint8Array(1 + encoded.length);
+            message[0] = 101; // GateToGame
+            message.set(encoded, 1);
+
+            this.gameConnector.send(message);
+        } catch (error) {
+            console.error('[GateServer] 转发消息到 Game 失败:', error);
         }
     }
 
@@ -100,7 +143,7 @@ export class GateServer {
      */
     private handleClose(session: PlayerSession): void {
         const ws = session.getWebSocket();
-        this.sessions.delete(ws);
+        PlayerManager.removeSession(ws);
         
         if (session.isLogin()) {
             console.log(`玩家断开连接 - ID: ${session.getPlayerId()}, 名称：${session.getName()}`);
@@ -113,14 +156,14 @@ export class GateServer {
      * 获取在线玩家数量
      */
     getOnlineCount(): number {
-        return this.sessions.size;
+        return PlayerManager.getOnlineCount();
     }
 
     /**
      * 获取所有会话
      */
     getSessions(): Map<WebSocket, PlayerSession> {
-        return this.sessions;
+        return PlayerManager.getAllSessions();
     }
 
     /**
@@ -129,11 +172,13 @@ export class GateServer {
     shutdown(): void {
         console.log('Gate 服务器正在关闭...');
         
+        // 关闭 Game 连接
+        this.gameConnector.close();
+        
         // 关闭所有连接
-        for (const [ws, session] of this.sessions) {
+        for (const [ws, session] of PlayerManager.getAllSessions()) {
             session.close();
         }
-        this.sessions.clear();
         
         // 关闭服务器
         this.wss.close(() => {

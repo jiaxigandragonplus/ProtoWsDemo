@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+// Gate 与 Game 之间的内部通信协议
+
+// Gate 发送给 Game 的消息
+message GateToGame {
+    uint64 session_id = 1;      // 客户端会话 ID
+    uint32 message_id = 2;      // 原始消息 ID
+    bytes payload = 3;          // 原始消息体
+}
+
+// Game 发送给 Gate 的消息
+message GameToGate {
+    uint64 session_id = 1;      // 目标客户端会话 ID
+    uint32 message_id = 2;      // 响应消息 ID
+    bytes payload = 3;          // 响应消息体
+}

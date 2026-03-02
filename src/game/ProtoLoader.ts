@@ -1,13 +1,9 @@
-/**
- * Proto 加载器
- * 在 Node.js 环境中使用 protobufjs 动态加载 proto 文件
- */
-
 import * as protobuf from 'protobufjs';
 import * as path from 'path';
 
 /**
- * Proto 加载器类
+ * Proto 加载器
+ * 负责加载和管理 protobuf 协议文件
  */
 export class ProtoLoader {
     private static root: protobuf.Root | null = null;
@@ -19,7 +15,7 @@ export class ProtoLoader {
      */
     private static getProtoPaths(): { game: string, gateGame: string } {
         if (!this.gameProtoPath) {
-            // __dirname 在编译后是 dist/src/gate，需要向上三层到项目根目录
+            // __dirname 在编译后是 dist/src/game，需要向上三层到项目根目录
             this.gameProtoPath = path.join(__dirname, '../../../protobuf/proto/game.proto');
         }
         if (!this.gateGameProtoPath) {
@@ -35,10 +31,6 @@ export class ProtoLoader {
         if (!this.root) {
             const paths = this.getProtoPaths();
             this.root = new protobuf.Root();
-            this.root.resolvePath = (origin, target) => {
-                if (path.isAbsolute(target)) return target;
-                return path.join(path.dirname(origin), target);
-            };
             this.root.loadSync(paths.game);
             this.root.loadSync(paths.gateGame);
         }

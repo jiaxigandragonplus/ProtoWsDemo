@@ -6,6 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/src/gate/GateServer.js",
+    "start:gate": "node dist/src/gate/GateServer.js",
+    "start:game": "node dist/src/game/GameServer.js",
     "dev": "tsc && node dist/src/gate/GateServer.js",
     "proto": "node protobuf/AutoExport.js",
     "test-client": "node dist/src/test/TestClient.js"

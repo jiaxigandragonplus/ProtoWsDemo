@@ -2,6 +2,7 @@ import { PlayerSession } from './PlayerSession';
 import { ProtoLoader } from './ProtoLoader';
 import { MessageRegistry } from './MessageRegistry';
 import * as protobuf from 'protobufjs';
+import { PlayerManager } from './PlayerManager';
 
 /**
  * 消息 ID 定义（保留用于发送响应）
@@ -134,5 +135,39 @@ export class MessageHandler {
      */
     private static generatePlayerId(): number {
         return this.playerIdCounter++;
+    }
+
+    /**
+     * 处理来自 Game 服务器的消息（GameToGate）
+     */
+    static handleGameToGameMessage(data: Uint8Array): void {
+        try {
+            const gameToGateType = ProtoLoader.GameToGate;
+            const gameToGate = gameToGateType.decode(data) as any;
+            
+            const sessionId = gameToGate.sessionId as number;
+            const messageId = gameToGate.messageId as number;
+            const payload = new Uint8Array(gameToGate.payload as ArrayBuffer);
+
+            console.log(`[MessageHandler] GameToGate - SessionId: ${sessionId}, MessageId: ${messageId}`);
+
+            // 获取玩家会话
+            const session = PlayerManager.getSessionByGateId(sessionId);
+            if (!session) {
+                console.warn(`[MessageHandler] 未找到会话 - SessionId: ${sessionId}`);
+                return;
+            }
+
+            // 创建响应消息
+            const response = new Uint8Array(1 + payload.length);
+            response[0] = messageId;
+            response.set(payload, 1);
+
+            // 发送给客户端
+            session.send(response);
+            console.log(`[MessageHandler] 消息已转发给客户端 - PlayerId: ${session.getPlayerId()}`);
+        } catch (error) {
+            console.error('[MessageHandler] 处理 GameToGate 消息时出错:', error);
+        }
     }
 }
