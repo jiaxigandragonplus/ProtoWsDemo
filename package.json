@@ -2,9 +2,13 @@
   "name": "protowsdemo",
   "version": "1.0.0",
   "description": "proto+websocket+ts demo",
-  "main": "index.js",
+  "main": "dist/src/gate/GateServer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "node dist/src/gate/GateServer.js",
+    "dev": "tsc && node dist/src/gate/GateServer.js",
+    "proto": "node protobuf/AutoExport.js",
+    "test-client": "node dist/src/test/TestClient.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +21,14 @@
   },
   "homepage": "https://github.com/jiaxigandragonplus/ProtoWsDemo#readme",
   "devDependencies": {
+    "@types/node": "^25.3.3",
+    "@types/ws": "^8.18.1",
     "protobufjs": "^7.5.4",
     "protobufjs-cli": "^2.0.0",
+    "typescript": "^5.9.3",
     "uglify-js": "^3.19.3"
+  },
+  "dependencies": {
+    "ws": "^8.19.0"
   }
 }
