@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message WebsocketMessage {
+    string uri = 1; // 客户端上行传递值,由jsonmap指定
+    string method = 2; // 
+    string message_type = 3; // 
+    bytes message_payload = 4; // 
+    string uuid = 5; // 
+    uint32 errno = 6; // 
+    string errmsg = 7; // 
+    int64 timestamp = 8;
+}
