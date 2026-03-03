@@ -40,7 +40,11 @@ export class PlayerManager {
      * 通过 Gate 会话 ID 获取会话
      */
     static getSessionByGateId(gateSessionId: number): PlayerSession | null {
-        return this.gateSessionIdMap.get(gateSessionId) || null;
+        console.log(`[PlayerManager] 查找会话 - GateSessionId: ${gateSessionId}, Map 大小：${this.gateSessionIdMap.size}`);
+        console.log(`[PlayerManager] Map 中的所有键：${Array.from(this.gateSessionIdMap.keys()).join(', ')}`);
+        const session = this.gateSessionIdMap.get(gateSessionId);
+        console.log(`[PlayerManager] 查找结果：${session ? '找到' : '未找到'}`);
+        return session || null;
     }
 
     /**
