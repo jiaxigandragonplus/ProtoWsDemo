@@ -5,7 +5,7 @@ import * as protobuf from 'protobufjs';
 import { PlayerManager } from './PlayerManager';
 
 /**
- * 消息 ID 定义（保留用于发送响应）
+ * 消息 ID 定义（保留用于向后兼容）
  */
 export enum MessageId {
     CLogin = 1,
@@ -37,24 +37,68 @@ export class MessageHandler {
 
     /**
      * 处理客户端消息
-     * 通过注册表自动路由到对应的处理器
+     * 使用 WebsocketMessage 格式，先按 PBPackage 解压，然后根据 message_type 找处理函数
+     * 根据 uri 前缀判断消息发往哪个服务器
      */
     static handleMessage(session: PlayerSession, data: Uint8Array): void {
-        const reader = new Uint8Array(data);
-        
-        // 读取消息 ID（第一个字节是消息 ID）
-        const messageId = reader[0];
-        
-        // 读取消息体
-        const messageBody = data.slice(1);
+        try {
+            // 使用 PBPackage 解压
+            const pbPackageType = ProtoLoader.PBPackage;
+            const pbPackage = pbPackageType.decode(data) as any;
+            
+            const messageType = pbPackage.message_type as string;
+            const messagePayload = new Uint8Array(pbPackage.message_payload as ArrayBuffer);
+            
+            console.log(`[MessageHandler] 收到消息 - messageType: ${messageType}, payloadSize: ${messagePayload.length}`);
+            
+            // 根据 message_type 查找处理函数
+            const handlerInfo = MessageRegistry.getHandlerByTypeName(messageType);
+            if (handlerInfo) {
+                const { handler, protoType } = handlerInfo;
+                handler(session, messagePayload, protoType);
+            } else {
+                console.warn(`[MessageHandler] 未找到消息类型处理器：${messageType}`);
+            }
+        } catch (error) {
+            console.error('[MessageHandler] 处理消息时出错:', error);
+        }
+    }
 
-        // 从注册表获取处理器
-        const handlerInfo = MessageRegistry.getHandler(messageId);
-        if (handlerInfo) {
-            const { handler, protoType } = handlerInfo;
-            handler(session, messageBody, protoType);
-        } else {
-            console.warn(`未知消息 ID: ${messageId}`);
+    /**
+     * 处理 WebsocketMessage 格式的消息
+     * 根据 uri 前缀判断消息发往哪个服务器
+     */
+    static handleWebsocketMessage(session: PlayerSession, data: Uint8Array, onForwardToGame: (wsMessage: any) => void): void {
+        try {
+            // 使用 WebsocketMessage 解压
+            const wsMessageType = ProtoLoader.WebsocketMessage;
+            const wsMessage = wsMessageType.decode(data) as any;
+            
+            const uri = wsMessage.uri as string;
+            const messageType = wsMessage.message_type as string;
+            const messagePayload = new Uint8Array(wsMessage.message_payload as ArrayBuffer);
+            
+            console.log(`[MessageHandler] 收到 WebsocketMessage - uri: ${uri}, messageType: ${messageType}`);
+            
+            // 根据 uri 判断目标服务器
+            const targetServer = ProtoLoader.getTargetServer(uri);
+            
+            if (targetServer === 'gate') {
+                // 发给 gate 服的消息，根据 message_type 查找处理函数
+                const handlerInfo = MessageRegistry.getHandlerByTypeName(messageType);
+                if (handlerInfo) {
+                    const { handler, protoType } = handlerInfo;
+                    handler(session, messagePayload, protoType);
+                } else {
+                    console.warn(`[MessageHandler] 未找到 gate 消息类型处理器：${messageType}`);
+                }
+            } else {
+                // 发给 game 服的消息，统一转发
+                console.log(`[MessageHandler] 转发消息到 Game 服务器 - uri: ${uri}, messageType: ${messageType}`);
+                onForwardToGame(wsMessage);
+            }
+        } catch (error) {
+            console.error('[MessageHandler] 处理 WebsocketMessage 时出错:', error);
         }
     }
 
@@ -78,8 +122,8 @@ export class MessageHandler {
                 const loginResponse = sLoginType.create({ playerId });
                 const encoded = sLoginType.encode(loginResponse).finish();
                 
-                // 发送响应（消息 ID + 数据）
-                this.sendResponse(session, MessageId.SLogin, encoded);
+                // 发送响应（使用 WebsocketMessage 格式）
+                this.sendWebsocketResponse(session, 'SLogin', '/gate/gate/login', encoded);
                 
                 console.log(`玩家登录成功 - ID: ${playerId}, 名称：${loginRequest.name}`);
             } else {
@@ -109,8 +153,8 @@ export class MessageHandler {
             const echoResponse = sEchoType.create({ msg: echoRequest.msg });
             const encoded = sEchoType.encode(echoResponse).finish();
             
-            // 发送响应
-            this.sendResponse(session, MessageId.SEcho, encoded);
+            // 发送响应（使用 WebsocketMessage 格式）
+            this.sendWebsocketResponse(session, 'SEcho', '/gate/gate/echo', encoded);
             
             console.log(`回显响应已发送 - 玩家：${session.getName()}`);
         } catch (error) {
@@ -119,15 +163,34 @@ export class MessageHandler {
     }
 
     /**
-     * 发送响应给客户端
+     * 发送响应给客户端（使用 WebsocketMessage 格式）
      */
-    private static sendResponse(session: PlayerSession, messageId: MessageId, data: Uint8Array): void {
-        // 组合消息：消息 ID(1 字节) + 消息体
-        const response = new Uint8Array(1 + data.length);
-        response[0] = messageId;
-        response.set(data, 1);
-        
-        session.send(response);
+    private static sendWebsocketResponse(session: PlayerSession, messageType: string, uri: string, payload: Uint8Array): void {
+        try {
+            const wsMessageType = ProtoLoader.WebsocketMessage;
+            const wsMessage = wsMessageType.create({
+                uri: uri,
+                method: 'POST',
+                message_type: messageType,
+                message_payload: payload,
+                uuid: '',
+                errno: 0,
+                errmsg: ''
+            });
+            const encoded = wsMessageType.encode(wsMessage).finish();
+            
+            // 使用 PBPackage 包装
+            const pbPackageType = ProtoLoader.PBPackage;
+            const pbPackage = pbPackageType.create({
+                message_type: messageType,
+                message_payload: encoded
+            });
+            const pbEncoded = pbPackageType.encode(pbPackage).finish();
+            
+            session.send(pbEncoded);
+        } catch (error) {
+            console.error('发送 WebsocketMessage 响应时出错:', error);
+        }
     }
 
     /**
@@ -139,6 +202,7 @@ export class MessageHandler {
 
     /**
      * 处理来自 Game 服务器的消息（GameToGate）
+     * 使用 WebsocketMessage 格式发送
      */
     static handleGameToGameMessage(data: Uint8Array): void {
         try {
@@ -148,8 +212,9 @@ export class MessageHandler {
             const sessionId = gameToGate.sessionId as number;
             const messageId = gameToGate.messageId as number;
             const payload = new Uint8Array(gameToGate.payload as ArrayBuffer);
+            const messageType = gameToGate.message_type as string || '';
 
-            console.log(`[MessageHandler] GameToGate - SessionId: ${sessionId}, MessageId: ${messageId}`);
+            console.log(`[MessageHandler] GameToGate - SessionId: ${sessionId}, MessageId: ${messageId}, MessageType: ${messageType}`);
 
             // 获取玩家会话
             const session = PlayerManager.getSessionByGateId(sessionId);
@@ -158,13 +223,29 @@ export class MessageHandler {
                 return;
             }
 
-            // 创建响应消息
-            const response = new Uint8Array(1 + payload.length);
-            response[0] = messageId;
-            response.set(payload, 1);
-
+            // 使用 WebsocketMessage 格式发送给客户端
+            const wsMessageType = ProtoLoader.WebsocketMessage;
+            const wsMessage = wsMessageType.create({
+                uri: '/gate/gate/response',
+                method: 'POST',
+                message_type: messageType,
+                message_payload: payload,
+                uuid: '',
+                errno: 0,
+                errmsg: ''
+            });
+            const wsEncoded = wsMessageType.encode(wsMessage).finish();
+            
+            // 使用 PBPackage 包装
+            const pbPackageType = ProtoLoader.PBPackage;
+            const pbPackage = pbPackageType.create({
+                message_type: messageType,
+                message_payload: wsEncoded
+            });
+            const pbEncoded = pbPackageType.encode(pbPackage).finish();
+            
             // 发送给客户端
-            session.send(response);
+            session.send(pbEncoded);
             console.log(`[MessageHandler] 消息已转发给客户端 - PlayerId: ${session.getPlayerId()}`);
         } catch (error) {
             console.error('[MessageHandler] 处理 GameToGate 消息时出错:', error);

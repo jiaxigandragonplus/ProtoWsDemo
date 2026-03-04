@@ -30,6 +30,7 @@ const MESSAGE_ID_CONFIG: Record<string, number> = {
 export class MessageRegistry {
     private static handlerMap = new Map<number, { handler: MessageHandlerFn, protoType: protobuf.Type }>();
     private static messageIdMap = new Map<string, number>();
+    private static messageNameHandlerMap = new Map<string, { handler: MessageHandlerFn, protoType: protobuf.Type }>();
 
     /**
      * 注册消息处理器
@@ -46,6 +47,7 @@ export class MessageRegistry {
     ): void {
         this.handlerMap.set(messageId, { handler, protoType });
         this.messageIdMap.set(protoTypeName, messageId);
+        this.messageNameHandlerMap.set(protoTypeName, { handler, protoType });
         console.log(`[MessageRegistry] 注册消息：${protoTypeName} -> ID:${messageId}`);
     }
 
@@ -54,6 +56,13 @@ export class MessageRegistry {
      */
     static getHandler(messageId: number): { handler: MessageHandlerFn, protoType: protobuf.Type } | null {
         return this.handlerMap.get(messageId) || null;
+    }
+
+    /**
+     * 根据消息类型名获取处理器（用于 WebsocketMessage）
+     */
+    static getHandlerByTypeName(typeName: string): { handler: MessageHandlerFn, protoType: protobuf.Type } | null {
+        return this.messageNameHandlerMap.get(typeName) || null;
     }
 
     /**
@@ -116,5 +125,6 @@ export class MessageRegistry {
     static clear(): void {
         this.handlerMap.clear();
         this.messageIdMap.clear();
+        this.messageNameHandlerMap.clear();
     }
 }

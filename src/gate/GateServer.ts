@@ -96,17 +96,16 @@ export class GateServer {
 
     /**
      * 处理客户端消息
+     * 使用 WebsocketMessage 格式，根据 uri 前缀判断转发目标
      */
     private handleMessage(session: PlayerSession, data: Buffer): void {
         try {
             const uint8Data = new Uint8Array(data);
             
-            // 读取消息 ID
-            const messageId = uint8Data[0];
-            const messageBody = uint8Data.slice(1);
-            
-            // 转发到 Game 服务器（使用 Gate 会话 ID）
-            this.forwardToGame(session.getGateSessionId(), messageId, messageBody);
+            // 使用 MessageHandler 处理 WebsocketMessage
+            MessageHandler.handleWebsocketMessage(session, uint8Data, (wsMessage) => {
+                this.forwardToGame(session, wsMessage);
+            });
         } catch (error) {
             console.error('处理消息时出错:', error);
             session.close();
@@ -114,25 +113,43 @@ export class GateServer {
     }
 
     /**
-     * 转发消息到 Game 服务器
+     * 转发 WebsocketMessage 到 Game 服务器
      */
-    private forwardToGame(gateSessionId: number, messageId: number, payload: Uint8Array): void {
+    private forwardToGame(session: PlayerSession, wsMessage: any): void {
         try {
+            // 使用 PBPackage 包装 WebsocketMessage
+            const pbPackageType = ProtoLoader.PBPackage;
+            const wsMessageType = ProtoLoader.WebsocketMessage;
+            
+            // 先编码 WebsocketMessage
+            const wsEncoded = wsMessageType.encode(wsMessage).finish();
+            
+            // 用 PBPackage 包装
+            const pbPackage = pbPackageType.create({
+                message_type: wsMessage.message_type,
+                message_payload: wsEncoded
+            });
+            const pbEncoded = pbPackageType.encode(pbPackage).finish();
+
             // 构建 GateToGame 消息
             const gateToGameType = ProtoLoader.GateToGame;
             const gateToGame = gateToGameType.create({
-                sessionId: gateSessionId,
-                messageId: messageId,
-                payload: payload
+                sessionId: session.getGateSessionId(),
+                messageId: 0, // 不再使用 messageId
+                payload: pbEncoded,
+                message_type: wsMessage.message_type
             });
             const encoded = gateToGameType.encode(gateToGame).finish();
 
-            // 发送：消息 ID + 数据
-            const message = new Uint8Array(1 + encoded.length);
-            message[0] = 101; // GateToGame
-            message.set(encoded, 1);
+            // 使用 PBPackage 包装 GateToGame 消息
+            const outerPbPackage = pbPackageType.create({
+                message_type: 'GateToGame',
+                message_payload: encoded
+            });
+            const outerEncoded = pbPackageType.encode(outerPbPackage).finish();
 
-            this.gameConnector.send(message);
+            this.gameConnector.send(outerEncoded);
+            console.log(`[GateServer] 消息已转发到 Game 服务器 - messageType: ${wsMessage.message_type}`);
         } catch (error) {
             console.error('[GateServer] 转发消息到 Game 失败:', error);
         }

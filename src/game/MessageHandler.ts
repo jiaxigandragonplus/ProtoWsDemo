@@ -4,7 +4,7 @@ import { ProtoLoader } from './ProtoLoader';
 import WebSocket, { WebSocketServer } from 'ws';
 
 /**
- * 消息 ID 定义（Gate-Game 内部通信）
+ * 消息 ID 定义（Gate-Game 内部通信，保留用于向后兼容）
  */
 export enum GameMessageId {
     GateToGame = 101,  // Gate 发送给 Game 的消息
@@ -20,52 +20,72 @@ export class GameMessageHandler {
 
     /**
      * 处理来自 Gate 的消息
+     * 使用 PBPackage 格式解析，然后根据 message_type 路由
      */
     static handleMessage(data: Uint8Array, wss: WebSocketServer): void {
-        const reader = new Uint8Array(data);
-        
-        // 读取消息 ID（第一个字节是消息 ID）
-        const messageId = reader[0];
-        
-        // 读取消息体
-        const messageBody = data.slice(1);
-
-        console.log(`[GameMessageHandler] 收到消息 - MessageId: ${messageId}`);
-
-        // 根据消息 ID 路由到不同的处理器
-        switch (messageId) {
-            case GameMessageId.GateToGame:
-                this.handleGateToGame(messageBody, wss);
-                break;
-            default:
-                console.warn(`[GameMessageHandler] 未知消息 ID: ${messageId}`);
+        try {
+            // 使用 PBPackage 解析
+            const pbPackageType = ProtoLoader.PBPackage;
+            const pbPackage = pbPackageType.decode(data) as any;
+            
+            const messageType = pbPackage.message_type as string;
+            const messagePayload = new Uint8Array(pbPackage.message_payload as ArrayBuffer);
+            
+            console.log(`[GameMessageHandler] 收到消息 - messageType: ${messageType}`);
+            
+            // 根据 messageType 路由
+            if (messageType === 'GateToGame') {
+                this.handleGateToGame(messagePayload, wss);
+            } else {
+                console.warn(`[GameMessageHandler] 未知消息类型：${messageType}`);
+            }
+        } catch (error) {
+            console.error('[GameMessageHandler] 处理消息时出错:', error);
         }
     }
 
     /**
      * 处理 GateToGame 消息
+     * 解析 WebsocketMessage 然后根据 message_type 路由到具体处理器
      */
     private static handleGateToGame(data: Uint8Array, wss: WebSocketServer): void {
         try {
+            // 解析 GateToGame 消息
             const gateToGameType = ProtoLoader.GateToGame;
             const gateToGame = gateToGameType.decode(data) as any;
             
             const sessionId = gateToGame.sessionId as number;
-            const messageId = gateToGame.messageId as number;
             const payload = new Uint8Array(gateToGame.payload as ArrayBuffer);
-
-            console.log(`[GameMessageHandler] GateToGame - SessionId: ${sessionId}, MessageId: ${messageId}`);
-
-            // 根据内部消息 ID 路由到具体的业务处理器
-            switch (messageId) {
-                case 1: // CLogin
-                    this.handleLogin(sessionId, payload, wss);
+            const messageType = gateToGame.message_type as string || '';
+            
+            console.log(`[GameMessageHandler] GateToGame - SessionId: ${sessionId}, MessageType: ${messageType}`);
+            
+            // 使用 PBPackage 再次解析 payload 获取 WebsocketMessage
+            const pbPackageType = ProtoLoader.PBPackage;
+            const pbPackage = pbPackageType.decode(payload) as any;
+            
+            const wsMessagePayload = new Uint8Array(pbPackage.message_payload as ArrayBuffer);
+            
+            // 解析 WebsocketMessage
+            const wsMessageType = ProtoLoader.WebsocketMessage;
+            const wsMessage = wsMessageType.decode(wsMessagePayload) as any;
+            
+            const uri = wsMessage.uri as string;
+            const innerMessageType = wsMessage.message_type as string;
+            const messagePayload = new Uint8Array(wsMessage.message_payload as ArrayBuffer);
+            
+            console.log(`[GameMessageHandler] WebsocketMessage - uri: ${uri}, messageType: ${innerMessageType}`);
+            
+            // 根据 message_type 路由到具体的业务处理器
+            switch (innerMessageType) {
+                case 'CLogin':
+                    this.handleLogin(sessionId, messagePayload, wss);
                     break;
-                case 3: // CEcho
-                    this.handleEcho(sessionId, payload, wss);
+                case 'CEcho':
+                    this.handleEcho(sessionId, messagePayload, wss);
                     break;
                 default:
-                    console.warn(`[GameMessageHandler] 未处理的业务消息 ID: ${messageId}`);
+                    console.warn(`[GameMessageHandler] 未处理的业务消息类型：${innerMessageType}`);
             }
         } catch (error) {
             console.error('[GameMessageHandler] 处理 GateToGame 消息时出错:', error);
@@ -87,8 +107,8 @@ export class GameMessageHandler {
                 // 创建会话
                 const sessionInfo = SessionManager.createSession(gateSessionId, loginRequest.name);
                 
-                // 发送登录响应
-                this.sendToGate(gateSessionId, 2, { playerId: sessionInfo.playerId }, 'SLogin', wss);
+                // 发送登录响应（使用 WebsocketMessage 格式）
+                this.sendWebsocketToGate(gateSessionId, 'SLogin', '/game/game/login', { playerId: sessionInfo.playerId }, wss);
                 
                 console.log(`[GameMessageHandler] 登录成功 - PlayerId: ${sessionInfo.playerId}`);
             } else {
@@ -116,8 +136,8 @@ export class GameMessageHandler {
             
             console.log(`[GameMessageHandler] 处理回显 - PlayerId: ${session.playerId}, Msg: ${echoRequest.msg}`);
 
-            // 发送回显响应
-            this.sendToGate(gateSessionId, 4, { msg: echoRequest.msg }, 'SEcho', wss);
+            // 发送回显响应（使用 WebsocketMessage 格式）
+            this.sendWebsocketToGate(gateSessionId, 'SEcho', '/game/game/echo', { msg: echoRequest.msg }, wss);
             
             console.log(`[GameMessageHandler] 回显响应已发送 - PlayerId: ${session.playerId}`);
         } catch (error) {
@@ -126,13 +146,13 @@ export class GameMessageHandler {
     }
 
     /**
-     * 发送消息到 Gate
+     * 发送 WebsocketMessage 到 Gate
      */
-    private static sendToGate(
+    private static sendWebsocketToGate(
         gateSessionId: number, 
-        messageId: number, 
+        messageType: string,
+        uri: string,
         data: Record<string, any>, 
-        protoTypeName: string,
         wss: WebSocketServer
     ): void {
         // 获取第一个连接的 Gate
@@ -143,25 +163,50 @@ export class GameMessageHandler {
         }
 
         try {
-            const protoType = ProtoLoader.getType(protoTypeName);
+            // 获取 proto 类型并编码消息
+            const protoType = ProtoLoader.getType(messageType);
             const message = protoType.create(data);
             const encoded = protoType.encode(message).finish();
 
-            // 构建 GameToGate 消息
+            // 创建 WebsocketMessage
+            const wsMessageType = ProtoLoader.WebsocketMessage;
+            const wsMessage = wsMessageType.create({
+                uri: uri,
+                method: 'POST',
+                message_type: messageType,
+                message_payload: encoded,
+                uuid: '',
+                errno: 0,
+                errmsg: ''
+            });
+            const wsEncoded = wsMessageType.encode(wsMessage).finish();
+
+            // 用 PBPackage 包装 WebsocketMessage
+            const pbPackageType = ProtoLoader.PBPackage;
+            const pbPackage = pbPackageType.create({
+                message_type: messageType,
+                message_payload: wsEncoded
+            });
+            const pbEncoded = pbPackageType.encode(pbPackage).finish();
+
+            // 创建 GameToGate 消息
             const gameToGateType = ProtoLoader.GameToGate;
             const gameToGate = gameToGateType.create({
                 sessionId: gateSessionId,
-                messageId: messageId,
-                payload: encoded
+                messageId: 0, // 不再使用
+                payload: pbEncoded,
+                message_type: messageType
             });
             const gameToGateEncoded = gameToGateType.encode(gameToGate).finish();
 
-            // 发送：消息 ID + 数据
-            const response = new Uint8Array(1 + gameToGateEncoded.length);
-            response[0] = GameMessageId.GameToGate;
-            response.set(gameToGateEncoded, 1);
+            // 用 PBPackage 包装 GameToGate 消息
+            const outerPbPackage = pbPackageType.create({
+                message_type: 'GameToGate',
+                message_payload: gameToGateEncoded
+            });
+            const outerEncoded = pbPackageType.encode(outerPbPackage).finish();
 
-            gateClient.send(response);
+            gateClient.send(outerEncoded);
         } catch (error) {
             console.error('[GameMessageHandler] 发送消息到 Gate 时出错:', error);
         }

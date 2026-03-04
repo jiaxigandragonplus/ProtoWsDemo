@@ -5,6 +5,15 @@
 
 import * as protobuf from 'protobufjs';
 import * as path from 'path';
+import * as fs from 'fs';
+
+/**
+ * 协议映射配置
+ */
+export interface ProtocolMapEntry {
+    method: string;
+    uri: string;
+}
 
 /**
  * Proto 加载器类
@@ -13,19 +22,33 @@ export class ProtoLoader {
     private static root: protobuf.Root | null = null;
     private static gameProtoPath: string;
     private static gateGameProtoPath: string;
+    private static commonProtoPath: string;
+    private static protocolMapPath: string;
+    private static protocolMap: Record<string, ProtocolMapEntry> = {};
 
     /**
      * 获取 proto 文件路径
      */
-    private static getProtoPaths(): { game: string, gateGame: string } {
+    private static getProtoPaths(): { game: string, gateGame: string, common: string, protocolMap: string } {
         if (!this.gameProtoPath) {
             // __dirname 在编译后是 dist/src/gate，需要向上三层到项目根目录
-            this.gameProtoPath = path.join(__dirname, '../../../protobuf/proto/game.proto');
+            this.gameProtoPath = path.join(__dirname, '../../../protobuf/proto/game/game.proto');
         }
         if (!this.gateGameProtoPath) {
-            this.gateGameProtoPath = path.join(__dirname, '../../../protobuf/proto/gate_game.proto');
+            this.gateGameProtoPath = path.join(__dirname, '../../../protobuf/proto/gate/gate_game.proto');
         }
-        return { game: this.gameProtoPath, gateGame: this.gateGameProtoPath };
+        if (!this.commonProtoPath) {
+            this.commonProtoPath = path.join(__dirname, '../../../protobuf/proto/common/common.proto');
+        }
+        if (!this.protocolMapPath) {
+            this.protocolMapPath = path.join(__dirname, '../../../protobuf/proto/protocol_map.json');
+        }
+        return { 
+            game: this.gameProtoPath, 
+            gateGame: this.gateGameProtoPath, 
+            common: this.commonProtoPath,
+            protocolMap: this.protocolMapPath
+        };
     }
 
     /**
@@ -39,10 +62,49 @@ export class ProtoLoader {
                 if (path.isAbsolute(target)) return target;
                 return path.join(path.dirname(origin), target);
             };
+            this.root.loadSync(paths.common);
             this.root.loadSync(paths.game);
             this.root.loadSync(paths.gateGame);
         }
         return this.root;
+    }
+
+    /**
+     * 加载 protocol_map.json
+     */
+    static loadProtocolMap(): void {
+        if (Object.keys(this.protocolMap).length === 0) {
+            const paths = this.getProtoPaths();
+            try {
+                const content = fs.readFileSync(paths.protocolMap, 'utf-8');
+                this.protocolMap = JSON.parse(content);
+                console.log(`[ProtoLoader] 协议映射加载完成，共 ${Object.keys(this.protocolMap).length} 条协议`);
+            } catch (error) {
+                console.error('[ProtoLoader] 加载协议映射失败:', error);
+            }
+        }
+    }
+
+    /**
+     * 根据消息类型名获取协议信息
+     */
+    static getProtocolInfo(messageType: string): ProtocolMapEntry | null {
+        if (Object.keys(this.protocolMap).length === 0) {
+            this.loadProtocolMap();
+        }
+        return this.protocolMap[messageType] || null;
+    }
+
+    /**
+     * 根据 URI 前缀判断目标服务器
+     * @param uri URI 路径
+     * @returns 服务器类型：'gate' 或 'game'
+     */
+    static getTargetServer(uri: string): 'gate' | 'game' {
+        if (uri.startsWith('/gate/')) {
+            return 'gate';
+        }
+        return 'game';
     }
 
     /**
@@ -66,9 +128,11 @@ export class ProtoLoader {
         if (!this.root) {
             const paths = this.getProtoPaths();
             this.root = new protobuf.Root();
+            await this.root.load(paths.common);
             await this.root.load(paths.game);
             await this.root.load(paths.gateGame);
         }
+        this.loadProtocolMap();
     }
 
     /**
@@ -78,9 +142,11 @@ export class ProtoLoader {
         if (!this.root) {
             const paths = this.getProtoPaths();
             this.root = new protobuf.Root();
+            this.root.loadSync(paths.common);
             this.root.loadSync(paths.game);
             this.root.loadSync(paths.gateGame);
         }
+        this.loadProtocolMap();
     }
 
     /**
@@ -130,5 +196,19 @@ export class ProtoLoader {
      */
     static get GameToGate(): protobuf.Type {
         return this.getType('GameToGate');
+    }
+
+    /**
+     * 获取 WebsocketMessage 类型
+     */
+    static get WebsocketMessage(): protobuf.Type {
+        return this.getType('WebsocketMessage');
+    }
+
+    /**
+     * 获取 PBPackage 类型
+     */
+    static get PBPackage(): protobuf.Type {
+        return this.getType('PBPackage');
     }
 }

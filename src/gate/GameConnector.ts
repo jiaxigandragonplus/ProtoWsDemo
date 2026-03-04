@@ -1,5 +1,6 @@
 import WebSocket from 'ws';
 import { MessageHandler } from './MessageHandler';
+import { ProtoLoader } from './ProtoLoader';
 
 /**
  * Game 连接器
@@ -59,20 +60,31 @@ export class GameConnector {
 
     /**
      * 处理来自 Game 的消息
+     * 使用 PBPackage 格式解析
      */
     private handleMessage(data: Buffer): void {
         try {
             const uint8Data = new Uint8Array(data);
             
-            // 读取消息 ID
-            const messageId = uint8Data[0];
-            const messageBody = uint8Data.slice(1);
+            // 使用 PBPackage 解析
+            const pbPackageType = ProtoLoader.PBPackage;
+            const pbPackage = pbPackageType.decode(uint8Data) as any;
             
-            console.log(`[GameConnector] 收到 Game 消息 - MessageId: ${messageId}`);
+            const messageType = pbPackage.message_type as string;
+            const messagePayload = new Uint8Array(pbPackage.message_payload as ArrayBuffer);
             
-            // 转发给 Gate 的消息
-            if (messageId === 102) { // GameToGate
-                MessageHandler.handleGameToGameMessage(messageBody);
+            console.log(`[GameConnector] 收到 Game 消息 - messageType: ${messageType}`);
+            
+            // 根据 messageType 路由
+            if (messageType === 'GameToGate') {
+                // 解析 GameToGate 消息
+                const gameToGateType = ProtoLoader.GameToGate;
+                const gameToGate = gameToGateType.decode(messagePayload) as any;
+                
+                // 调用 MessageHandler 处理
+                MessageHandler.handleGameToGameMessage(messagePayload);
+            } else {
+                console.warn(`[GameConnector] 未知消息类型：${messageType}`);
             }
         } catch (error) {
             console.error('[GameConnector] 处理 Game 消息时出错:', error);

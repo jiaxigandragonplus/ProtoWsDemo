@@ -67,6 +67,7 @@ export class GameServer {
 
     /**
      * 处理来自 Gate 的消息
+     * 使用 PBPackage 格式解析
      */
     private handleMessage(data: Buffer): void {
         try {
