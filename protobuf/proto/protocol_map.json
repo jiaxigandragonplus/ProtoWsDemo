@@ -1,4 +1,20 @@
 {
+    "CLogin": {
+        "method": "POST",
+        "uri": "/game/game/login"
+    },
+    "CEcho": {
+        "method": "POST",
+        "uri": "/game/game/echo"
+    },
+    "CKickPlayers": {
+        "method": "POST",
+        "uri": "/game/game/kick_players"
+    },
+    "CKickAllPlayers": {
+        "method": "POST",
+        "uri": "/game/game/kick_all_players"
+    },
     "CKickPlayer": {
         "method": "POST",
         "uri": "/gate/gate/kick_player"
