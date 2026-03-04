@@ -20,31 +20,19 @@ else
     SED=sed
 fi
 
-# First, compile common module separately
-echo "Generating common"
-COMMON_OUTPUT_DIR=ts/common
-rm -rf $COMMON_OUTPUT_DIR && mkdir -p $COMMON_OUTPUT_DIR
-protoc --proto_path=proto --ts_proto_out=$COMMON_OUTPUT_DIR --ts_proto_opt=esModuleInterop=true,outputEncodeMethods=false,outputJsonMethods=false,outputClientImpl=false,env=node proto/common/*.proto
-find "$COMMON_OUTPUT_DIR" -name "*.ts" -type f -exec $SED -i '/export const protobufPackage =/d' {} \;
-# Flatten directory structure for common
-for nested_dir in $(find "$COMMON_OUTPUT_DIR" -mindepth 1 -maxdepth 1 -type d); do
-    mv "$nested_dir"/* "$COMMON_OUTPUT_DIR"/
-done
-find "$COMMON_OUTPUT_DIR" -mindepth 1 -type d -empty -delete
-
-# Then compile other modules (game, gate, etc.)
-for INPUT_DIR in $(find proto -maxdepth 3 -mindepth 1 -type d); do
-    module=$(basename $INPUT_DIR)
+# Generate TypeScript files from proto files
+# Arguments:
+#   $1 - Input proto directory
+#   $2 - Output ts directory
+#   $3 - Module name (e.g., "common", "game", "gate")
+#   $4 - Skip nested directory name (optional, default: none)
+generate_ts() {
+    local INPUT_DIR=$1
+    local OUTPUT_DIR=$2
+    local MODULE=$3
+    local SKIP_DIR=${4:-""}
     
-    # Skip common as it's already compiled
-    if [ "$module" == "common" ]; then
-        continue
-    fi
-    
-    echo "Generating $module"
-
-    ## Generate ts
-    OUTPUT_DIR=ts/$module
+    echo "Generating $MODULE"
     rm -rf $OUTPUT_DIR && mkdir -p $OUTPUT_DIR
 
     protoc --proto_path=proto --ts_proto_out=$OUTPUT_DIR --ts_proto_opt=esModuleInterop=true,outputEncodeMethods=false,outputJsonMethods=false,outputClientImpl=false,env=node $INPUT_DIR/*.proto
@@ -53,13 +41,11 @@ for INPUT_DIR in $(find proto -maxdepth 3 -mindepth 1 -type d); do
     find "$OUTPUT_DIR" -name "*.ts" -type f -exec $SED -i '/export const protobufPackage =/d' {} \;
 
     # Flatten directory structure: move files from nested package directories to OUTPUT_DIR
-    # e.g., ts/game/game/*.ts -> ts/game/*.ts
-    # But skip common directory as it's already compiled
     for nested_dir in $(find "$OUTPUT_DIR" -mindepth 1 -maxdepth 1 -type d); do
         nested_name=$(basename "$nested_dir")
-        if [ "$nested_name" == "common" ]; then
-            # Skip common directory, it's already in ts/common
-            # Remove the common directory and its contents
+        if [ -n "$SKIP_DIR" ] && [ "$nested_name" == "$SKIP_DIR" ]; then
+            # Skip specified directory
+            # Remove the directory and its contents
             rm -rf "$nested_dir"
             continue
         fi
@@ -67,4 +53,20 @@ for INPUT_DIR in $(find proto -maxdepth 3 -mindepth 1 -type d); do
     done
     # Remove empty nested directories
     find "$OUTPUT_DIR" -mindepth 1 -type d -empty -delete
+}
+
+# First, compile common module separately (no skip)
+generate_ts "proto/common" "ts/common" "common"
+
+# Then compile other modules (game, gate, etc.)
+# Skip "common" nested directory as it's already in ts/common
+for INPUT_DIR in $(find proto -maxdepth 3 -mindepth 1 -type d); do
+    module=$(basename $INPUT_DIR)
+    
+    # Skip common as it's already compiled
+    if [ "$module" == "common" ]; then
+        continue
+    fi
+    
+    generate_ts "$INPUT_DIR" "ts/$module" "$module" "common"
 done
