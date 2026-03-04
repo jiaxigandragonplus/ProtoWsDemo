@@ -1,0 +1,12 @@
+syntax = "proto3";
+package guild;
+
+import "common/guild_data.proto";
+
+// 获取公会列表
+message CGetGuildList {
+
+}
+message SGuildList {
+    repeated common.GuildData guilds = 1;
+}

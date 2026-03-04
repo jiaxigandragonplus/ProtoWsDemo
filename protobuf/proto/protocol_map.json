@@ -30,5 +30,9 @@
     "CBroadcastGameMessage": {
         "method": "POST",
         "uri": "/gate/gate/broadcast_game_message"
+    },
+    "CGetGuildList": {
+        "method": "POST",
+        "uri": "/guild/guild/get_guild_list"
     }
 }

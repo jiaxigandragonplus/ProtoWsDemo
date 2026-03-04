@@ -629,6 +629,249 @@ $root.common = (function() {
         return values;
     })();
 
+    common.GuildData = (function() {
+
+        /**
+         * Properties of a GuildData.
+         * @memberof common
+         * @interface IGuildData
+         * @property {number|Long|null} [id] GuildData id
+         * @property {string|null} [name] GuildData name
+         */
+
+        /**
+         * Constructs a new GuildData.
+         * @memberof common
+         * @classdesc Represents a GuildData.
+         * @implements IGuildData
+         * @constructor
+         * @param {common.IGuildData=} [properties] Properties to set
+         */
+        function GuildData(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GuildData id.
+         * @member {number|Long} id
+         * @memberof common.GuildData
+         * @instance
+         */
+        GuildData.prototype.id = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * GuildData name.
+         * @member {string} name
+         * @memberof common.GuildData
+         * @instance
+         */
+        GuildData.prototype.name = "";
+
+        /**
+         * Creates a new GuildData instance using the specified properties.
+         * @function create
+         * @memberof common.GuildData
+         * @static
+         * @param {common.IGuildData=} [properties] Properties to set
+         * @returns {common.GuildData} GuildData instance
+         */
+        GuildData.create = function create(properties) {
+            return new GuildData(properties);
+        };
+
+        /**
+         * Encodes the specified GuildData message. Does not implicitly {@link common.GuildData.verify|verify} messages.
+         * @function encode
+         * @memberof common.GuildData
+         * @static
+         * @param {common.IGuildData} message GuildData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GuildData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.id);
+            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GuildData message, length delimited. Does not implicitly {@link common.GuildData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof common.GuildData
+         * @static
+         * @param {common.IGuildData} message GuildData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GuildData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GuildData message from the specified reader or buffer.
+         * @function decode
+         * @memberof common.GuildData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {common.GuildData} GuildData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GuildData.decode = function decode(reader, length, error) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.common.GuildData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                if (tag === error)
+                    break;
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.int64();
+                        break;
+                    }
+                case 2: {
+                        message.name = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GuildData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof common.GuildData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {common.GuildData} GuildData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GuildData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GuildData message.
+         * @function verify
+         * @memberof common.GuildData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GuildData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isInteger(message.id) && !(message.id && $util.isInteger(message.id.low) && $util.isInteger(message.id.high)))
+                    return "id: integer|Long expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a GuildData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof common.GuildData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {common.GuildData} GuildData
+         */
+        GuildData.fromObject = function fromObject(object) {
+            if (object instanceof $root.common.GuildData)
+                return object;
+            var message = new $root.common.GuildData();
+            if (object.id != null)
+                if ($util.Long)
+                    (message.id = $util.Long.fromValue(object.id)).unsigned = false;
+                else if (typeof object.id === "string")
+                    message.id = parseInt(object.id, 10);
+                else if (typeof object.id === "number")
+                    message.id = object.id;
+                else if (typeof object.id === "object")
+                    message.id = new $util.LongBits(object.id.low >>> 0, object.id.high >>> 0).toNumber();
+            if (object.name != null)
+                message.name = String(object.name);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GuildData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof common.GuildData
+         * @static
+         * @param {common.GuildData} message GuildData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GuildData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.id = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.id = options.longs === String ? "0" : 0;
+                object.name = "";
+            }
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (typeof message.id === "number")
+                    object.id = options.longs === String ? String(message.id) : message.id;
+                else
+                    object.id = options.longs === String ? $util.Long.prototype.toString.call(message.id) : options.longs === Number ? new $util.LongBits(message.id.low >>> 0, message.id.high >>> 0).toNumber() : message.id;
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            return object;
+        };
+
+        /**
+         * Converts this GuildData to JSON.
+         * @function toJSON
+         * @memberof common.GuildData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GuildData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for GuildData
+         * @function getTypeUrl
+         * @memberof common.GuildData
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        GuildData.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/common.GuildData";
+        };
+
+        return GuildData;
+    })();
+
     return common;
 })();
 

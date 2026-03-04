@@ -1,0 +1,7 @@
+syntax = "proto3";
+package common;
+
+message GuildData { 
+    int64 id = 1;
+    string name = 2;
+}
