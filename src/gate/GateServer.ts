@@ -209,6 +209,11 @@ function startGate(): void {
         gateServer.shutdown();
         process.exit(0);
     });
+
+    // 捕获异常
+    process.on('uncaughtException', (err) => {
+        console.error('\n[GateServer] 捕获到异常:', err);
+    });
 }
 
 // 如果直接运行此文件则启动服务器
