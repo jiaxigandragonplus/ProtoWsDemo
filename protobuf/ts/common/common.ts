@@ -7,20 +7,26 @@
 /* eslint-disable */
 
 
+export interface PBPackage {
+  /** 消息类型 */
+  messageType: string;
+  /** 数据 */
+  messagePayload: Buffer;
+}
+
 export interface WebsocketMessage {
   /** 客户端上行传递值,由jsonmap指定 */
   uri: string;
-  /**  */
+  /** 方法，GET POST */
   method: string;
-  /**  */
+  /** 消息名字 */
   messageType: string;
-  /**  */
+  /** 消息内容 */
   messagePayload: Buffer;
-  /**  */
+  /** 唯一id */
   uuid: string;
-  /**  */
+  /** 错误码 */
   errno: number;
-  /**  */
+  /** 错误内容 */
   errmsg: string;
-  timestamp: number;
 }

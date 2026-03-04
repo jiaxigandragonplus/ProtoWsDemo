@@ -1,13 +1,17 @@
 syntax = "proto3";
 package common;
 
+message PBPackage {
+	string message_type = 1;    // 消息类型
+	bytes message_payload = 2;  // 数据
+}
+
 message WebsocketMessage {
-    string uri = 1; // 客户端上行传递值,由jsonmap指定
-    string method = 2; // 
-    string message_type = 3; // 
-    bytes message_payload = 4; // 
-    string uuid = 5; // 
-    uint32 errno = 6; // 
-    string errmsg = 7; // 
-    int64 timestamp = 8;
+    string uri = 1;             // 客户端上行传递值,由jsonmap指定
+    string method = 2;          // 方法，GET POST
+    string message_type = 3;    // 消息名字
+    bytes message_payload = 4;  // 消息内容
+    string uuid = 5;            // 唯一id
+    uint32 errno = 6;           // 错误码
+    string errmsg = 7;          // 错误内容
 }

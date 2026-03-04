@@ -18,6 +18,244 @@ $root.common = (function() {
      */
     var common = {};
 
+    common.PBPackage = (function() {
+
+        /**
+         * Properties of a PBPackage.
+         * @memberof common
+         * @interface IPBPackage
+         * @property {string|null} [messageType] PBPackage messageType
+         * @property {Uint8Array|null} [messagePayload] PBPackage messagePayload
+         */
+
+        /**
+         * Constructs a new PBPackage.
+         * @memberof common
+         * @classdesc Represents a PBPackage.
+         * @implements IPBPackage
+         * @constructor
+         * @param {common.IPBPackage=} [properties] Properties to set
+         */
+        function PBPackage(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * PBPackage messageType.
+         * @member {string} messageType
+         * @memberof common.PBPackage
+         * @instance
+         */
+        PBPackage.prototype.messageType = "";
+
+        /**
+         * PBPackage messagePayload.
+         * @member {Uint8Array} messagePayload
+         * @memberof common.PBPackage
+         * @instance
+         */
+        PBPackage.prototype.messagePayload = $util.newBuffer([]);
+
+        /**
+         * Creates a new PBPackage instance using the specified properties.
+         * @function create
+         * @memberof common.PBPackage
+         * @static
+         * @param {common.IPBPackage=} [properties] Properties to set
+         * @returns {common.PBPackage} PBPackage instance
+         */
+        PBPackage.create = function create(properties) {
+            return new PBPackage(properties);
+        };
+
+        /**
+         * Encodes the specified PBPackage message. Does not implicitly {@link common.PBPackage.verify|verify} messages.
+         * @function encode
+         * @memberof common.PBPackage
+         * @static
+         * @param {common.IPBPackage} message PBPackage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PBPackage.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.messageType != null && Object.hasOwnProperty.call(message, "messageType"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.messageType);
+            if (message.messagePayload != null && Object.hasOwnProperty.call(message, "messagePayload"))
+                writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.messagePayload);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified PBPackage message, length delimited. Does not implicitly {@link common.PBPackage.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof common.PBPackage
+         * @static
+         * @param {common.IPBPackage} message PBPackage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PBPackage.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a PBPackage message from the specified reader or buffer.
+         * @function decode
+         * @memberof common.PBPackage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {common.PBPackage} PBPackage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PBPackage.decode = function decode(reader, length, error) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.common.PBPackage();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                if (tag === error)
+                    break;
+                switch (tag >>> 3) {
+                case 1: {
+                        message.messageType = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.messagePayload = reader.bytes();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a PBPackage message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof common.PBPackage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {common.PBPackage} PBPackage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PBPackage.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a PBPackage message.
+         * @function verify
+         * @memberof common.PBPackage
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        PBPackage.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.messageType != null && message.hasOwnProperty("messageType"))
+                if (!$util.isString(message.messageType))
+                    return "messageType: string expected";
+            if (message.messagePayload != null && message.hasOwnProperty("messagePayload"))
+                if (!(message.messagePayload && typeof message.messagePayload.length === "number" || $util.isString(message.messagePayload)))
+                    return "messagePayload: buffer expected";
+            return null;
+        };
+
+        /**
+         * Creates a PBPackage message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof common.PBPackage
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {common.PBPackage} PBPackage
+         */
+        PBPackage.fromObject = function fromObject(object) {
+            if (object instanceof $root.common.PBPackage)
+                return object;
+            var message = new $root.common.PBPackage();
+            if (object.messageType != null)
+                message.messageType = String(object.messageType);
+            if (object.messagePayload != null)
+                if (typeof object.messagePayload === "string")
+                    $util.base64.decode(object.messagePayload, message.messagePayload = $util.newBuffer($util.base64.length(object.messagePayload)), 0);
+                else if (object.messagePayload.length >= 0)
+                    message.messagePayload = object.messagePayload;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a PBPackage message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof common.PBPackage
+         * @static
+         * @param {common.PBPackage} message PBPackage
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        PBPackage.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.messageType = "";
+                if (options.bytes === String)
+                    object.messagePayload = "";
+                else {
+                    object.messagePayload = [];
+                    if (options.bytes !== Array)
+                        object.messagePayload = $util.newBuffer(object.messagePayload);
+                }
+            }
+            if (message.messageType != null && message.hasOwnProperty("messageType"))
+                object.messageType = message.messageType;
+            if (message.messagePayload != null && message.hasOwnProperty("messagePayload"))
+                object.messagePayload = options.bytes === String ? $util.base64.encode(message.messagePayload, 0, message.messagePayload.length) : options.bytes === Array ? Array.prototype.slice.call(message.messagePayload) : message.messagePayload;
+            return object;
+        };
+
+        /**
+         * Converts this PBPackage to JSON.
+         * @function toJSON
+         * @memberof common.PBPackage
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        PBPackage.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for PBPackage
+         * @function getTypeUrl
+         * @memberof common.PBPackage
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        PBPackage.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/common.PBPackage";
+        };
+
+        return PBPackage;
+    })();
+
     common.WebsocketMessage = (function() {
 
         /**
@@ -31,7 +269,6 @@ $root.common = (function() {
          * @property {string|null} [uuid] WebsocketMessage uuid
          * @property {number|null} [errno] WebsocketMessage errno
          * @property {string|null} [errmsg] WebsocketMessage errmsg
-         * @property {number|Long|null} [timestamp] WebsocketMessage timestamp
          */
 
         /**
@@ -106,14 +343,6 @@ $root.common = (function() {
         WebsocketMessage.prototype.errmsg = "";
 
         /**
-         * WebsocketMessage timestamp.
-         * @member {number|Long} timestamp
-         * @memberof common.WebsocketMessage
-         * @instance
-         */
-        WebsocketMessage.prototype.timestamp = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
          * Creates a new WebsocketMessage instance using the specified properties.
          * @function create
          * @memberof common.WebsocketMessage
@@ -151,8 +380,6 @@ $root.common = (function() {
                 writer.uint32(/* id 6, wireType 0 =*/48).uint32(message.errno);
             if (message.errmsg != null && Object.hasOwnProperty.call(message, "errmsg"))
                 writer.uint32(/* id 7, wireType 2 =*/58).string(message.errmsg);
-            if (message.timestamp != null && Object.hasOwnProperty.call(message, "timestamp"))
-                writer.uint32(/* id 8, wireType 0 =*/64).int64(message.timestamp);
             return writer;
         };
 
@@ -217,10 +444,6 @@ $root.common = (function() {
                         message.errmsg = reader.string();
                         break;
                     }
-                case 8: {
-                        message.timestamp = reader.int64();
-                        break;
-                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -277,9 +500,6 @@ $root.common = (function() {
             if (message.errmsg != null && message.hasOwnProperty("errmsg"))
                 if (!$util.isString(message.errmsg))
                     return "errmsg: string expected";
-            if (message.timestamp != null && message.hasOwnProperty("timestamp"))
-                if (!$util.isInteger(message.timestamp) && !(message.timestamp && $util.isInteger(message.timestamp.low) && $util.isInteger(message.timestamp.high)))
-                    return "timestamp: integer|Long expected";
             return null;
         };
 
@@ -312,15 +532,6 @@ $root.common = (function() {
                 message.errno = object.errno >>> 0;
             if (object.errmsg != null)
                 message.errmsg = String(object.errmsg);
-            if (object.timestamp != null)
-                if ($util.Long)
-                    (message.timestamp = $util.Long.fromValue(object.timestamp)).unsigned = false;
-                else if (typeof object.timestamp === "string")
-                    message.timestamp = parseInt(object.timestamp, 10);
-                else if (typeof object.timestamp === "number")
-                    message.timestamp = object.timestamp;
-                else if (typeof object.timestamp === "object")
-                    message.timestamp = new $util.LongBits(object.timestamp.low >>> 0, object.timestamp.high >>> 0).toNumber();
             return message;
         };
 
@@ -351,11 +562,6 @@ $root.common = (function() {
                 object.uuid = "";
                 object.errno = 0;
                 object.errmsg = "";
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.timestamp = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.timestamp = options.longs === String ? "0" : 0;
             }
             if (message.uri != null && message.hasOwnProperty("uri"))
                 object.uri = message.uri;
@@ -371,11 +577,6 @@ $root.common = (function() {
                 object.errno = message.errno;
             if (message.errmsg != null && message.hasOwnProperty("errmsg"))
                 object.errmsg = message.errmsg;
-            if (message.timestamp != null && message.hasOwnProperty("timestamp"))
-                if (typeof message.timestamp === "number")
-                    object.timestamp = options.longs === String ? String(message.timestamp) : message.timestamp;
-                else
-                    object.timestamp = options.longs === String ? $util.Long.prototype.toString.call(message.timestamp) : options.longs === Number ? new $util.LongBits(message.timestamp.low >>> 0, message.timestamp.high >>> 0).toNumber() : message.timestamp;
             return object;
         };
 

@@ -3,6 +3,109 @@ import Long = require("long");
 /** Namespace common. */
 export namespace common {
 
+    /** Properties of a PBPackage. */
+    interface IPBPackage {
+
+        /** PBPackage messageType */
+        messageType?: (string|null);
+
+        /** PBPackage messagePayload */
+        messagePayload?: (Uint8Array|null);
+    }
+
+    /** Represents a PBPackage. */
+    class PBPackage implements IPBPackage {
+
+        /**
+         * Constructs a new PBPackage.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: common.IPBPackage);
+
+        /** PBPackage messageType. */
+        public messageType: string;
+
+        /** PBPackage messagePayload. */
+        public messagePayload: Uint8Array;
+
+        /**
+         * Creates a new PBPackage instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns PBPackage instance
+         */
+        public static create(properties?: common.IPBPackage): common.PBPackage;
+
+        /**
+         * Encodes the specified PBPackage message. Does not implicitly {@link common.PBPackage.verify|verify} messages.
+         * @param message PBPackage message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: common.IPBPackage, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified PBPackage message, length delimited. Does not implicitly {@link common.PBPackage.verify|verify} messages.
+         * @param message PBPackage message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: common.IPBPackage, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a PBPackage message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns PBPackage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): common.PBPackage;
+
+        /**
+         * Decodes a PBPackage message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns PBPackage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): common.PBPackage;
+
+        /**
+         * Verifies a PBPackage message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a PBPackage message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns PBPackage
+         */
+        public static fromObject(object: { [k: string]: any }): common.PBPackage;
+
+        /**
+         * Creates a plain object from a PBPackage message. Also converts values to other types if specified.
+         * @param message PBPackage
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: common.PBPackage, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this PBPackage to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for PBPackage
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
     /** Properties of a WebsocketMessage. */
     interface IWebsocketMessage {
 
@@ -26,9 +129,6 @@ export namespace common {
 
         /** WebsocketMessage errmsg */
         errmsg?: (string|null);
-
-        /** WebsocketMessage timestamp */
-        timestamp?: (number|Long|null);
     }
 
     /** Represents a WebsocketMessage. */
@@ -60,9 +160,6 @@ export namespace common {
 
         /** WebsocketMessage errmsg. */
         public errmsg: string;
-
-        /** WebsocketMessage timestamp. */
-        public timestamp: (number|Long);
 
         /**
          * Creates a new WebsocketMessage instance using the specified properties.
