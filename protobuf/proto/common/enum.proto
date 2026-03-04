@@ -9,3 +9,11 @@ enum KickPlayerReason {
     GMKick = 3;         // GM后台操作
     Banned = 4;         // 封号踢人
 }
+
+// 服务器类型
+enum ServerType {
+    ServerTypeUnknown = 0;
+    ServerTypeGate = 1;
+    ServerTypeGame = 2;
+    ServerTypeGuild = 3;
+}
