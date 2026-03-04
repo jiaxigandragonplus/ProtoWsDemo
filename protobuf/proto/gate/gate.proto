@@ -1,0 +1,41 @@
+syntax = "proto3";
+package gate;
+
+import "common/enum.proto";
+
+// 踢出单个玩家
+message CKickPlayer {
+    int64 player_id = 1;
+    common.KickPlayerReason reason = 2;
+}
+message SKickPlayer {
+    
+}
+
+// 踢出指定服务器的玩家
+message CKickGamePlayers {
+    int32 server_id = 1;
+    common.KickPlayerReason reason = 2;
+}
+message SKickGamePlayers {
+    
+}
+
+// 广播消息，推送给当前gate上的所有玩家
+message CBroadcastMessage {
+    string msg_type = 1;
+    bytes msg_body = 2;
+}
+message SBroadcastMessage {
+    
+}
+
+// 广播指定服务器的消息
+message CBroadcastGameMessage {
+    int32 server_id = 1;
+    string msg_type = 2;
+    bytes msg_body = 3;
+}
+message SBroadcastGameMessage {
+    
+}

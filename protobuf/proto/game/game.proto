@@ -1,0 +1,40 @@
+syntax = "proto3";
+package game;
+
+import "common/enum.proto";
+
+// 登录协议
+message CLogin {
+    string name = 1;
+    string password = 2;
+}
+
+message SLogin {
+    int64 player_id = 1;
+}
+
+// 回显协议
+message CEcho {
+    string msg = 1;
+}
+
+message SEcho {
+    string msg = 1;
+}
+
+// 踢出指定玩家
+message CKickPlayers {
+    repeated int64 player_ids = 1;
+    common.KickPlayerReason reason = 2;
+}
+message SKickPlayers {
+    
+}
+
+// 踢出所有玩家
+message CKickAllPlayers {
+    common.KickPlayerReason reason = 1;
+}
+message SKickAllPlayers {
+    
+}

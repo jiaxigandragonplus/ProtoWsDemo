@@ -1,0 +1,11 @@
+syntax = "proto3";
+package common;
+
+// 踢人原因
+enum KickPlayerReason {
+    ClientLeave = 0;    // 客户端主动离开
+    DuplicateLogin = 1; // 重复登录
+    ServerShutdown = 2; // 服务器关闭
+    GMKick = 3;         // GM后台操作
+    Banned = 4;         // 封号踢人
+}

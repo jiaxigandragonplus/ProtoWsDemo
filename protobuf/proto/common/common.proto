@@ -1,4 +1,5 @@
 syntax = "proto3";
+package common;
 
 message WebsocketMessage {
     string uri = 1; // 客户端上行传递值,由jsonmap指定
