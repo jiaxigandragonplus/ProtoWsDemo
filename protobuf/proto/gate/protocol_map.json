@@ -1,0 +1,6 @@
+{
+    "CKickPlayer": {
+        "method": "POST",
+        "uri": "/gate/gate/kick_player"
+    }
+}

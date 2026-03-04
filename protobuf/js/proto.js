@@ -1,1 +1,0 @@
-"use strict";var $protobuf=protobuf;var $Reader=$protobuf.Reader,$Writer=$protobuf.Writer,$util=$protobuf.util;var $root=$protobuf.roots["default"]||($protobuf.roots["default"]={});module.exports=$root;
