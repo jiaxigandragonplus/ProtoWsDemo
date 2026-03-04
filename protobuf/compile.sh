@@ -92,6 +92,73 @@ generate_js() {
     find "$OUTPUT_DIR" -mindepth 1 -type d -empty -delete
 }
 
+# Generate protocol_map.json for C/S protocols
+# Arguments:
+#   $1 - Input proto directory
+#   $2 - Output protocol_map.json path
+generate_protocol_map() {
+    local INPUT_DIR=$1
+    local OUTPUT_FILE=$2
+    local DIR_NAME=$(basename "$INPUT_DIR")
+    
+    echo "Generating protocol_map.json for $DIR_NAME"
+    
+    # Start JSON object
+    echo "{" > "$OUTPUT_FILE"
+    
+    local first=true
+    
+    # Iterate over all proto files in the input directory
+    for proto_file in "$INPUT_DIR"/*.proto; do
+        [ -f "$proto_file" ] || continue
+        
+        local FILE_NAME=$(basename "$proto_file" .proto)
+        
+        # Extract message names starting with C
+        while IFS= read -r line; do
+            # Match message definitions starting with C
+            if [[ $line =~ ^[[:space:]]*message[[:space:]]+(C[A-Za-z0-9]+) ]]; then
+                local MSG_NAME="${BASH_REMATCH[1]}"
+                
+                # Remove first character and convert to snake_case
+                local MSG_WITHOUT_FIRST="${MSG_NAME:1}"
+                # Convert CamelCase to snake_case using awk
+                local SNAKE_CASE=$(echo "$MSG_WITHOUT_FIRST" | awk '{
+                    str = $0
+                    result = ""
+                    for (i = 1; i <= length(str); i++) {
+                        c = substr(str, i, 1)
+                        if (c ~ /[A-Z]/) {
+                            if (result != "") result = result "_"
+                            result = result tolower(c)
+                        } else {
+                            result = result c
+                        }
+                    }
+                    print result
+                }')
+                
+                # Build URL: /dir_name/file_name/snake_case
+                local URL="/${DIR_NAME}/${FILE_NAME}/${SNAKE_CASE}"
+                
+                # Add comma before entry if not first
+                if [ "$first" = true ]; then
+                    first=false
+                else
+                    echo "," >> "$OUTPUT_FILE"
+                fi
+                
+                # Write JSON entry
+                printf '    "%s": {\n        "method": "POST",\n        "uri": "%s"\n    }' "$MSG_NAME" "$URL" >> "$OUTPUT_FILE"
+            fi
+        done < "$proto_file"
+    done
+    
+    # Close JSON object
+    echo "" >> "$OUTPUT_FILE"
+    echo "}" >> "$OUTPUT_FILE"
+}
+
 # First, compile common module separately (no skip)
 generate_ts "proto/common" "ts/common" "common"
 generate_js "proto/common" "js/common" "common"
@@ -108,4 +175,5 @@ for INPUT_DIR in $(find proto -maxdepth 3 -mindepth 1 -type d); do
     
     generate_ts "$INPUT_DIR" "ts/$module" "$module" "common"
     generate_js "$INPUT_DIR" "js/$module" "$module" "common"
+    generate_protocol_map "$INPUT_DIR" "proto/$module/protocol_map.json"
 done

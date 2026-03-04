@@ -2,5 +2,17 @@
     "CKickPlayer": {
         "method": "POST",
         "uri": "/gate/gate/kick_player"
+    },
+    "CKickGamePlayers": {
+        "method": "POST",
+        "uri": "/gate/gate/kick_game_players"
+    },
+    "CBroadcastMessage": {
+        "method": "POST",
+        "uri": "/gate/gate/broadcast_message"
+    },
+    "CBroadcastGameMessage": {
+        "method": "POST",
+        "uri": "/gate/gate/broadcast_game_message"
     }
 }
