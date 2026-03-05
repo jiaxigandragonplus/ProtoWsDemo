@@ -2,40 +2,52 @@
  * 测试客户端
  * 用于测试 Gate 服务器的登录协议和回显协议
  * 使用 WebsocketMessage 格式发送消息
+ * 基于 framework/network/WsClient 实现
  */
 
-import WebSocket from 'ws';
-import * as path from 'path';
-import * as commonProto from '../protobuf/js/common/common';
-import * as gameProto from '../protobuf/js/game/game';
+import { WsClient, WsClientConfig } from '../framework/network/WsClient';
+import { ProtoLoader } from '../gate/ProtoLoader';
 
 class TestClient {
-    private ws: WebSocket;
+    private client: WsClient;
 
     constructor(url: string) {
-        this.ws = new WebSocket(url);
+        const config: WsClientConfig = {
+            url,
+            reconnectInterval: 3000,
+            maxReconnectAttempts: 3,
+            pingInterval: 30000
+        };
+        this.client = new WsClient(config);
         this.setupHandlers();
     }
 
     /**
-     * 设置 WebSocket 事件处理
+     * 设置事件处理
      */
     private setupHandlers(): void {
-        this.ws.on('open', () => {
+        this.client.on('open', () => {
             console.log('已连接到服务器');
         });
 
-        this.ws.on('message', (data: Buffer) => {
+        this.client.on('message', (data: Buffer) => {
             this.handleMessage(data);
         });
 
-        this.ws.on('close', () => {
+        this.client.on('close', () => {
             console.log('连接已关闭');
         });
 
-        this.ws.on('error', (error: Error) => {
+        this.client.on('error', (error: Error) => {
             console.error('连接错误:', error);
         });
+    }
+
+    /**
+     * 连接到服务器
+     */
+    async connect(): Promise<void> {
+        await this.client.connect();
     }
 
     /**
@@ -47,33 +59,37 @@ class TestClient {
             const uint8Data = new Uint8Array(data);
             
             // 使用 PBPackage 解析
-            const pbPackage = commonProto.common.PBPackage.decode(uint8Data) as any;
+            const pbPackageType = ProtoLoader.PBPackage;
+            const pbPackage = pbPackageType.decode(uint8Data) as any;
             
-            const messageType = pbPackage.messageType as string;
-            const messagePayload = new Uint8Array(pbPackage.messagePayload as ArrayBuffer);
+            const messageType = pbPackage.message_type as string;
+            const messagePayload = new Uint8Array(pbPackage.message_payload as ArrayBuffer);
             
             console.log(`收到消息 - messageType: ${messageType}`);
             
             // 再次解析 WebsocketMessage
-            const wsMessage = commonProto.common.WebsocketMessage.decode(messagePayload) as any;
+            const wsMessageType = ProtoLoader.WebsocketMessage;
+            const wsMessage = wsMessageType.decode(messagePayload) as any;
             
-            const innerMessageType = wsMessage.messageType as string;
-            const innerPayload = new Uint8Array(wsMessage.messagePayload as ArrayBuffer);
+            const innerMessageType = wsMessage.message_type as string;
+            const innerPayload = new Uint8Array(wsMessage.message_payload as ArrayBuffer);
             
             console.log(`WebsocketMessage - messageType: ${innerMessageType}`);
             
             // 根据消息类型处理
             switch (innerMessageType) {
                 case 'SLogin':
-                    const loginResponse = gameProto.game.SLogin.decode(innerPayload) as any;
-                    console.log(`收到登录响应 - 玩家 ID: ${loginResponse.playerId}`);
+                    const loginResponseType = ProtoLoader.SLogin;
+                    const loginResponse = loginResponseType.decode(innerPayload) as any;
+                    console.log(`收到登录响应 - 玩家 ID: ${loginResponse.player_id}`);
                     
                     // 登录成功后发送回显消息
                     setTimeout(() => this.sendEcho('Hello, Gate Server!'), 1000);
                     break;
 
                 case 'SEcho':
-                    const echoResponse = gameProto.game.SEcho.decode(innerPayload) as any;
+                    const echoResponseType = ProtoLoader.SEcho;
+                    const echoResponse = echoResponseType.decode(innerPayload) as any;
                     console.log(`收到回显响应 - 消息：${echoResponse.msg}`);
                     
                     // 测试完成，关闭连接
@@ -95,29 +111,32 @@ class TestClient {
      */
     sendLogin(name: string, password: string): void {
         // 编码 CLogin 消息
-        const loginRequest = gameProto.game.CLogin.create({ name, password });
-        const loginEncoded = gameProto.game.CLogin.encode(loginRequest).finish();
+        const cloginType = ProtoLoader.CLogin;
+        const loginRequest = cloginType.create({ name, password });
+        const loginEncoded = cloginType.encode(loginRequest).finish();
 
         // 创建 WebsocketMessage
-        const wsMessage = commonProto.common.WebsocketMessage.create({
+        const wsMessageType = ProtoLoader.WebsocketMessage;
+        const wsMessage = wsMessageType.create({
             uri: '/game/game/login',
             method: 'POST',
-            messageType: 'CLogin',
-            messagePayload: loginEncoded,
+            message_type: 'CLogin',
+            message_payload: loginEncoded,
             uuid: '',
             errno: 0,
             errmsg: ''
         });
-        const wsEncoded = commonProto.common.WebsocketMessage.encode(wsMessage).finish();
+        const wsEncoded = wsMessageType.encode(wsMessage).finish();
 
         // 使用 PBPackage 包装
-        const pbPackage = commonProto.common.PBPackage.create({
-            messageType: 'CLogin',
-            messagePayload: wsEncoded
+        const pbPackageType = ProtoLoader.PBPackage;
+        const pbPackage = pbPackageType.create({
+            message_type: 'CLogin',
+            message_payload: wsEncoded
         });
-        const pbEncoded = commonProto.common.PBPackage.encode(pbPackage).finish();
+        const pbEncoded = pbPackageType.encode(pbPackage).finish();
 
-        this.ws.send(pbEncoded);
+        this.client.send(Buffer.from(pbEncoded));
         console.log(`发送登录请求 - 用户名：${name}`);
     }
 
@@ -127,37 +146,40 @@ class TestClient {
      */
     sendEcho(msg: string): void {
         // 编码 CEcho 消息
-        const echoRequest = gameProto.game.CEcho.create({ msg });
-        const echoEncoded = gameProto.game.CEcho.encode(echoRequest).finish();
+        const cechoType = ProtoLoader.CEcho;
+        const echoRequest = cechoType.create({ msg });
+        const echoEncoded = cechoType.encode(echoRequest).finish();
 
         // 创建 WebsocketMessage
-        const wsMessage = commonProto.common.WebsocketMessage.create({
+        const wsMessageType = ProtoLoader.WebsocketMessage;
+        const wsMessage = wsMessageType.create({
             uri: '/game/game/echo',
             method: 'POST',
-            messageType: 'CEcho',
-            messagePayload: echoEncoded,
+            message_type: 'CEcho',
+            message_payload: echoEncoded,
             uuid: '',
             errno: 0,
             errmsg: ''
         });
-        const wsEncoded = commonProto.common.WebsocketMessage.encode(wsMessage).finish();
+        const wsEncoded = wsMessageType.encode(wsMessage).finish();
 
         // 使用 PBPackage 包装
-        const pbPackage = commonProto.common.PBPackage.create({
-            messageType: 'CEcho',
-            messagePayload: wsEncoded
+        const pbPackageType = ProtoLoader.PBPackage;
+        const pbPackage = pbPackageType.create({
+            message_type: 'CEcho',
+            message_payload: wsEncoded
         });
-        const pbEncoded = commonProto.common.PBPackage.encode(pbPackage).finish();
+        const pbEncoded = pbPackageType.encode(pbPackage).finish();
 
-        this.ws.send(pbEncoded);
+        this.client.send(Buffer.from(pbEncoded));
         console.log(`发送回显请求 - 消息：${msg}`);
     }
 
     /**
      * 关闭连接
      */
-    close(): void {
-        this.ws.close();
+    async close(): Promise<void> {
+        await this.client.close();
     }
 }
 
@@ -165,7 +187,13 @@ class TestClient {
  * 启动测试
  */
 async function startTest(): Promise<void> {
-    const client = new TestClient('ws://localhost:8080');
+    // 先加载 proto 文件
+    ProtoLoader.loadProtoSync();
+    
+    // 连接到 Gate 服务器（端口 = 配置端口 8080 + SERVER_ID 1 = 8081）
+    const client = new TestClient('ws://localhost:8081');
+    
+    await client.connect();
     
     // 等待连接建立
     setTimeout(() => {
