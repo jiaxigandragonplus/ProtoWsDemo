@@ -6,8 +6,8 @@
 
 import WebSocket from 'ws';
 import * as path from 'path';
-import * as commonProto from '../../protobuf/js/common/common';
-import * as gameProto from '../../protobuf/js/game/game';
+import * as commonProto from '../protobuf/js/common/common';
+import * as gameProto from '../protobuf/js/game/game';
 
 class TestClient {
     private ws: WebSocket;
