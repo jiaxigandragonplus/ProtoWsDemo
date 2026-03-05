@@ -30,6 +30,7 @@ export class Framework {
   private serviceDiscovery: ServiceDiscovery | null = null;
   private isInitialized: boolean = false;
   private isRunning: boolean = false;
+  protected serverId: number = 0;
 
   private constructor() {
     this.configManager = ConfigManager.getInstance();
@@ -92,6 +93,13 @@ export class Framework {
       return;
     }
 
+    // 从环境变量里面读取服务器id
+    this.serverId = parseInt(process.env.SERVER_ID);
+    if (isNaN(this.serverId)) {
+      this.logger.fatal('SERVER_ID 环境变量未设置或无效');
+      process.exit(1);
+    }
+
     // 加载配置
     if (config.configPath) {
       this.configManager.load(config.configPath);
@@ -151,7 +159,7 @@ export class Framework {
             serviceName: discoveryConfig.serviceName,
             instanceId: this.generateInstanceId(),
             host: serverConfig.host,
-            port: serverConfig.port,
+            port: serverConfig.port + this.serverId, // 端口号计算
             heartbeatInterval: discoveryConfig.heartbeatInterval,
             discoveryInterval: discoveryConfig.discoveryInterval,
             instanceTimeout: discoveryConfig.heartbeatInterval * 6,
