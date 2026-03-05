@@ -1,14 +1,14 @@
 syntax = "proto3";
 package battle;
 
-import "battle_common.proto";
-import "item_common.proto";
+import "common/battle_data.proto";
+import "common/item_data.proto";
 
 // 发送命令
 message CSendCommand {
     int64 inst_id = 1;  // 卡牌实例id
     int32 card = 2; // 卡牌模板id
-    repeated RouteInfo routes = 3;  // 路线  
+    repeated common.RouteInfo routes = 3;  // 路线  
 }
 message SSendCommand {
 
@@ -56,7 +56,7 @@ message CGetLocalWinAwards {
 
 }
 message SGetLocalWinAwards {
-    repeated Reward awards = 1;
+    repeated common.Reward awards = 1;
 }
 
 // 检查是否在战斗中
@@ -64,7 +64,7 @@ message CCheckIsInBattle {
 
 }
 message SCheckIsInBattle {
-    BattleFieldData replay_data = 1;
+    common.BattleFieldData replay_data = 1;
 }
 
 // 请求从当前帧开始之后的最新帧数据，用于在战斗中断线重连
@@ -73,7 +73,7 @@ message CRequestFrameData {
 }
 message SRequestFrameData {
     int32 cur_frame = 1;
-    map<int32, FrameData> frame_data = 2;
+    map<int32, common.FrameData> frame_data = 2;
 }
 
 // 战斗推送消息

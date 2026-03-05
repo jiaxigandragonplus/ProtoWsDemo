@@ -1,3 +1,103 @@
 syntax = "proto3";
 package game;
 // 冒险协议
+
+import "common/player_data.proto";
+import "common/item_data.proto";
+
+// 开始探索
+message CStartExplore {
+
+}
+message SStartExplore {
+    int64 start_time = 1;
+    int64 cost_time = 2;
+    repeated common.AdventureTeamInfo teams = 3;
+}
+
+// 停止探索
+message CStopExplore {
+
+}
+message SStopExplore {
+    int64 start_time = 1;
+}
+
+// 前往区域
+message CGotoArea {
+    int32 id = 1;
+}
+message SGotoArea {
+    int32 move_start_point = 1;
+    int32 target = 2;
+    int64 move_start_time = 3;
+}
+
+// 触发事件
+message CTriggerEvent {
+
+}
+message STriggerEvent {
+    int32 event_count = 1;
+    int32 id = 2;
+}
+
+// 派遣英雄
+message CSendHero {
+    int32 card_id = 1;
+    int32 index = 2;
+}
+message SSendHero {
+    repeated int32 slots = 1;
+}
+
+// 设置工具
+message CSetTools {
+    int32 id = 1;
+}
+message SSetTools {
+
+}
+
+// 领取一次性奖励
+message CClaimOnceAward {
+    int32 index = 1;
+}
+message SClaimOnceAward {
+    repeated common.Reward awards = 1;
+}
+
+// 切换探险队伍
+message CSwitchTeam {
+    int32 team_id = 1;
+}
+message SSwitchTeam {
+
+}
+
+// 购买探险工具
+message CBuyTools {
+    int32 id = 1;
+}
+message SBuyTools {
+    repeated common.Reward costs = 1;
+}
+
+// 区域升级
+message CUpgradeArea {
+    int32 area_id = 1;
+}
+message SUpgradeArea {
+    repeated common.Reward costs = 1;
+    repeated common.Reward awards = 2;
+    int32 level = 3;
+}
+
+// 领取区域升级奖励
+message CClaimAreaUpgradeAward {
+    int32 area_id = 1;
+    int32 level = 2;
+}
+message SClaimAreaUpgradeAward {
+    repeated common.Reward awards = 1;
+}

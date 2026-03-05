@@ -1,0 +1,42 @@
+syntax = "proto3";
+package game;
+
+import "common/item_data.proto";
+
+// 使用道具
+message CUseBagItem {
+    int32 id = 1;
+    int32 num = 2;
+}
+message SUseBagItem {
+    repeated common.Reward awards = 1;
+    repeated common.Reward costs = 2;
+}
+
+// 出售背包道具
+message CSellBagItem {
+    int32 id = 1;
+    int32 num = 2;
+}
+message SSellBagItem {
+    repeated common.Reward awards = 1;
+    repeated common.Reward costs = 2;
+}
+
+// 扩展装备背包格子
+message CExtendEquipBag {
+
+}
+message SExtendEquipBag {
+    repeated common.Reward costs = 1;
+}
+
+// 分解装备
+message CDecomposeEquip {
+    repeated int64 eids = 1;
+    int32 quality = 2;
+}
+message SDecomposeEquip {
+    repeated common.Reward awards = 1;
+    repeated common.Reward costs = 2;
+}

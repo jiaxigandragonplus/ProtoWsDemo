@@ -86,8 +86,8 @@ message CUpgradeHero {
 }
 message SUpgradeHero {
     int32 new_level = 1;    // 新的等级
-    repeated Reward costs = 2;  // 消耗
-    repeated Reward awards = 3; // 获得
+    repeated common.Reward costs = 2;  // 消耗
+    repeated common.Reward awards = 3; // 获得
 }
 
 // 英雄换肤

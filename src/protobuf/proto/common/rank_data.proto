@@ -1,2 +1,23 @@
 syntax = "proto3";
 package common;
+
+// 排行榜类型
+enum RankType {
+    RANK_TYPE_UNKNOWN = 0;
+
+    GLOBAL_LEAGUE_CUR_CUPS = 1001;         // 本届联赛杯数全球榜
+    GLOBAL_LEAGUE_LAST_CUPS = 1002;        // 上届联赛杯数全球榜
+    GLOBAL_GUILD_CUPS = 1003;               // 公会杯数全球榜
+
+    LOCAL_LEAGUE_CUR_CUPS = 2001;           // 本届联赛杯数地区榜
+    LOCAL_LEAGUE_LAST_CUPS = 2002;          // 上届联赛杯数地区榜
+    LOCAL_GUILD_CUPS = 2003;                // 公会杯数地区榜
+}
+
+message RankNodeInfo {
+    string node_id = 1;
+    uint32 score = 2;
+    uint32 rank = 3;
+    string extra = 4;
+    uint64 updated_at = 5;
+}

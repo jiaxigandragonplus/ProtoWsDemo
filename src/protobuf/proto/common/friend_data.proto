@@ -1,2 +1,31 @@
 syntax = "proto3";
 package common;
+
+
+message FriendGuildInfo {
+    string gid = 1;     // 公会id
+    string name = 2;    // 公会名称
+    int32 flag = 3;     // 公会旗帜
+    string type = 4;    // 成员类型
+}
+
+message FriendUserInfo {
+    string uid = 1;         // 玩家id
+    string name = 2;        // 名称
+    string avatar = 3;      // 头像
+    string country = 4;     // 国家
+    int32 level = 5;        // 等级
+    int32 online = 6;       // 在线状态
+    FriendGuildInfo guild = 7;    // 公会数据
+    string extra = 8;         // 扩展数据
+}
+
+message ApplyInfo {
+    string uid = 1;
+    string name = 2;
+    string avatar = 3;
+    string country = 4;
+    int32 level = 5;
+    FriendGuildInfo guild = 6;
+    string extra = 7;
+}

@@ -1,2 +1,141 @@
 syntax = "proto3";
 package game;
+
+import "common/item_data.proto";
+
+message CEcho {
+    string text = 1;
+}
+message SEcho {
+    string text = 1;
+}
+
+// 添加装备
+message CDebugAddEquip {
+    int32 id = 1;
+    int32 num = 2;
+}
+message SDebugAddEquip {
+    repeated common.Reward awards = 1;
+}
+
+// 添加道具
+message CDebugAddItem {
+    int32 id = 1;
+    int32 num = 2;
+}
+message SDebugAddItem {
+    repeated common.Reward awards = 1;
+}
+
+// 添加卡牌
+message CDebugAddCard {
+    int32 id = 1;
+    int32 num = 2;
+    bool tradable = 3;  // 是否可交易
+}
+message SDebugAddCard {
+    repeated common.Reward awards = 1;
+}
+
+// 修改杯数
+message CDebugAddCups {
+    int32 cups = 1;
+}
+message SDebugAddCups {
+
+}
+
+// 增加经验
+message CDebugAddExp {
+    int32 exp = 1;
+}
+message SDebugAddExp {
+
+}
+
+// 增加钻石
+message CDebugAddCash {
+    int32 val = 1;
+}
+message SDebugAddCash {
+
+}
+
+// 添加宝箱
+message CDebugAddBox {
+    int32 box_id = 1;
+    int32 num = 2;
+}
+message SDebugAddBox {
+    repeated common.Reward awards = 1;
+}
+
+// 添加书页
+message CDebugAddPages {
+    int32 pages = 1;
+}
+message SDebugAddPages {
+
+}
+
+// 添加糖果
+message CDebugAddCandy {
+    int32 val = 1;
+}
+message SDebugAddCandy {
+
+}
+
+// 触发冒险事件
+message CDebugTriggerEvent {
+    int32 id = 1;   // 事件id
+    int32 tool = 2;
+    int32 team_id = 3;
+}
+message SDebugTriggerEvent {
+
+}
+
+// 修改交易余额
+message CDebugSetTradingBalance {
+
+}
+message SDebugSetTradingBalance {
+
+}
+
+// 添加漂流瓶
+message CDebugAddDriftBottle {
+    int32 id = 1;
+    int32 num = 2;
+}
+message SDebugAddDriftBottle {
+    repeated common.Reward awards = 1;
+}
+
+// 添加拼图
+message CDebugAddPuzzlePiece {
+    int32 id = 1;
+    int32 num = 2;
+}
+message SDebugAddPuzzlePiece {
+    repeated common.Reward awards = 1;
+}
+
+// 添加收藏品
+message CDebugAddCollection {
+    int32 id = 1;
+    int32 num = 2;
+}
+message SDebugAddCollection {
+    repeated common.Reward awards = 1;
+}
+
+// 增加冒险进度
+message CDebugAddAdventureProgress {
+    int32 val = 1;
+}
+message SDebugAddAdventureProgress {
+
+}

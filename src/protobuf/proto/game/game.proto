@@ -3,25 +3,6 @@ package game;
 
 import "common/enum.proto";
 
-// 登录协议
-message CLogin {
-    string name = 1;
-    string password = 2;
-}
-
-message SLogin {
-    int64 player_id = 1;
-}
-
-// 回显协议
-message CEcho {
-    string msg = 1;
-}
-
-message SEcho {
-    string msg = 1;
-}
-
 // 踢出指定玩家
 message CKickPlayers {
     repeated int64 player_ids = 1;

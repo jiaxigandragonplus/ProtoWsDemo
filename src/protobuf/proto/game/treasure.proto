@@ -11,8 +11,8 @@ message CUnlockTreatureBox {
 }
 message SUnlockTreatureBox {
     int64 time = 1; // 开始时间
-    repeated Reward awards = 2;
-    repeated Reward costs = 3;
+    repeated common.Reward awards = 2;
+    repeated common.Reward costs = 3;
 }
 
 // 开启宝箱
@@ -21,8 +21,8 @@ message COpenTreatureBox {
     bool use_cash = 2;
 }
 message SOpenTreatureBox {
-    repeated Reward awards = 1;
-    repeated Reward costs = 2;
+    repeated common.Reward awards = 1;
+    repeated common.Reward costs = 2;
 }
 
 // 宝箱加速

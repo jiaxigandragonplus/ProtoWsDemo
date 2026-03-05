@@ -1,2 +1,28 @@
 syntax = "proto3";
 package game;
+
+import "common/battle_data.proto";
+
+// 获取最近一次胜利的战报
+message CGetLastWinData {
+
+}
+message SGetLastWinData {
+
+}
+
+// 获取战报列表
+message CGetReplayList {
+
+}
+message SGetReplayList {
+
+}
+
+// 获取指定战报
+message CGetReplay {
+    string key = 1; // 战报id
+}
+message SGetReplay {
+    common.ReplayData replay = 1;
+}
