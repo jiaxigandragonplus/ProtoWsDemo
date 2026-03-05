@@ -1,0 +1,31 @@
+syntax = "proto3";
+package game;
+
+import "common/item_data.proto";
+
+// 领取奖励
+message CClaimFairyThemeReward {
+    int32 level = 1;
+    bool special = 2;
+}
+message SClaimFairyThemeReward {
+    repeated common.Reward awards = 1;
+}
+
+// 开启特殊篇幅
+message COpenSpecialFairyTheme {
+
+}
+message SOpenSpecialFairyTheme {
+    repeated common.Reward costs = 1;
+}
+
+// 购买书页
+message CBuyPages {
+
+}
+message SBuyPages {
+    repeated common.Reward costs = 1;
+    repeated common.Reward awards = 2;
+    int32 level = 3;
+}

@@ -1,0 +1,120 @@
+syntax = "proto3";
+package game;
+
+import "common/trading_data.proto";
+
+// 上架商品
+message CPutOnSale {
+    int32 item_id = 1;         // 商品id
+    string item_type = 2;      // 商品类型
+    string item_tag = 3;       // 商品标签
+    int32 item_count = 4;      // 商品数量
+    int32 item_price = 5;      // 价格
+    int32 publicity_time = 11;  // 公示时间
+}
+message SPutOnSale {
+    common.SaleItemInfo sale_info = 1;
+}
+
+// 下架商品
+message CTakeSaleOff {
+    int64 item_uuid = 1;   // 商品唯一id
+}
+message STakeSaleOff {
+    common.StorageItemInfo storage_item = 1;  // 下架后先到仓库
+}
+
+// 获取自己的仓库信息
+message CGetMyStorage {
+
+}
+message SGetMyStorage {
+    repeated common.StorageItemInfo item_list = 1;   // 商品列表
+    common.WalletInfo wallet_info = 2; // 钱包数据
+}
+
+// 查询可购买的物品
+message CQuerySales {
+    string item_type = 1;   // 商品类型
+    int32 item_id = 2;  // 商品id
+    int32 offset = 3;   // 开始位置
+    int32 limit = 4;    // 数量
+}
+message SQuerySales {
+    repeated common.SaleItemInfo sales = 1;
+}
+
+message CQueryGoods {
+    string item_type = 1;   // 商品类型
+    int32 offset = 2;   // 开始位置
+    int32 limit = 3;    // 数量
+}
+message SQueryGoods {
+    repeated common.GoodsInfo goods_list = 1;
+}
+
+// 获取自身已上架商品
+message CGetMySales {
+}
+message SGetMySales {
+    repeated common.SaleItemInfo sales = 1;
+}
+
+// 购买商品
+message CPurchaseItem {
+    int64 sale_id = 1;      // 商品id
+    int32 count = 2;        // 购买数量
+}
+message SPurchaseItem {
+    common.StorageItemInfo storage_item = 1;  // 购买成功的商品
+}
+
+// 获取交易记录
+message CGetRecords {
+
+}
+message SGetRecords {
+    repeated common.SaleRecordInfo records = 1;
+}
+
+// 收藏商品
+message CMarkSale {
+    int64 sale_id = 1;      // 商品id
+    bool cancel = 2;        // 是否取消收藏
+}
+message SMarkSale {
+    int64 sale_id = 1;
+}
+
+// 获取我的收藏
+message CGetMyMarkedSales {
+    
+}
+message SGetMyMarkedSales {
+    repeated common.SaleItemInfo sales = 1;
+}
+
+message CMarkGoods {
+    string item_type = 1;       // 商品类型
+    int32 item_id = 2;          // 商品id
+    bool cancel = 3;        // 是否取消收藏
+}
+message SMarkGoods {
+    string goods_key = 1;
+}
+
+// 获取我的收藏
+message CGetMyMarkedGoods {
+    repeated string goods_key = 1;
+}
+message SGetMyMarkedGoods {
+    repeated common.GoodsInfo goods_list = 1;
+}
+
+// 获取商品推荐价格
+message CGetRecommandPrice {
+    int32 item_id = 1;
+}
+message SGetRecommandPrice {
+    int32 price = 1;
+}

@@ -1,0 +1,61 @@
+syntax = "proto3";
+package common;
+
+// 出售物品状态
+enum SaleItemStatus {
+    SALE_ITEM_STATE_UNKNOWN = 0;
+    SALE_ITEM_STATE_PUBLICITY = 1;      // 公示期
+    SALE_ITEM_STATE_TRADING = 2;        // 交易期
+    SALE_ITEM_STATE_VERIFY = 3;         // 审核期
+    SALE_ITEM_STATE_CLAIM = 4;          // 可领取
+    SALE_ITEM_STATE_EXPIRE = 5;         // 超时
+}
+
+// 记录类型，出售还是购买
+enum SaleRecordType {
+    SALE_RECORD_TYPE_SALE = 0;  // 出售
+    SALE_RECORD_TYPE_BUY = 1;   // 购买
+}
+
+message StorageItemInfo {
+    int64 item_uuid = 1;        // 商品唯一id
+    int32 item_id = 2;          // 商品id
+    string item_type = 3;       // 商品类型
+    string item_tag = 4;        // 商品标签
+    int32 item_count = 5;       // 商品数量
+}
+
+message SaleItemInfo {
+    int64 sale_id = 1;      // 商品唯一id
+    int32 item_id = 2;      // 商品id
+    string item_type = 3;   // 商品类型
+    string item_tag = 4;    // 商品标签
+    int32 item_count = 5;   // 商品数量
+    int32 status = 6;       // 商品状态
+    int64 create_at = 7;    // 上架时间
+    int32 price = 8;        // 价格
+    int32 mark_count = 9;   // 收藏数
+    string saler_id = 10;   // 卖家id
+    int32 publicity_time = 11;  // 公示时间
+}
+
+message SaleRecordInfo {
+    SaleRecordType record_type = 1; // 记录类型
+    int32 item_id = 2;      // 交易的物品id
+    int32 item_count = 3;   // 交易数量
+    int32 item_price = 4;   // 价格
+    int64 timestamp = 5;    // 时间戳
+    string item_type = 6; 
+}
+
+// 钱包数据
+message WalletInfo {
+    int32 balance = 1;  // 余额
+}
+
+message GoodsInfo {
+    string item_type = 1;
+    int32 item_id = 2;
+    int32 item_count = 3;
+    int32 mark_count = 4;
+}

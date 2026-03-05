@@ -1,0 +1,14 @@
+syntax = "proto3";
+package game;
+
+import "common/item_data.proto";
+
+// 领取联赛奖励
+message CClaimLeagueReward {
+    int32 level = 1;
+    int32 id = 2;
+    int32 index = 3;
+}
+message SClaimLeagueReward {
+    repeated common.Reward awards = 1;
+}
