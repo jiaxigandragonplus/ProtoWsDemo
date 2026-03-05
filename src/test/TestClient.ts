@@ -7,6 +7,7 @@
 
 import { WsClient, WsClientConfig } from '../framework/network/WsClient';
 import { ProtoLoader } from '../gate/ProtoLoader';
+import { generateUUID } from '../framework/utils/uuid';
 
 class TestClient {
     private client: WsClient;
@@ -122,21 +123,13 @@ class TestClient {
             method: 'POST',
             message_type: 'CLogin',
             message_payload: loginEncoded,
-            uuid: '',
+            uuid: generateUUID(),
             errno: 0,
             errmsg: ''
         });
         const wsEncoded = wsMessageType.encode(wsMessage).finish();
 
-        // 使用 PBPackage 包装
-        const pbPackageType = ProtoLoader.PBPackage;
-        const pbPackage = pbPackageType.create({
-            message_type: 'CLogin',
-            message_payload: wsEncoded
-        });
-        const pbEncoded = pbPackageType.encode(pbPackage).finish();
-
-        this.client.send(Buffer.from(pbEncoded));
+        this.client.send(Buffer.from(wsEncoded));
         console.log(`发送登录请求 - 用户名：${name}`);
     }
 
@@ -157,21 +150,13 @@ class TestClient {
             method: 'POST',
             message_type: 'CEcho',
             message_payload: echoEncoded,
-            uuid: '',
+            uuid: generateUUID(),
             errno: 0,
             errmsg: ''
         });
         const wsEncoded = wsMessageType.encode(wsMessage).finish();
 
-        // 使用 PBPackage 包装
-        const pbPackageType = ProtoLoader.PBPackage;
-        const pbPackage = pbPackageType.create({
-            message_type: 'CEcho',
-            message_payload: wsEncoded
-        });
-        const pbEncoded = pbPackageType.encode(pbPackage).finish();
-
-        this.client.send(Buffer.from(pbEncoded));
+        this.client.send(Buffer.from(wsEncoded));
         console.log(`发送回显请求 - 消息：${msg}`);
     }
 
