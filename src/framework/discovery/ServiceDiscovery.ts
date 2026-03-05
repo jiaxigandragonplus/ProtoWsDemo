@@ -55,8 +55,8 @@ export class ServiceDiscovery {
   private currentInstances: ServiceInstance[] = [];
 
   // Redis key 前缀
-  private static readonly SERVICE_KEY_PREFIX = 'discovery:services:';
-  private static readonly SERVICE_INSTANCE_KEY = 'discovery:instance:';
+  private static readonly SERVICE_KEY_PREFIX = 'services';
+  private static readonly SERVICE_INSTANCE_KEY = 'instance';
 
   constructor(redisClient: RedisClient, config: DiscoveryConfig, logger?: Logger) {
     this.redisClient = redisClient;
@@ -67,15 +67,19 @@ export class ServiceDiscovery {
   /**
    * 生成服务 zSet 的 key
    */
-  private getServiceKey(serviceName: string): string {
-    return `${ServiceDiscovery.SERVICE_KEY_PREFIX}${serviceName}`;
+  private getServiceKey(): string {
+    return `${ServiceDiscovery.SERVICE_KEY_PREFIX}`;
   }
 
   /**
    * 生成服务实例数据的 key
    */
-  private getInstanceKey(serviceName: string, instanceId: string): string {
-    return `${this.getServiceKey(serviceName)}:${ServiceDiscovery.SERVICE_INSTANCE_KEY}${instanceId}`;
+  private getInstanceKey(instanceId: string): string {
+    return `${this.getServiceKey()}:${ServiceDiscovery.SERVICE_INSTANCE_KEY}:${instanceId}`;
+  }
+
+  private getDiscoveryKey() : string {
+    return 'discovery:';
   }
 
   /**
@@ -104,8 +108,8 @@ export class ServiceDiscovery {
    * 注册自己到服务列表
    */
   private async registerSelf(): Promise<void> {
-    const serviceKey = this.getServiceKey(this.config.serviceName);
-    const instanceKey = this.getInstanceKey(this.config.serviceName, this.config.instanceId);
+    const serviceKey = this.getServiceKey();
+    const instanceKey = this.getInstanceKey(this.config.instanceId);
     const now = Date.now();
 
     // 存储实例详细信息
@@ -150,14 +154,14 @@ export class ServiceDiscovery {
    * 心跳
    */
   private async heartbeat(): Promise<void> {
-    const serviceKey = this.getServiceKey(this.config.serviceName);
+    const serviceKey = this.getServiceKey();
     const now = Date.now();
 
     // 更新 zSet 中的分数
     await this.redisClient.zadd(serviceKey, now, this.config.instanceId);
 
     // 更新实例信息中的最后心跳时间
-    const instanceKey = this.getInstanceKey(this.config.serviceName, this.config.instanceId);
+    const instanceKey = this.getInstanceKey(this.config.instanceId);
     const instanceData = await this.redisClient.get(instanceKey);
     
     if (instanceData) {
@@ -190,7 +194,7 @@ export class ServiceDiscovery {
    * 发现服务
    */
   private async discoverServices(): Promise<void> {
-    const serviceKey = this.getServiceKey(this.config.serviceName);
+    const serviceKey = this.getServiceKey();
     const now = Date.now();
     const timeout = this.config.instanceTimeout || 30000;
 
@@ -212,7 +216,7 @@ export class ServiceDiscovery {
       }
 
       // 获取实例详细信息
-      const instanceKey = this.getInstanceKey(this.config.serviceName, instanceId);
+      const instanceKey = this.getInstanceKey(instanceId);
       const instanceData = await this.redisClient.get(instanceKey);
       
       if (instanceData) {
@@ -225,7 +229,7 @@ export class ServiceDiscovery {
     // 清理超时实例
     for (const instanceId of expiredInstanceIds) {
       await this.redisClient.zrem(serviceKey, instanceId);
-      const instanceKey = this.getInstanceKey(this.config.serviceName, instanceId);
+      const instanceKey = this.getInstanceKey(instanceId);
       await this.redisClient.del(instanceKey);
       this.logger.info(`移除超时服务实例：${instanceId}`, 'ServiceDiscovery');
     }
@@ -392,8 +396,8 @@ export class ServiceDiscovery {
    */
   private async unregisterSelf(): Promise<void> {
     try {
-      const serviceKey = this.getServiceKey(this.config.serviceName);
-      const instanceKey = this.getInstanceKey(this.config.serviceName, this.config.instanceId);
+      const serviceKey = this.getServiceKey();
+      const instanceKey = this.getInstanceKey(this.config.instanceId);
 
       await this.redisClient.zrem(serviceKey, this.config.instanceId);
       await this.redisClient.del(instanceKey);
