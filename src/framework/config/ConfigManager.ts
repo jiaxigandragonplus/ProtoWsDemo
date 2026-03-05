@@ -83,7 +83,7 @@ export class ConfigManager {
    */
   public load(configPath: string): void {
     this.configPath = configPath;
-    const absolutePath = path.resolve(configPath);
+    let absolutePath = path.resolve("dist", configPath);
     
     if (!fs.existsSync(absolutePath)) {
       throw new Error(`配置文件不存在：${absolutePath}`);

@@ -19,9 +19,11 @@ export class GameServer {
     private config: GameConfig;
     private framework: Framework;
     private isRunning: boolean = false;
+    private serverId: number = 0;
 
-    constructor(config: GameConfig) {
+    constructor(config: GameConfig, serverId: number) {
         this.config = config;
+        this.serverId = serverId;
         this.framework = getFramework();
         
         // 同步加载 proto 文件
@@ -41,7 +43,7 @@ export class GameServer {
         logger.info('Game 服务器启动中...', 'GameServer');
 
         // 初始化框架
-        await this.framework.init({
+        await this.framework.init(this.serverId,{
             configPath: `config/${process.env.NODE_ENV || 'local'}/game.json`
         });
 
@@ -71,7 +73,7 @@ export class GameServer {
         }
 
         this.isRunning = true;
-        logger.info(`[GameServer] Game 服务器已启动 - 监听 ${this.config.host}:${this.config.port}`, 'GameServer');
+        logger.info(`[GameServer] Game 服务器已启动 - 监听 ${this.config.host}:${this.config.port + this.serverId}`, 'GameServer');
     }
 
     /**
@@ -115,9 +117,16 @@ export class GameServer {
 async function startGame(): Promise<void> {
     const env = process.env.NODE_ENV || 'local';
     const configPath = `config/${env}/game.json`;
+
+    // 从环境变量里面读取服务器id
+    const serverId = parseInt(process.env.SERVER_ID);
+    if (isNaN(serverId)) {
+      console.error('SERVER_ID 环境变量未设置或无效');
+      process.exit(1);
+    }
     
     const framework = getFramework();
-    await framework.init({ configPath });
+    await framework.init(serverId, { configPath });
     
     const config = framework.getConfigManager().getAllConfig();
     
@@ -126,7 +135,7 @@ async function startGame(): Promise<void> {
         host: config.server.host
     };
 
-    const gameServer = new GameServer(gameConfig);
+    const gameServer = new GameServer(gameConfig, serverId);
 
     // 处理进程退出
     process.on('SIGINT', async () => {

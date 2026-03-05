@@ -33,15 +33,17 @@ export class GateServer {
     private config: GateConfig;
     private framework: Framework;
     private isRunning: boolean = false;
+    private serverId: number = 0;
     
     // 游戏服务器连接池，key 为服务实例 ID
     private gameConnections: Map<string, GameServerConnection> = new Map();
     // 当前会话到游戏服务器的路由映射，key 为 sessionId (number 类型)
     private sessionRoutes: Map<number, string> = new Map();
 
-    constructor(config: GateConfig) {
+    constructor(config: GateConfig, serverId: number) {
         this.config = config;
         this.framework = getFramework();
+        this.serverId = serverId;
         
         // 同步加载 proto 文件
         ProtoLoader.loadProtoSync();
@@ -63,7 +65,7 @@ export class GateServer {
         logger.info('Gate 服务器启动中...', 'GateServer');
 
         // 初始化框架
-        await this.framework.init({
+        await this.framework.init(this.serverId, {
             configPath: `config/${process.env.NODE_ENV || 'local'}/gate.json`
         });
 
@@ -92,7 +94,8 @@ export class GateServer {
         }
 
         this.isRunning = true;
-        logger.info(`Gate 服务器已启动 - 监听 ${this.config.host}:${this.config.port}`, 'GateServer');
+
+        logger.info(`Gate 服务器已启动 - 监听 ${this.config.host}:${this.config.port + this.serverId}`, 'GateServer');
     }
 
     /**
@@ -442,9 +445,16 @@ export class GateServer {
 async function startGate(): Promise<void> {
     const env = process.env.NODE_ENV || 'local';
     const configPath = `config/${env}/gate.json`;
+
+    // 从环境变量里面读取服务器id
+    const serverId = parseInt(process.env.SERVER_ID);
+    if (isNaN(serverId)) {
+      console.error('SERVER_ID 环境变量未设置或无效');
+      process.exit(1);
+    }
     
     const framework = getFramework();
-    await framework.init({ configPath });
+    await framework.init(serverId, { configPath });
     
     const config = framework.getConfigManager().getAllConfig();
     
@@ -453,7 +463,7 @@ async function startGate(): Promise<void> {
         host: config.server.host
     };
     
-    const gateServer = new GateServer(gateConfig);
+    const gateServer = new GateServer(gateConfig, serverId);
     
     // 处理进程退出
     process.on('SIGINT', async () => {

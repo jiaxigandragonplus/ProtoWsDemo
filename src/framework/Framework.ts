@@ -87,18 +87,13 @@ export class Framework {
   /**
    * 初始化框架
    */
-  public async init(config: FrameworkConfig): Promise<void> {
+  public async init(serverId: number, config: FrameworkConfig): Promise<void> {
     if (this.isInitialized) {
       this.logger.warn('框架已初始化', 'Framework');
       return;
     }
 
-    // 从环境变量里面读取服务器id
-    this.serverId = parseInt(process.env.SERVER_ID);
-    if (isNaN(this.serverId)) {
-      this.logger.fatal('SERVER_ID 环境变量未设置或无效');
-      process.exit(1);
-    }
+    this.serverId = serverId;
 
     // 加载配置
     if (config.configPath) {
@@ -166,7 +161,7 @@ export class Framework {
             serviceName: discoveryConfig.serviceName,
             instanceId: this.generateInstanceId(),
             host: serverConfig.host,
-            port: serverConfig.port, // 使用配置中的端口
+            port: serverConfig.port + this.serverId, // 使用配置中的端口
             heartbeatInterval: discoveryConfig.heartbeatInterval,
             discoveryInterval: discoveryConfig.discoveryInterval,
             instanceTimeout: discoveryConfig.heartbeatInterval * 6,

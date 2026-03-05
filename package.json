@@ -2,15 +2,15 @@
   "name": "protowsdemo",
   "version": "1.0.0",
   "description": "proto+websocket+ts demo",
-  "main": "dist/src/gate/GateServer.js",
+  "main": "dist/gate/GateServer.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/src/gate/GateServer.js",
-    "start:gate": "node dist/src/gate/GateServer.js",
-    "start:game": "node dist/src/game/GameServer.js",
-    "dev": "tsc && node dist/src/gate/GateServer.js",
+    "build": "tsc && cp -r src/protobuf/proto dist/protobuf/proto && cp -r src/config dist/config",
+    "start": "node dist/gate/GateServer.js",
+    "start:gate": "node dist/gate/GateServer.js",
+    "start:game": "node dist/game/GameServer.js",
+    "dev": "tsc && node dist/gate/GateServer.js",
     "proto": "node protobuf/AutoExport.js",
-    "test-client": "node dist/src/test/TestClient.js"
+    "test-client": "node dist/test/TestClient.js"
   },
   "repository": {
     "type": "git",
