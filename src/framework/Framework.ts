@@ -181,10 +181,8 @@ export class Framework {
    * 生成实例 ID
    */
   private generateInstanceId(): string {
-    const hostname = require('os').hostname();
-    const pid = process.pid;
-    const timestamp = Date.now();
-    return `${hostname}-${pid}-${timestamp}`;
+    const serverConfig = this.configManager.getServerConfig();
+    return `${serverConfig.name}-${this.serverId}`
   }
 
   /**
