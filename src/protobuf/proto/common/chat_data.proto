@@ -1,2 +1,86 @@
 syntax = "proto3";
 package common;
+
+// 聊天频道的类型
+enum ChannelType {
+    CHANNEL_INVALID = 0;    // 无效
+    CHANNEL_PRIVATE = 1;    // 私聊
+    CHANNEL_GUILD = 2;      // 公会
+    CHANNEL_TEAM = 3;       // 队伍
+    CHANNEL_WORLD = 4;      // 世界
+}
+
+// 聊天内容类型
+enum ContentType {
+    CONTENT_INVALID = 0;    // 无效类型
+    CONTENT_TEXT = 1;       // 纯文本
+    CONTENT_IMAGE = 2;      // 图片
+    CONTENT_CARD = 3;       // 卡片
+    CONTENT_AUDIO = 4;      // 音频
+    CONTENT_VEDIO = 5;      // 视频
+    CONTENT_EMOJI = 6;      // 表情
+}
+
+// 聊天消息加载类型
+enum MessageLoadType {
+    BACKWORD = 0;   //加载历史消息
+    FORWORD = 1;    //加载最新消息
+}
+
+// 聊天消息类型
+enum ChatType {
+    CHAT_TYPE_UNKONOWN = 0;       // 未知类型
+    CHAT_TYPE_USER_MESSAGE = 1;       // 用户消息
+    CHAT_TYPE_SYSTEM_MESSAGE = 2;     // 系统消息，如时间提示
+    CHAT_TYPE_GUILD_NOTICE = 3;       // 公会提示消息
+}
+
+// 聊天频道类型
+enum ChatChannelType {
+    CHAT_CHANNEL_TYPE_UNKNOWN = 0;
+    CHAT_CHANNEL_TYPE_WORLD = 1;      // 世界聊天
+    CHAT_CHANNEL_TYPE_PRIVATE = 2;    // 私聊
+    CHAT_CHANNEL_TYPE_GUILD = 3;      // 公会聊天
+}
+
+// 聊天item类型，展示ui用
+enum ChatItemType {
+    CHAT_ITEM_TYPE_UNKNOWN = 0;
+    CHAT_ITEM_TYPE_NORMAL = 1; // 普通状态
+    CHAT_ITEM_TYPE_NOTICE = 2; // 提示状态
+    CHAT_ITEM_TYPE_GUILD_NOTICE = 3;   // 公会提示
+}
+
+message GetChatTipsParam {
+    string channel_id = 1;  // 频道id
+    int32 max_readed_message_id = 2;    // 已读消息的最大id
+}
+
+message ChatTipsInfo {
+    string channel_id = 1;  // 频道id
+    int32 new_message_count = 2;    // 新消息条数
+}
+
+// 发送者信息
+message ChatSenderInfo {
+    string uid = 1;         // 玩家uid
+    string name = 2;        // 玩家名字
+    string avatar = 3;      // 玩家头像
+    string extra = 4;       // 扩展信息
+}
+
+// 聊天内容
+message ChatContentInfo {
+    ContentType type = 1;   // 消息类型
+    string content = 2;     // 消息本身,当 ContentType 为 TEXT: 文本字符串， PICTURE/AUDIO/VIDIO: 媒体文件url，CARD/CUSTOM: 序列化json字符串
+}
+
+// 一条聊天消息内容
+message ChatMessageInfo {
+    int32 message_id = 1;           // 消息id
+    ChatSenderInfo sender = 2;      // 发送者信息
+    ChatContentInfo content = 3;    // 消息内容
+    int32 timestamp = 4;            // 时间戳
+    ChatType chat_type = 5;         // 聊天类型
+    string channel_id = 6;          // 所在频道id
+}

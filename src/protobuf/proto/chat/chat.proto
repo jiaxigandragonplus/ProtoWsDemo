@@ -1,2 +1,32 @@
 syntax = "proto3";
 package chat;
+
+import "common/chat_data.proto";
+
+// 发送消息
+message CSendMessage {
+    string channel_id = 1;
+    string message = 2;
+}
+message SSendMessage {
+    repeated common.ChatMessageInfo added_messages = 1;   // 新增的消息列表
+}
+
+// 获取聊天记录
+message CGetChatLog {
+    string channel_id = 1;
+    int32 min_message_id = 2;
+    int32 max_message_id = 3;
+    int64 last_load_timestamp = 4;
+    int32 load_type = 5;
+}
+message SGetChatLog {
+    repeated common.ChatMessageInfo messages = 1;  // 消息列表
+}
+
+message CGetChatTips {
+    repeated common.GetChatTipsParam params = 1;
+}
+message SGetChatTips {
+    repeated common.ChatTipsInfo tips = 1;
+}
