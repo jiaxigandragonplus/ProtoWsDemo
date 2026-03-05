@@ -21,29 +21,46 @@ export class ProtoLoader {
     private static commonProtoPath: string;
     private static protocolMapPath: string;
     private static protocolMap: Record<string, ProtocolMapEntry> = {};
+    private static protoRootDir: string;
 
     /**
      * 获取 proto 文件路径
      */
-    private static getProtoPaths(): { game: string, gateGame: string, common: string, protocolMap: string } {
+    private static getProtoPaths(): { game: string, common: string, protocolMap: string } {
         if (!this.gameProtoPath) {
             // __dirname 在编译后是 dist/src/game，需要向上三层到项目根目录
-            this.gameProtoPath = path.join(__dirname, '../../../protobuf/proto/game/game.proto');
-        }
-        if (!this.gateGameProtoPath) {
-            this.gateGameProtoPath = path.join(__dirname, '../../../protobuf/proto/gate/gate_game.proto');
+            this.gameProtoPath = path.join(__dirname, '../protobuf/proto/game/game.proto');
         }
         if (!this.commonProtoPath) {
-            this.commonProtoPath = path.join(__dirname, '../../../protobuf/proto/common/common.proto');
+            this.commonProtoPath = path.join(__dirname, '../protobuf/proto/common/common.proto');
         }
         if (!this.protocolMapPath) {
-            this.protocolMapPath = path.join(__dirname, '../../../protobuf/proto/protocol_map.json');
+            this.protocolMapPath = path.join(__dirname, '../protobuf/proto/protocol_map.json');
         }
         return { 
             game: this.gameProtoPath, 
-            gateGame: this.gateGameProtoPath, 
             common: this.commonProtoPath,
             protocolMap: this.protocolMapPath
+        };
+    }
+
+    /**
+     * 设置 resolvePath 函数
+     */
+    private static setupResolvePath(root: protobuf.Root): void {
+        // 获取 proto 根目录（protobuf/proto）
+        if (!this.protoRootDir) {
+            this.protoRootDir = path.join(__dirname, '../protobuf/proto');
+        }
+        root.resolvePath = (origin, target) => {
+            if (path.isAbsolute(target)) return target;
+            // 首先尝试从 proto 根目录解析
+            const fromProtoRoot = path.join(this.protoRootDir, target);
+            if (fs.existsSync(fromProtoRoot)) {
+                return fromProtoRoot;
+            }
+            // 如果从 proto 根目录找不到，再尝试从当前文件目录解析
+            return path.join(path.dirname(origin), target);
         };
     }
 
@@ -54,13 +71,9 @@ export class ProtoLoader {
         if (!this.root) {
             const paths = this.getProtoPaths();
             this.root = new protobuf.Root();
-            this.root.resolvePath = (origin, target) => {
-                if (path.isAbsolute(target)) return target;
-                return path.join(path.dirname(origin), target);
-            };
+            this.setupResolvePath(this.root);
             this.root.loadSync(paths.common);
             this.root.loadSync(paths.game);
-            this.root.loadSync(paths.gateGame);
         }
         return this.root;
     }
@@ -112,9 +125,9 @@ export class ProtoLoader {
         if (!this.root) {
             const paths = this.getProtoPaths();
             this.root = new protobuf.Root();
+            this.setupResolvePath(this.root);
             await this.root.load(paths.common);
             await this.root.load(paths.game);
-            await this.root.load(paths.gateGame);
         }
         this.loadProtocolMap();
     }
@@ -126,9 +139,9 @@ export class ProtoLoader {
         if (!this.root) {
             const paths = this.getProtoPaths();
             this.root = new protobuf.Root();
+            this.setupResolvePath(this.root);
             this.root.loadSync(paths.common);
             this.root.loadSync(paths.game);
-            this.root.loadSync(paths.gateGame);
         }
         this.loadProtocolMap();
     }
