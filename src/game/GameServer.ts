@@ -1,13 +1,14 @@
-import WebSocket, { WebSocketServer } from 'ws';
+import WebSocket from 'ws';
 import { GameMessageHandler } from './MessageHandler';
 import { ProtoLoader } from './ProtoLoader';
+import { Framework, getFramework } from '../framework/Framework';
 
 /**
  * Game 服务器配置
  */
 interface GameConfig {
     port: number;
-    host?: string;
+    host: string;
 }
 
 /**
@@ -16,65 +17,72 @@ interface GameConfig {
  */
 export class GameServer {
     private config: GameConfig;
-    private wss: WebSocketServer;
+    private framework: Framework;
     private isRunning: boolean = false;
 
     constructor(config: GameConfig) {
-        this.config = {
-            port: config.port || 9000,
-            host: config.host || '127.0.0.1'
-        };
-
+        this.config = config;
+        this.framework = getFramework();
+        
         // 同步加载 proto 文件
         ProtoLoader.loadProtoSync();
-
-        // 创建 WebSocket 服务器
-        this.wss = new WebSocketServer({
-            port: this.config.port,
-            host: this.config.host
-        });
-
-        this.setupServer();
     }
 
     /**
-     * 设置服务器事件处理
+     * 启动服务器
      */
-    private setupServer(): void {
-        this.wss.on('connection', (ws) => {
-            console.log('[GameServer] Gate 服务器已连接');
-            
-            ws.on('message', (data: Buffer) => {
-                this.handleMessage(data);
-            });
+    async start(): Promise<void> {
+        if (this.isRunning) {
+            this.framework.getLogger().warn('Game 服务器已在运行中', 'GameServer');
+            return;
+        }
 
-            ws.on('close', () => {
-                console.log('[GameServer] Gate 服务器连接已关闭');
-            });
+        const logger = this.framework.getLogger();
+        logger.info('Game 服务器启动中...', 'GameServer');
 
-            ws.on('error', (error: Error) => {
-                console.error('[GameServer] Gate 连接错误:', error);
-            });
+        // 初始化框架
+        await this.framework.init({
+            configPath: `src/config/${process.env.NODE_ENV || 'local'}/game.json`
         });
 
-        this.wss.on('error', (error: Error) => {
-            console.error('[GameServer] WebSocket 服务器错误:', error);
-        });
+        // 启动框架（包括服务发现）
+        await this.framework.start();
+
+        // 设置 WebSocket 服务器事件处理
+        const networkManager = this.framework.getNetworkManager();
+        const wsServer = networkManager.getServer();
+        
+        if (wsServer) {
+            wsServer.on('connection', (conn) => {
+                logger.info('[GameServer] Gate 服务器已连接', 'GameServer');
+                
+                conn.socket.on('message', (data: Buffer) => {
+                    this.handleMessage(data);
+                });
+
+                conn.socket.on('close', () => {
+                    logger.info('[GameServer] Gate 服务器连接已关闭', 'GameServer');
+                });
+
+                conn.socket.on('error', (error: Error) => {
+                    logger.error('[GameServer] Gate 连接错误', error, 'GameServer');
+                });
+            });
+        }
 
         this.isRunning = true;
-        console.log(`[GameServer] Game 服务器已启动 - 监听 ${this.config.host}:${this.config.port}`);
+        logger.info(`[GameServer] Game 服务器已启动 - 监听 ${this.config.host}:${this.config.port}`, 'GameServer');
     }
 
     /**
      * 处理来自 Gate 的消息
-     * 使用 PBPackage 格式解析
      */
     private handleMessage(data: Buffer): void {
         try {
             const uint8Data = new Uint8Array(data);
-            GameMessageHandler.handleMessage(uint8Data, this.wss);
+            GameMessageHandler.handleMessage(uint8Data, this.framework.getNetworkManager());
         } catch (error) {
-            console.error('[GameServer] 处理消息时出错:', error);
+            this.framework.getLogger().error('[GameServer] 处理消息时出错', error as Error, 'GameServer');
         }
     }
 
@@ -88,47 +96,58 @@ export class GameServer {
     /**
      * 关闭服务器
      */
-    shutdown(): void {
-        console.log('[GameServer] 正在关闭 Game 服务器...');
+    async shutdown(): Promise<void> {
+        const logger = this.framework.getLogger();
+        logger.info('[GameServer] 正在关闭 Game 服务器...', 'GameServer');
+        
         this.isRunning = false;
         
-        // 关闭所有连接
-        for (const client of this.wss.clients) {
-            client.close();
-        }
+        // 关闭框架（包括 WebSocket 服务器）
+        await this.framework.shutdown();
         
-        // 关闭服务器
-        this.wss.close(() => {
-            console.log('[GameServer] Game 服务器已关闭');
-        });
+        logger.info('[GameServer] Game 服务器已关闭', 'GameServer');
     }
 }
 
 /**
  * 启动 Game 服务器
  */
-function startGame(): void {
-    const config: GameConfig = {
-        port: 9000
+async function startGame(): Promise<void> {
+    const env = process.env.NODE_ENV || 'local';
+    const configPath = `src/config/${env}/game.json`;
+    
+    const framework = getFramework();
+    await framework.init({ configPath });
+    
+    const config = framework.getConfigManager().getAllConfig();
+    
+    const gameConfig: GameConfig = {
+        port: config.server.port,
+        host: config.server.host
     };
 
-    const gameServer = new GameServer(config);
+    const gameServer = new GameServer(gameConfig);
 
     // 处理进程退出
-    process.on('SIGINT', () => {
+    process.on('SIGINT', async () => {
         console.log('\n[GameServer] 收到退出信号...');
-        gameServer.shutdown();
+        await gameServer.shutdown();
         process.exit(0);
     });
 
-    process.on('SIGTERM', () => {
+    process.on('SIGTERM', async () => {
         console.log('\n[GameServer] 收到终止信号...');
-        gameServer.shutdown();
+        await gameServer.shutdown();
         process.exit(0);
     });
+
+    await gameServer.start();
 }
 
 // 如果直接运行此文件则启动服务器
 if (require.main === module) {
-    startGame();
+    startGame().catch((err) => {
+        console.error('[GameServer] 启动失败:', err);
+        process.exit(1);
+    });
 }

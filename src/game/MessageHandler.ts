@@ -1,7 +1,8 @@
 import * as protobuf from 'protobufjs';
 import { SessionManager } from './SessionManager';
 import { ProtoLoader } from './ProtoLoader';
-import WebSocket, { WebSocketServer } from 'ws';
+import WebSocket from 'ws';
+import { NetworkManager } from '../framework/network/NetworkManager';
 
 /**
  * 消息 ID 定义（Gate-Game 内部通信，保留用于向后兼容）
@@ -16,13 +17,11 @@ export enum GameMessageId {
  * 负责处理从 Gate 转发过来的业务逻辑
  */
 export class GameMessageHandler {
-    private static gateWs: WebSocket | null = null;
-
     /**
      * 处理来自 Gate 的消息
      * 使用 PBPackage 格式解析，然后根据 message_type 路由
      */
-    static handleMessage(data: Uint8Array, wss: WebSocketServer): void {
+    static handleMessage(data: Uint8Array, networkManager: NetworkManager): void {
         try {
             // 使用 PBPackage 解析
             const pbPackageType = ProtoLoader.PBPackage;
@@ -35,7 +34,7 @@ export class GameMessageHandler {
             
             // 根据 messageType 路由
             if (messageType === 'GateToGame') {
-                this.handleGateToGame(messagePayload, wss);
+                this.handleGateToGame(messagePayload, networkManager);
             } else {
                 console.warn(`[GameMessageHandler] 未知消息类型：${messageType}`);
             }
@@ -48,7 +47,7 @@ export class GameMessageHandler {
      * 处理 GateToGame 消息
      * 解析 WebsocketMessage 然后根据 message_type 路由到具体处理器
      */
-    private static handleGateToGame(data: Uint8Array, wss: WebSocketServer): void {
+    private static handleGateToGame(data: Uint8Array, networkManager: NetworkManager): void {
         try {
             // 解析 GateToGame 消息
             const gateToGameType = ProtoLoader.GateToGame;
@@ -79,10 +78,10 @@ export class GameMessageHandler {
             // 根据 message_type 路由到具体的业务处理器
             switch (innerMessageType) {
                 case 'CLogin':
-                    this.handleLogin(sessionId, messagePayload, wss);
+                    this.handleLogin(sessionId, messagePayload, networkManager);
                     break;
                 case 'CEcho':
-                    this.handleEcho(sessionId, messagePayload, wss);
+                    this.handleEcho(sessionId, messagePayload, networkManager);
                     break;
                 default:
                     console.warn(`[GameMessageHandler] 未处理的业务消息类型：${innerMessageType}`);
@@ -95,7 +94,7 @@ export class GameMessageHandler {
     /**
      * 处理登录请求
      */
-    private static handleLogin(gateSessionId: number, data: Uint8Array, wss: WebSocketServer): void {
+    private static handleLogin(gateSessionId: number, data: Uint8Array, networkManager: NetworkManager): void {
         try {
             const cLoginType = ProtoLoader.CLogin;
             const loginRequest = cLoginType.decode(data) as any;
@@ -108,7 +107,7 @@ export class GameMessageHandler {
                 const sessionInfo = SessionManager.createSession(gateSessionId, loginRequest.name);
                 
                 // 发送登录响应（使用 WebsocketMessage 格式）
-                this.sendWebsocketToGate(gateSessionId, 'SLogin', '/game/game/login', { playerId: sessionInfo.playerId }, wss);
+                this.sendWebsocketToGate(gateSessionId, 'SLogin', '/game/game/login', { playerId: sessionInfo.playerId }, networkManager);
                 
                 console.log(`[GameMessageHandler] 登录成功 - PlayerId: ${sessionInfo.playerId}`);
             } else {
@@ -122,7 +121,7 @@ export class GameMessageHandler {
     /**
      * 处理回显请求
      */
-    private static handleEcho(gateSessionId: number, data: Uint8Array, wss: WebSocketServer): void {
+    private static handleEcho(gateSessionId: number, data: Uint8Array, networkManager: NetworkManager): void {
         try {
             // 检查会话是否存在
             const session = SessionManager.getSessionByGateId(gateSessionId);
@@ -137,7 +136,7 @@ export class GameMessageHandler {
             console.log(`[GameMessageHandler] 处理回显 - PlayerId: ${session.playerId}, Msg: ${echoRequest.msg}`);
 
             // 发送回显响应（使用 WebsocketMessage 格式）
-            this.sendWebsocketToGate(gateSessionId, 'SEcho', '/game/game/echo', { msg: echoRequest.msg }, wss);
+            this.sendWebsocketToGate(gateSessionId, 'SEcho', '/game/game/echo', { msg: echoRequest.msg }, networkManager);
             
             console.log(`[GameMessageHandler] 回显响应已发送 - PlayerId: ${session.playerId}`);
         } catch (error) {
@@ -153,10 +152,18 @@ export class GameMessageHandler {
         messageType: string,
         uri: string,
         data: Record<string, any>, 
-        wss: WebSocketServer
+        networkManager: NetworkManager
     ): void {
-        // 获取第一个连接的 Gate
-        const gateClient = wss.clients.values().next().value;
+        // 获取 WebSocket 服务器
+        const wsServer = networkManager.getServer();
+        if (!wsServer) {
+            console.error('[GameMessageHandler] WebSocket 服务器不可用');
+            return;
+        }
+
+        // 获取第一个连接的 Gate 客户端
+        const clients = wsServer.getClients();
+        const gateClient = clients.values().next().value;
         if (!gateClient || gateClient.readyState !== WebSocket.OPEN) {
             console.error('[GameMessageHandler] Gate 连接不可用');
             return;

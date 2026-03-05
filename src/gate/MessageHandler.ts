@@ -204,11 +204,8 @@ export class MessageHandler {
      * 处理来自 Game 服务器的消息（GameToGate）
      * 使用 WebsocketMessage 格式发送
      */
-    static handleGameToGameMessage(data: Uint8Array): void {
+    static handleGameToGameMessage(gameToGate: any): void {
         try {
-            const gameToGateType = ProtoLoader.GameToGate;
-            const gameToGate = gameToGateType.decode(data) as any;
-            
             const sessionId = gameToGate.sessionId as number;
             const messageId = gameToGate.messageId as number;
             const payload = new Uint8Array(gameToGate.payload as ArrayBuffer);

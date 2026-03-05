@@ -127,6 +127,13 @@ export class Framework {
     this.databaseManager.setLogger(this.logger);
     this.networkManager.setLogger(this.logger);
 
+    // 创建 WebSocket 服务器
+    const serverConfig = this.configManager.getServerConfig();
+    await this.networkManager.createServer({
+      host: serverConfig.host,
+      port: serverConfig.port + this.serverId
+    });
+
     this.isInitialized = true;
     this.logger.info('框架初始化完成', 'Framework');
   }
@@ -159,7 +166,7 @@ export class Framework {
             serviceName: discoveryConfig.serviceName,
             instanceId: this.generateInstanceId(),
             host: serverConfig.host,
-            port: serverConfig.port + this.serverId, // 端口号计算
+            port: serverConfig.port, // 使用配置中的端口
             heartbeatInterval: discoveryConfig.heartbeatInterval,
             discoveryInterval: discoveryConfig.discoveryInterval,
             instanceTimeout: discoveryConfig.heartbeatInterval * 6,
