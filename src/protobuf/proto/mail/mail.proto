@@ -1,2 +1,46 @@
 syntax = "proto3";
 package mail;
+
+import "common/mail_data.proto";
+
+// 获取邮件列表
+message CGetMailList {
+    repeated uint32 mail_ids = 1;   // 已经领取的系统邮件id，用来过滤系统邮件的
+}
+message SGetMailList {
+    repeated MailInfo list = 1;
+}
+
+// 读取邮件
+message CReadMail {
+    uint32 mail_id = 1;  // 邮件id
+    MailType mail_type = 2; // 邮件类型
+}
+message SReadMail {
+
+}
+
+// 删除邮件
+message CDeleteMail {
+    repeated uint32 mail_ids = 1;  // 邮件id
+}
+message SDeleteMail {
+    repeated uint32 mail_ids = 1;   // 删除成功的邮件id
+}
+
+// 领取邮件
+message CClaimMail {
+    uint32 mail_id = 1;  // 邮件id
+    MailType mail_type = 2; // 邮件类型
+}
+message SClaimMail {
+    string extra = 1;  // 附件
+}
+
+// 一键领取
+message CClaimAllMail {
+
+}
+message SClaimAllMail {
+    repeated string extra = 1;  // 附件
+}
