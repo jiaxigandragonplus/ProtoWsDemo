@@ -64,7 +64,7 @@ export class GateServer {
 
         // 初始化框架
         await this.framework.init({
-            configPath: `src/config/${process.env.NODE_ENV || 'local'}/gate.json`
+            configPath: `config/${process.env.NODE_ENV || 'local'}/gate.json`
         });
 
         // 启动框架（包括服务发现）
@@ -441,7 +441,7 @@ export class GateServer {
  */
 async function startGate(): Promise<void> {
     const env = process.env.NODE_ENV || 'local';
-    const configPath = `src/config/${env}/gate.json`;
+    const configPath = `config/${env}/gate.json`;
     
     const framework = getFramework();
     await framework.init({ configPath });

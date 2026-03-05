@@ -42,7 +42,7 @@ export class GameServer {
 
         // 初始化框架
         await this.framework.init({
-            configPath: `src/config/${process.env.NODE_ENV || 'local'}/game.json`
+            configPath: `config/${process.env.NODE_ENV || 'local'}/game.json`
         });
 
         // 启动框架（包括服务发现）
@@ -114,7 +114,7 @@ export class GameServer {
  */
 async function startGame(): Promise<void> {
     const env = process.env.NODE_ENV || 'local';
-    const configPath = `src/config/${env}/game.json`;
+    const configPath = `config/${env}/game.json`;
     
     const framework = getFramework();
     await framework.init({ configPath });
