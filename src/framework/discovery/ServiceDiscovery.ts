@@ -55,8 +55,8 @@ export class ServiceDiscovery {
   private currentInstances: ServiceInstance[] = [];
 
   // Redis key 前缀
-  private static readonly SERVICE_KEY_PREFIX = 'services:';
-  private static readonly SERVICE_INSTANCE_KEY = 'instance:';
+  private static readonly SERVICE_KEY_PREFIX = 'discovery:services:';
+  private static readonly SERVICE_INSTANCE_KEY = 'discovery:instance:';
 
   constructor(redisClient: RedisClient, config: DiscoveryConfig, logger?: Logger) {
     this.redisClient = redisClient;
