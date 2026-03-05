@@ -1,0 +1,44 @@
+syntax = "proto3";
+package game;
+// 任务协议
+
+import "common/item_data.proto";
+
+// 开启任务宝箱
+message COpenTaskBox {
+    bool is_pay_open = 1;   // 是否看广告打开
+}
+message SOpenTaskBox {
+    repeated Reward awards = 1;
+    int32 new_box = 2;  // 返回新的宝箱id
+    int32 award_point = 3;
+}
+
+// 领取免费奖励
+message CClaimTaskFreeAward {
+    bool is_double = 1;
+}
+message SClaimTaskFreeAward {
+    repeated Reward awards = 1;
+    int32 award_point = 2;
+    int64 get_time = 3;
+    int32 get_index = 4;
+}
+
+// 完成任务
+message CFinishTask {
+    int32 id = 1;
+}
+message SFinishTask {
+    repeated Reward awards = 1;
+    int32 award_point = 2;
+}
+
+// 刷新普通任务
+message CRefreshTask {
+    int32 id = 1;
+}
+message SRefreshTask {
+    repeated Reward costs = 1;
+    int32 new_task_id = 2;
+}

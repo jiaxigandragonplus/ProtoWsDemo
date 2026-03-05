@@ -1,7 +1,102 @@
 syntax = "proto3";
 package common;
 
-message GuildData { 
-    int64 id = 1;
-    string name = 2;
+enum GuildEventType {
+    GUILD_EVVENT_UNKNOWN = 0;
+    GUILD_EVVENT_CREATE = 1;
+    GUILD_EVVENT_JOIN = 2;
+    GUILD_EVVENT_LEAVE = 3;
+    GUILD_EVVENT_KICK = 4;
+    GUILD_EVVENT_MODIFY_NOTICE = 5;
+    GUILD_EVVENT_MODIFY_FLAG = 6;
+    GUILD_EVVENT_MODIFY_NAME = 7;
+    GUILD_EVVENT_TRANSFER = 8;
+}
+
+// 成员类型
+enum GuildMemberType {
+    GUILD_ROLE_NORMAL = 0;  // 普通成员
+    GUILD_ROLE_ELITE = 1;   // 精英成员
+    GUILD_ROLE_DEPUTY = 2;  // 副会长
+    GUILD_ROLE_LEADER = 3;  // 会长
+}
+
+// 权限类型
+enum GuildPermissionType {
+    GUILD_PERMISSION_UNKNOWN = 0;
+    GUILD_PERMISSION_HANDLE_APPLY = 1;      // 处理申请
+    GUILD_PERMISSION_LEAVE = 2;             // 离开公会
+    GUILD_PERMISSION_OPEN_SETTING = 3;      // 打开设置界面
+    GUILD_PERMISSION_MODIFY_NAME = 4;       // 更改名称
+    GUILD_PERMISSION_MODIFY_FLAG = 5;       // 更改旗帜
+    GUILD_PERMISSION_MODIFY_NOTICE = 6;     // 更改公告
+    GUILD_PERMISSION_SET_DUTY = 7;          // 职务任免
+    GUILD_PERMISSION_TRANSFER_LEADER = 8;   // 转让会长
+}
+
+// 创建者信息
+message GuildUserInfo {
+    string uid = 1;         // 玩家id
+    string name = 2;        // 玩家名字
+    int32 avatar = 3;       // 头像
+    string country = 4;     // 国家
+    int32 level = 5;        // 等级
+    int32 cups = 6;         // 杯数
+}
+
+message GuildMemberInfo {
+    string uid = 1;             // 玩家id
+    string name = 2;            // 名字
+    string avatar = 3;          // 头像
+    int32 level = 4;            // 等级
+    string country = 5;         // 国家
+    int32 cups = 6;             // 杯数
+    GuildMemberType role = 7;            // 成员职位
+    uint32 join_time = 8;       // 加入时间
+    uint32 offline_time = 9;    // 下线时间，0表示在线，非0表示下线时间点
+    int32 week_contribute = 10; // 每周贡献
+    string extra = 11;          // 扩展数据
+}
+
+message GuildApplyInfo {
+    string uid = 1;             // 玩家id
+    string name = 2;            // 名字
+    int32 avatar = 3;           // 头像
+    int32 level = 4;            // 等级
+    string country = 5;         // 国家
+    string msg = 6;             // 申请信息
+    uint32 apply_time = 7;      // 申请时间
+    int32 cups = 8;             // 杯数
+}
+
+// 公会基础数据
+message GuildSimpleInfo {
+    string gid = 1;         // 公会id
+    string name = 2;        // 公会名字
+    uint32 flag = 3;        // 公会旗帜
+    string location = 4;    // 位置
+    int32 join_type = 5;    // 加入类型：可直接加入，需要审批，不可加入等
+    int32 require_cups = 6;   // 加入限制
+}
+
+// 公会信息
+message GuildInfo {
+    string gid = 1;         // 公会id
+    string name = 2;        // 公会名字
+    uint32 flag = 3;        // 公会旗帜
+    string location = 4;    // 位置
+    int32 join_type = 5;    // 加入类型：可直接加入，需要审批，不可加入等
+    int32 require_cups = 6;   // 加入限制
+    string notice = 7;      // 公告
+    int32 week_contribute = 8; // 每周贡献
+    int32 total_cups = 9;   // 所有成员加起来的杯数
+    int64 offline_timestamp = 10;   // 离线时间
+    string leader_id = 11;  // 会长id
+    map<string, GuildMemberInfo> members = 12;   // 成员列表
+}
+
+// 公会日志信息
+message GuildLogInfo {
+    int32 event = 1;
+    repeated string params = 2;
 }

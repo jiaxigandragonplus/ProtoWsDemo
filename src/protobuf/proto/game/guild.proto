@@ -1,0 +1,143 @@
+syntax = "proto3";
+package game;
+
+import "common/guild_data.proto";
+
+// 获取公会信息
+message CGetGuild {
+    string uid = 1;
+    string gid = 2;
+}
+
+message SGetGuild {
+    GuildInfo info = 1;
+}
+
+// 获取公会列表
+message CGetGuildList {
+    int32 offset = 1;
+    int32 limit = 2;
+}
+
+message SGetGuildList {
+    repeated GuildSimpleInfo list = 1;
+}
+
+// 创建公会
+message CCreateGuild {
+    string name = 1;
+    uint32 flag = 2;
+    string location = 3;
+    int32 join_type = 4;
+    int32 join_limit = 5;
+}
+
+message SCreateGuild {
+    GuildInfo info = 1;
+}
+
+// 离开公会
+message CLeaveGuild {
+    
+}
+
+message SLeaveGuild {
+    string gid = 1;
+}
+
+// 申请加入
+message CApplyJoin {
+    string gid = 1;
+    GuildApplyInfo apply = 2;
+}
+
+message SApplyJoin {
+
+}
+
+// 获取申请列表
+message CGetGuildApplyList {
+
+}
+
+message SGetGuildApplyList {
+    repeated GuildApplyInfo list = 1;
+}
+
+// 回复申请
+message CReplyJoin {
+    string target_uid = 1;
+    bool agree = 2;
+}
+
+message SReplyJoin {
+
+}
+
+// 踢出成员
+message CKickMember {
+    string target_uid = 1;
+}
+
+message SKickMember {
+
+}
+
+// 修改公会名称
+message CModifyGuildName {
+    string name = 1;
+}
+
+message SModifyGuildName {
+
+}
+
+// 修改公告
+message CModifyNotice {
+    string notice = 1;
+}
+
+message SModifyNotice {
+
+}
+
+// 修改旗帜
+message CModifyFlag {
+    uint32 flag = 1;
+}
+
+message SModifyFlag {
+
+}
+
+// 修改公会信息
+message CModifyGuild {
+    string name = 1;
+    uint32 flag = 2;
+    string location = 3;
+    int32 join_type = 4;
+    int32 join_limit = 5;
+}
+
+message SModifyGuild {
+
+}
+
+// 设置成员职位
+message CSetMemberType {
+    string target_uid = 1;
+    string type = 2;
+}
+
+message SSetMemberType {
+
+}
+
+// 转移会长
+message CTransferLeader {
+    string target_uid = 1;
+}
+
+message STransferLeader {
+
+}

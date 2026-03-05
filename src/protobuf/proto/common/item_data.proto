@@ -1,0 +1,12 @@
+syntax = "proto3";
+package common;
+
+// 奖励数据
+message Reward {
+    string type = 1;    // 奖励类型
+    string id = 2;      // 奖励id
+    int64 count = 3;    // 奖励数量
+    bool tradable = 4;  // 是否可交易
+    bool is_box_award = 5;  // 是否时宝箱
+    int32 box_id = 6;   // 宝箱id
+}

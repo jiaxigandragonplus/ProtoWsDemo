@@ -1,0 +1,35 @@
+syntax = "proto3";
+package game;
+// 宝物协议
+
+import "common/item_data.proto";
+
+// 解锁宝箱
+message CUnlockTreatureBox {
+    int64 bid = 1;
+    bool use_cash = 2;
+}
+message SUnlockTreatureBox {
+    int64 time = 1; // 开始时间
+    repeated Reward awards = 2;
+    repeated Reward costs = 3;
+}
+
+// 开启宝箱
+message COpenTreatureBox {
+    int64 bid = 1;
+    bool use_cash = 2;
+}
+message SOpenTreatureBox {
+    repeated Reward awards = 1;
+    repeated Reward costs = 2;
+}
+
+// 宝箱加速
+message CSpeedUpTreatureBox {
+    int64 bid = 1; // 宝箱实例id
+}
+message SSpeedUpTreatureBox {
+    int32 box_id = 1;
+    int64 time = 2;
+}

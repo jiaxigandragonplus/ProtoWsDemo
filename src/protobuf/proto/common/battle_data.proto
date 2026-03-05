@@ -1,0 +1,261 @@
+syntax = "proto3";
+package common;
+
+// 战斗状态
+enum BattleState {
+    BATTLE_STATE_UNKNOWN = 0;
+    BATTLE_STATE_INIT = 1;       // 初始化
+    BATTLE_STATE_LOADING = 2;    // 资源加载中
+    BATTLE_STATE_COUNT_DOWN = 3; // 开战倒计时
+    BATTLE_STATE_FIGHTING = 4;   // 战斗中
+    BATTLE_STATE_OVER = 5;       // 战斗结束
+    BATTLE_STATE_DELETE = 6;     // 等待删除
+}
+
+
+// 战场类型
+enum BattleFieldType {
+    BATTLE_FIELD_INVALID = 0;        // 无效类型
+    BATTLE_FIELD_NORMAL = 1;         // 正常战斗
+    BATTLE_FIELD_REPLAY = 2;         // 战斗回放
+    BATTLE_FIELD_CHECK_RESULT = 3;   // 检查战斗结果
+}
+
+enum BattleSide {
+    LEFT = 0;    // 左边
+    RIGHT = 1;   // 右边
+    MAX = 3;
+}
+
+enum RouteType {
+    DOWN = 0;   // 下路
+    MIDDLE = 1; // 中路
+    UP = 2;     // 上路
+}
+
+// 英雄状态
+enum HeroState {
+    HERO_STATE_INIT = 0;       // 初始化状态
+    HERO_STATE_SEARCH = 1;     // 搜索
+    HERO_STATE_MOVE = 2;       // 移动
+    HERO_STATE_ATTACK = 3;     // 攻击中
+    HERO_STATE_DELETE = 4;     // 等待删除
+    HERO_STATE_OVER = 888;     // 战斗结束
+    HERO_STATE_DEAD = 999;     // 死亡
+    HERO_STATE_ERROR = 1888;    // BUG了
+}
+
+// 子弹状态
+enum BulletState {
+    BULLET_STATE_NORMAL = 0;
+    BULLET_STATE_DEAD = 1;
+    BULLET_STATE_DELETE = 2;
+}
+
+enum TargetType {
+    TARGET_TYPE_All = 0;
+    TARGET_TYPE_FRIEND = 1;
+    TARGET_TYPE_ENEMY = 2;
+}
+
+// buff效果类型
+enum BuffEffectType {
+    EFFECT_TYPE_UNKNOWN = 0;
+    BAN_MOVE = 1;   // 禁止移动
+    BAN_ATTACK = 2; // 禁止攻击
+    IMMNUE_CONTROL = 3; // 免疫控制
+    IMMNUE_DAMAGE = 4;  // 免疫伤害
+    INVINCIBLE = 5; // 无敌
+}
+
+// 技能寻找目标方式
+enum SkillFindTargetWay {
+    SINGLE = 0; // 单体目标
+}
+
+// 计算技能，子弹伤害所需要的属性索引
+// 伤害、治疗量、暴击几率、格挡几率、闪避几率、暴击伤害、伤害吸血。
+enum DamageAttrIndex {
+    Damage = 0;
+    Healing = 1;
+    CritPer = 2;
+    BlockPer = 3;
+    DodgePer = 4;
+    CrtiDmgPer = 5;
+    SuckBloodPer = 6;
+}
+
+// 0:普通命中 1:闪避 2:格挡 3:暴击 999:免疫
+enum DamageType {
+    NORMAL = 0;
+    DODGE = 1;
+    BLOCK = 2;
+    CRIT = 3;
+    IMMUNE = 999;
+}
+
+enum CardRemoveType {
+    REMOVE_TYPE_UNKNOWN = 0;
+    REPLAY = 1; // 录像
+    COMMAND = 2;    // 召唤移除
+    DROP = 3;   // 丢弃
+}
+
+// 线路数据
+message RouteInfo {
+    int32 route = 1;
+    int32 pos_x = 2;
+    int32 pos_y = 3;
+}
+
+// 出牌数据
+message CommandRoute {
+    int32 route = 1;   // 在哪条线
+    int32 pos_x = 2;    // 坐标位置x
+    int32 pos_y = 3;    // 坐标位置y
+    bool front = 4;  // 是否是最前端
+}
+message Command {
+    int64 instId = 1;  // 卡牌实例id
+    int32 card = 2;   // 卡牌id
+    repeated CommandRoute routes = 3; // 各线路出牌数据
+}
+
+// 弃牌参数
+message RemoveCardCommond {
+    int32 instId = 1; // 卡牌实例id
+}
+
+message Equip {
+    int64 id = 1; // 装备id
+}
+
+message Card {
+    int32 id = 1; // 卡牌id
+    int32 level = 2;  // 卡牌等级
+    repeated Equip equips = 3;    // 装备列表
+    int32 model_id = 4;
+}
+
+// 手牌
+message HandCardInst {
+    int64 id = 1; // 实例id
+    int32 card_id = 2; // 模板id
+}
+
+message BattlePlayerData {
+    string uid = 1;        // 玩家id
+    string nick = 2;       // 昵称
+    int32 avatar = 3;     // 头像
+    int32 level = 4;      // 等级
+    string country = 5;    // 国家
+    int32 cup = 6;        // 杯数
+    string guild_name = 7;  // 公会名字
+    int64 guild_flag = 8;  // 公会旗帜
+
+    repeated Card cards = 9;  // 玩家拥有的卡牌信息
+    repeated HandCardInst init_cards = 10;  // 初始手牌
+    int32 init_energy = 11;  // 初始能量
+    int32 next_frame = 12;  // 下次获取卡牌的帧数
+    int32 card_num = 13;    // 下次获取卡牌的张数
+    int32 deal_times = 14;  // 发牌次数
+}
+
+// 战斗结果集
+message BattleResult {
+    string winner = 1;     // 获胜方
+    repeated int32 cups = 2;     // 双方杯数变化
+    repeated int32 crowns = 3;   // 皇冠数
+    int32 turn_the_tile = 4;    // 反败为胜
+    int32 end_frame = 5;  // 战斗结束帧
+}
+
+// 卡牌实例信息
+message CardInstData {
+    int32 level = 1;  // 卡牌等级
+    int32 model_id = 2;    // 模型id
+}
+
+// 帧数据，轮数据
+message ClientCommand {
+    string uid = 1;    // 玩家id
+    int32 frame = 2;  // 在第几帧出的牌
+    int32 inst_id = 3; // 卡牌实例id
+    int32 card = 4;   // 卡牌id
+    repeated CommandRoute routes = 5; // 各线路出牌数据
+}
+
+// 帧数据
+message FrameData {
+    int32 frame = 1;  // 第几帧
+    repeated ClientCommand commands = 2;    // 输入列表
+    repeated ReplayPower add_power = 3;  // 增加的能量点
+    repeated ReplayHandCard add_cards = 4;   // 增加的手牌
+}
+
+message BattleFieldData {
+    int32 curFrame = 1;                           // 当前帧
+    int64 seed = 2;                               // 随机种子
+    repeated BattlePlayerData player_data = 3;             // 玩家数据
+    map<int32, FrameData> frame_data = 4;  // 帧数据
+    int32 battleConfigId = 5;    // 战斗配置id
+}
+
+message ReplayHandCard {
+    string uid = 1;
+    HandCardInst card = 2;
+    int32 nextFrame = 3;  // 下一次发牌帧
+    int32 cardNum = 4;    // 下一次发牌数量
+}
+
+message ReplayPower {
+    string uid = 1;
+    int32 power = 2;
+    int32 nextFrame = 3;
+}
+
+// 录像数据
+message ReplayData {
+    string key = 1;    // 录像索引
+    int64 seed = 2;   // 随机种子
+    int32 time = 3;   // 战斗时间
+    repeated BattlePlayerData player_data = 4;   // 玩家数据
+    map<int32, FrameData> frame_list = 5;  // 帧数据
+    BattleResult result = 6;   // 战斗结果
+    string version = 7;    // 版本号
+}
+
+// 战报玩家概要信息
+message ReplayCard {
+    int32 id = 1; // 卡牌id
+    int32 level = 2;  // 卡牌等级
+}
+
+message ReplayPlayerSummary {
+    string uid = 1;        // 玩家id
+    string nick = 2;       // 昵称
+    string avatar = 3;     // 头像
+    int32 level = 4;      // 等级
+    string country = 5;    // 国家
+    int32 cup = 6;        // 杯数
+    string guild_name = 7;  // 公会名字
+    int64 guild_flag = 8;  // 公会旗帜
+    repeated ReplayCard cards = 9;  // 玩家拥有的卡牌信息
+}
+
+// 战报概要信息
+message ReplaySummaryData {
+    string key = 1;                        // 战报索引
+    int32 time = 2;                       // 战斗时间
+    BattleResult result = 3;               // 战斗结果
+    repeated ReplayPlayerSummary player_data = 4;  // 玩家数据
+    string version = 5;                    // 版本号
+    bool play = 6;                      // 是否能播放
+}
+
+message DamageLabelData {
+    int32 flag = 1;    // 1普通伤害，2暴击伤害，3普通加血，4暴击加血
+    int32 val = 2; // 具体数值
+    int32 pos_x = 3;
+    int32 pos_y = 4;   // 飘出位置
+}

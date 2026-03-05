@@ -1,0 +1,316 @@
+syntax = "proto3";
+package common;
+
+// 玩家数据
+message PlayerData { 
+    int64 id = 1;
+    string name = 2;
+    int64 guild_id = 3;
+}
+
+message UserInfo {
+    int64 union_id = 1;         // 唯一id
+    string account = 2;         // 账号
+    string nick = 3;            // 昵称
+    string email = 4;           // 邮箱
+    string phone_number = 5;    // 手机号码
+    int32 group = 6;           // 用户组
+    int64 create_time = 7;      // 创建时间
+}
+
+message WorldUserInfo {
+    string uid = 1;
+    string nick = 2;
+    string gender = 3;
+    string country = 4;
+    string avatar = 5;
+    int32 level = 6;
+    int32 cups = 7;
+    int32 game_id = 8;
+    int32 gate_id = 9;
+    string gate_address = 10;
+}
+
+// 玩家相关数据定义
+
+message EquipInfo {
+    int32 id = 1;   // 装备模板id
+    int32 hero = 2; // 所装备的英雄
+    repeated int32 attr = 3;    // 随机属性
+}
+
+// 英雄数据
+message Hero {
+    int32 level = 1;     // 英雄等级
+    int32 san = 2;
+    int64 revocer_time = 3;
+    int32 model_id = 4; // 当前所用的模型id
+    int32 skin_id = 5;  // 皮肤id
+    repeated int64 equips = 6;  // 装备列表，记录装备实例id
+}
+
+message BagItemNum {
+    int32 num = 1;  // 总数量
+    int32 tradable = 2;  // 可交易数量
+}
+
+// 收藏品数据
+message Collection {
+    int32 level = 1;    // 等级
+    int32 num = 2;      // 当前拥有数量
+}
+
+// 背包数据
+message BagInfo {
+    map<int64, EquipInfo> equips = 1;    // 装备
+    map<int32, BagItemNum> items = 2;// 普通道具
+    map<int32, BagItemNum> cards = 3;// 卡牌
+    map<int32, int32> drift_bottles = 4;// 漂流瓶
+    map<int32, int32> picture_puzzles = 5;// 拼图
+    map<int32, int32> collections = 6;// 收藏品
+    map<int32, int32> diy_flags = 7;// diy旗帜
+    int32 equip_volume = 8;// 装备容量
+    int32 extend_num = 9;// 已扩充次数
+}
+
+// 商店数据
+message GoodsRecordInfo {
+    int32 buy_times = 1;    // 本期购买次数
+    int32 total_buy_times = 2;  // 总购买次数
+    int32 request_times = 3;    // 请求发起次数，包括未购买成功
+    int64 refresh_time = 4; // 最近一次刷新时间
+    string awards = 5;  // 奖励 todo
+}
+
+message ShopInfo {
+    map<int32, GoodsRecordInfo> goods = 1;
+}
+
+message TaskFreeAward {
+    repeated int32 ids = 1; // 免费奖励id
+    int32 get_index = 2;     // 上一次领取的奖励索引
+    int64 get_time = 3; // 上一次领奖时间
+}
+
+message TaskInfo {
+    int32 award_point = 1;// 任务点
+    int32 box = 2;// 任务宝箱
+    TaskFreeAward free = 3;// 免费奖励
+    int32 refresh_num = 4;// 今日任务刷新次数
+    repeated int32 box_seq = 5;// 任务宝箱生成序列
+    string box_seq_ver = 6;// 任务宝箱版本号
+    repeated int32 free_seq = 7;// 免费奖励序列
+    string free_seq_ver = 8;// 免费奖励版本号
+    map<int32, int32> task_list = 9;// 任务列表
+
+}
+
+message WaitEventData {
+    int32 id = 1;   // 事件id
+    int32 team = 2; // 队伍id
+    int32 tool = 3; // 当时使用的工具
+}
+
+message UserBaseInfo {
+    string nick = 1;    // 昵称
+    string gender = 2;  // 性别
+    string country = 3; // 国家
+    int32 avatar = 4;   // 头像
+    string imel = 5;    // 设备号
+    string device = 6;  // 设备名
+}
+
+message LoginInfo {
+    int64 first_time = 1; // 首次登陆时间
+    int64 last_time = 2;  // 上次登录时间
+    string last_ip = 3;   // 上次登录ip
+    int32 login_days = 4; // 累计登陆天数
+}
+
+message PaymentInfo {
+    int32 total_echarge = 1;   // 累计充值
+    int32 daily_recharge = 2;   // 今日充值
+    int32 last_recharge = 3;    // 最后一次充值金额
+    int64 last_recharge_time = 4;    // 最后一次充值时间
+}
+
+message CosumeInfo {
+    int32 cash = 1;       // 历史消耗cash
+    int32 bindcash = 2;   // 历史消耗绑定cash
+}
+
+message ResourceInfo {
+    int64 cash = 1;       // 现有cash
+    int64 bindcash = 2;   // 现有绑定cash
+    int64 exp = 3;        // 经验
+    int64 gold = 4;       // 金币
+    int32 fairy_age = 5;  // 书页
+    int32 candy = 6;      // 糖果
+}
+
+message HeroTeam {
+    repeated int32 heros = 1;
+}
+
+message BoxInfo {
+    int32 bid = 1;  // 宝箱实例id
+    int32 id = 2;   // 宝箱id
+    int64 time = 3; // 开启时间，已经解锁的才有时间
+}
+
+message DropInfo {
+    int32 num = 1;
+    int32 cycle = 2;
+}
+
+message ArenaInfo {
+    int32 history_cups = 1;    // 本次联赛历史最高奖杯
+    repeated int32 prize_record = 2;  // 领奖记录
+    int32 win_box_index = 3;    // 胜利宝箱索引
+    int32 win_count = 4;       // 总共胜利次数
+    int32 cur_win_repeat = 5;   // 当前连胜
+    int32 max_win_repeat = 6;   // 最高连胜
+    int32 total_win = 7;       // 完胜次数，获得胜利时对方获得0皇冠的场次
+    int32 turn_the_tide = 8;    // 反败为胜次数
+    int32 season_join_count = 9;    // 本赛季参加次数
+    int32 season_win_count = 10; // 本赛季胜利次数
+    int32 pre_league_id = 11;    // 上一届联赛id
+    int32 cur_league_id = 12;    // 本届联赛id
+    int32 pre_rank_global = 13;
+    int32 pre_rank_local = 14;
+    int32 cur_rank_global = 15;
+    int32 cur_rank_local = 16;
+}
+
+message MarkInfo {
+    int32 user_name_modify_count = 1;    // 角色名字修改次数
+    int32 guild_name_modify_count = 2;   // 公会名字修改次数
+    int32 ad_times_today = 3;    // 今日观看广告次数
+}
+
+message BindInfo {
+    string wx = 1;
+    string qq = 2;
+    string fb = 3;
+    string gmail = 4;
+    string twitter = 5;
+}
+
+message AdventureTeamInfo {
+    int32 id = 1;             // 区域id
+    int64 start_time = 2;      // 开始探索时间
+    int32 cost_time = 3;       // 持续时间
+    int64 move_start_time = 4;  // 移动开始时间
+    int32 move_start_point = 5; // 移动起始坐标
+    int32 move_target = 6;     // 移动目标
+    int32 using_tool = 7;      // 当前使用的探索工具
+    map<int32, int32> slots = 8;            // 英雄槽位
+}
+
+message AdventureAreaInfo {
+    int32 level = 1;
+    int32 progress = 2;
+    map<int32, int32> once_award = 3;
+    map<int32, int32> upgrade_award = 4;
+}
+
+message EventModInfo {
+    repeated int32 seq = 1;
+}
+message RandomEventInfo {
+    string version = 1;
+    EventModInfo mod = 2;
+}
+
+message AdventureInfo {
+    AdventureTeamInfo teams = 1;
+    int32 cur_select_team = 2;
+    map<int32, AdventureAreaInfo> areas = 3;
+    RandomEventInfo random_event = 4;
+}
+
+message EventInfo {
+    repeated WaitEventData wait_queue = 1;
+    map<int32, int32> happend = 2;
+}
+
+message ToolInfo {
+    int32 id = 1;         // 工具id
+    int64 use_time = 2;     // 上次使用时间
+    int32 use_num = 3;      // 本周期内使用次数
+    int32 ad_num = 4;       // 本周期内看广告次数
+    int32 has_num = 5;      // 拥有的数量
+}
+
+message CollectionInfo {
+    int32 id = 1;
+    int32 level = 2;
+}
+
+message WorkTableInfo {
+    map<int32, ToolInfo> tools = 1;
+    map<int32, CollectionInfo> collections = 2;
+}
+
+message FairyThemeInfo {
+    int32 id = 1; // 本次活动id
+    int32 level = 2;// 当前活动等级
+    bool specialOpened = 3;// 是否开启特别篇
+    int64 record_normal = 4;    // 领奖记录
+    int64 record_special = 5;
+}
+
+message GuideInfo {
+    int32 task_id = 1;         // 当前引导任务id
+    int32 step_id = 2;         // 当前步骤id
+    map<int32, int32> jump_record = 3;         // 跳过的步骤
+    repeated int32 finished_task_ids = 4;    // 已完成的任务id
+}
+
+// 公会信息
+message UserGuildInfo {
+    string gid = 1;
+    string name = 2;
+    int32 flag = 3;
+    string location = 4;
+}
+
+message UserProfile {
+    string uid = 1;
+    string open_id = 2;
+    UserBaseInfo info = 3;  // 基础信息
+    LoginInfo login = 4;    // 登录信息
+    int32 level = 5;    // 等级
+    int32 cups = 6; // 杯数
+    int32 history_max_cups = 7; // 历史最高杯数
+    int32 ad_times = 8;     // 观看广告次数
+    int32 guest = 9;         // 是否是游客账号
+    PaymentInfo payment = 10;   // 充值信息
+    CosumeInfo consume = 11;    // 消费信息
+    ResourceInfo resource = 12; // 玩家可以获得和消耗的一些资源
+    map<int32, Hero> heros = 13;    // 英雄列表
+    map<int32, HeroTeam> hero_teams = 14; // 上阵英雄小队
+    int32 cur_hero_team = 15;       // 当前使用的英雄队伍
+    BagInfo bag = 16;       // 背包数据
+    ShopInfo shop = 17;     // 商店数据
+    map<string, int32> mail = 18;       // 邮件信息
+    TaskInfo task = 19; // 任务信息
+    map<int32, BoxInfo> box = 20;   // 宝箱数据
+    map<int32, DropInfo> drop = 21;  // 掉落数据
+    ArenaInfo arena = 22;   // 竞技场数据
+    MarkInfo mark = 23;
+    BindInfo bind = 24; // 绑定的第三方账号信息信息
+    repeated int32 has_avatars = 25;     // 已经获得的头像
+    AdventureInfo adventure = 26;   // 冒险数据
+    EventInfo events = 27;  
+    WorkTableInfo work_table = 28;  // 工作台数据
+    FairyThemeInfo fairy_theme = 29;    // 书页数据
+    GuideInfo guide = 30;   // 引导数据
+    repeated int32 unlocked_skins = 31; // 已解锁的皮肤
+    map<int32, int64> skin_expire = 32; // 记录皮肤的过期时间
+    repeated int32 marked_sale_ids = 33;
+    repeated string marked_goods = 34;
+    map<int32, int32> diy_flags = 35;
+    string custom_data = 36;    // 客户端自定义数据
+    UserGuildInfo guild = 37;   // 公会数据
+}

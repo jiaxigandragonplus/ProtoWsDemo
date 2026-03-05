@@ -1,0 +1,114 @@
+syntax = "proto3";
+package battle;
+
+import "battle_common.proto";
+import "item_common.proto";
+
+// 发送命令
+message CSendCommand {
+    int64 inst_id = 1;  // 卡牌实例id
+    int32 card = 2; // 卡牌模板id
+    repeated RouteInfo routes = 3;  // 路线  
+}
+message SSendCommand {
+
+}
+
+// 通知服务器资源加载完成
+message CResLoadCommpelte {
+
+}
+message SResLoadComplete {
+
+}
+
+// 丢弃卡片
+message CRemoveCard {
+    int64 inst_id = 1;  // 卡牌实例id
+}
+message SRemoveCard {
+
+}
+
+// 通知服务器战斗结束
+message CBattleOver {
+    string winner = 1;     // 获胜方
+    repeated int32 cups = 2;     // 双方杯数变化
+    repeated int32 crowns = 3;   // 皇冠数
+    int32 turnTheTile = 4;    // 反败为胜
+    int32 endFrame = 5;  // 战斗结束帧
+}
+message SBattleOver {
+
+}
+
+// 战斗中抽卡
+message CDrawCard {
+
+}
+message SDrawCard {
+    int64 inst_id = 1;
+    int32 card_id = 2;
+}
+
+// 获取本地战斗奖励
+message CGetLocalWinAwards {
+
+}
+message SGetLocalWinAwards {
+    repeated Reward awards = 1;
+}
+
+// 检查是否在战斗中
+message CCheckIsInBattle {
+
+}
+message SCheckIsInBattle {
+    BattleFieldData replay_data = 1;
+}
+
+// 请求从当前帧开始之后的最新帧数据，用于在战斗中断线重连
+message CRequestFrameData {
+
+}
+message SRequestFrameData {
+    int32 cur_frame = 1;
+    map<int32, FrameData> frame_data = 2;
+}
+
+// 战斗推送消息
+// =====================
+// 通知战斗已经初始化，客户端收到此消息后开始加载资源
+message PNotifyBattleInit {
+
+}
+
+// 通知战斗开始
+message PNotifyBattleStart {
+
+}
+
+// 同步帧数据
+message PSyncFrameData {
+
+}
+
+// 通知发牌
+message PNotifyNewCard {
+
+}
+
+// 通知能量回复
+message PNotifyPowerRecover {
+
+}
+
+// 通知战斗结束
+message PNotifyBattleOver {
+
+}
+
+// 通知敌方手牌数量
+message PNotifyEnemyCardNum {
+
+}
