@@ -159,7 +159,7 @@ export class Framework {
           redisClient,
           {
             serviceName: discoveryConfig.serviceName,
-            instanceId: this.generateInstanceId(),
+            instanceId: this.serverId,
             host: serverConfig.host,
             port: serverConfig.port + this.serverId, // 使用配置中的端口
             heartbeatInterval: discoveryConfig.heartbeatInterval,

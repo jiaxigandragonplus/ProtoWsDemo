@@ -10,7 +10,7 @@ import { Logger } from '../logger/Logger';
  * 服务实例信息
  */
 export interface ServiceInstance {
-  id: string;
+  id: number;
   name: string;
   host: string;
   port: number;
@@ -24,7 +24,7 @@ export interface ServiceInstance {
  */
 export interface DiscoveryConfig {
   serviceName: string;
-  instanceId: string;
+  instanceId: number;
   host: string;
   port: number;
   weight?: number;
@@ -74,7 +74,7 @@ export class ServiceDiscovery {
   /**
    * 生成服务实例数据的 key
    */
-  private getInstanceKey(instanceId: string): string {
+  private getInstanceKey(instanceId: number): string {
     return `${this.getServiceKey()}:${ServiceDiscovery.SERVICE_INSTANCE_KEY}:${instanceId}`;
   }
 
@@ -125,7 +125,7 @@ export class ServiceDiscovery {
     await this.redisClient.set(instanceKey, JSON.stringify(instanceData));
 
     // 添加到服务 zSet，分数为当前时间戳
-    await this.redisClient.zadd(serviceKey, now, this.config.instanceId);
+    await this.redisClient.zadd(serviceKey, now, this.config.instanceId.toString());
 
     this.logger.info(
       `注册服务实例：${this.config.serviceName}/${this.config.instanceId} @ ${this.config.host}:${this.config.port}`,
@@ -158,7 +158,7 @@ export class ServiceDiscovery {
     const now = Date.now();
 
     // 更新 zSet 中的分数
-    await this.redisClient.zadd(serviceKey, now, this.config.instanceId);
+    await this.redisClient.zadd(serviceKey, now, this.config.instanceId.toString());
 
     // 更新实例信息中的最后心跳时间
     const instanceKey = this.getInstanceKey(this.config.instanceId);
@@ -216,7 +216,7 @@ export class ServiceDiscovery {
       }
 
       // 获取实例详细信息
-      const instanceKey = this.getInstanceKey(instanceId);
+      const instanceKey = this.getInstanceKey(parseInt(instanceId));
       const instanceData = await this.redisClient.get(instanceKey);
       
       if (instanceData) {
@@ -229,7 +229,7 @@ export class ServiceDiscovery {
     // 清理超时实例
     for (const instanceId of expiredInstanceIds) {
       await this.redisClient.zrem(serviceKey, instanceId);
-      const instanceKey = this.getInstanceKey(instanceId);
+      const instanceKey = this.getInstanceKey(parseInt(instanceId));
       await this.redisClient.del(instanceKey);
       this.logger.info(`移除超时服务实例：${instanceId}`, 'ServiceDiscovery');
     }
@@ -399,7 +399,7 @@ export class ServiceDiscovery {
       const serviceKey = this.getServiceKey();
       const instanceKey = this.getInstanceKey(this.config.instanceId);
 
-      await this.redisClient.zrem(serviceKey, this.config.instanceId);
+      await this.redisClient.zrem(serviceKey, this.config.instanceId.toString());
       await this.redisClient.del(instanceKey);
 
       this.logger.info(

@@ -36,9 +36,9 @@ export class GateServer {
     private serverId: number = 0;
     
     // 游戏服务器连接池，key 为服务实例 ID
-    private gameConnections: Map<string, GameServerConnection> = new Map();
+    private gameConnections: Map<number, GameServerConnection> = new Map();
     // 当前会话到游戏服务器的路由映射，key 为 sessionId (number 类型)
-    private sessionRoutes: Map<number, string> = new Map();
+    private sessionRoutes: Map<number, number> = new Map();
 
     constructor(config: GateConfig, serverId: number) {
         this.config = config;
@@ -188,7 +188,7 @@ export class GateServer {
         logger.info(`正在连接到游戏服务器：${gameUrl} (ID: ${instance.id})`, 'GateServer');
 
         try {
-            const client = await networkManager.createClient(`game:${instance.id}`, {
+            const client = await networkManager.createClient('game', instance.id, {
                 url: gameUrl,
                 reconnectInterval: 3000,
                 maxReconnectAttempts: 10,
@@ -264,7 +264,7 @@ export class GateServer {
     /**
      * 处理来自游戏服务器的消息
      */
-    private handleGameMessage(data: Buffer, instanceId: string): void {
+    private handleGameMessage(data: Buffer, instanceId: number): void {
         try {
             const uint8Data = new Uint8Array(data);
             
