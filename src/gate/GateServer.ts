@@ -1,8 +1,8 @@
 import WebSocket from 'ws';
-import { PlayerSession } from './PlayerSession';
+import { ClientSession } from './ClientSession';
 import { MessageHandler } from './MessageHandler';
 import { ProtoLoader } from './ProtoLoader';
-import { PlayerManager } from './PlayerManager';
+import { ClientManager } from './ClientManager';
 import { Framework, getFramework } from '../framework/Framework';
 import { WsClient } from '../framework/network/WsClient';
 import { ServiceInstance } from '../framework/discovery/ServiceDiscovery';
@@ -64,9 +64,12 @@ export class GateServer {
         const logger = this.framework.getLogger();
         logger.info('Gate 服务器启动中...', 'GateServer');
 
-        // 初始化框架
+        // 初始化框架，传入消息处理函数
         await this.framework.init(this.serverId, {
-            configPath: `config/${process.env.NODE_ENV || 'local'}/gate.json`
+            configPath: `config/${process.env.NODE_ENV || 'local'}/gate.json`,
+            handleMessage: (data: Buffer, serverType: string, id: number) => {
+                this.handleFrameworkMessage(data, serverType, id);
+            }
         });
 
         // 启动框架（包括服务发现）
@@ -82,10 +85,6 @@ export class GateServer {
         if (wsServer) {
             wsServer.on('connection', (conn) => {
                 this.handleConnection(conn.socket);
-            });
-
-            wsServer.on('message', (event) => {
-                this.handleMessage(event.socket, event.data);
             });
 
             wsServer.on('close', (event) => {
@@ -235,8 +234,8 @@ export class GateServer {
         logger.debug('新客户端连接', 'GateServer');
         
         // 创建玩家会话
-        const session = new PlayerSession(ws);
-        PlayerManager.registerSession(ws, session);
+        const session = new ClientSession(ws);
+        ClientManager.registerSession(ws, session);
     }
 
     /**
@@ -244,7 +243,7 @@ export class GateServer {
      */
     private handleMessage(ws: WebSocket, data: Buffer): void {
         try {
-            const session = PlayerManager.getSession(ws);
+            const session = ClientManager.getSession(ws);
             if (!session) {
                 this.framework.getLogger().warn('未找到会话，忽略消息', 'GateServer');
                 return;
@@ -258,6 +257,29 @@ export class GateServer {
             });
         } catch (error) {
             this.framework.getLogger().error('处理消息时出错', error as Error, 'GateServer');
+        }
+    }
+
+    /**
+     * 处理 Framework 传来的 WebSocket 消息
+     * @param data - 消息数据
+     * @param serverType - 服务器类型
+     * @param id - 服务器实例 ID
+     */
+    private handleFrameworkMessage(data: Buffer, serverType: string, id: number): void {
+        try {
+            // Gate 服务器的消息已经在 handleMessage 中通过 wsServer.on('message') 处理
+            // 此方法主要用于处理来自其他服务器的消息
+            this.framework.getLogger().debug(
+                `收到 Framework 消息 - serverType: ${serverType}, id: ${id}`,
+                'GateServer'
+            );
+        } catch (error) {
+            this.framework.getLogger().error(
+                '处理 Framework 消息时出错',
+                error as Error,
+                'GateServer'
+            );
         }
     }
 
@@ -307,7 +329,7 @@ export class GateServer {
      * 转发 WebsocketMessage 到游戏服务器
      * 按需建立连接
      */
-    private async forwardToGame(session: PlayerSession, wsMessage: any): Promise<void> {
+    private async forwardToGame(session: ClientSession, wsMessage: any): Promise<void> {
         try {
             const sessionId = session.getGateSessionId();
             
@@ -370,13 +392,13 @@ export class GateServer {
      * 处理连接关闭
      */
     private handleClose(ws: WebSocket): void {
-        const session = PlayerManager.getSession(ws);
+        const session = ClientManager.getSession(ws);
         if (session) {
             const sessionId = session.getGateSessionId();
             // 清理会话路由
             this.sessionRoutes.delete(sessionId);
             
-            PlayerManager.removeSession(ws);
+            ClientManager.removeSession(ws);
             
             if (session.isLogin()) {
                 this.framework.getLogger().info(
@@ -393,14 +415,14 @@ export class GateServer {
      * 获取在线玩家数量
      */
     getOnlineCount(): number {
-        return PlayerManager.getOnlineCount();
+        return ClientManager.getOnlineCount();
     }
 
     /**
      * 获取所有会话
      */
-    getSessions(): Map<WebSocket, PlayerSession> {
-        return PlayerManager.getAllSessions();
+    getSessions(): Map<WebSocket, ClientSession> {
+        return ClientManager.getAllSessions();
     }
 
     /**
@@ -428,7 +450,7 @@ export class GateServer {
         this.sessionRoutes.clear();
         
         // 关闭所有客户端连接
-        for (const [ws, session] of PlayerManager.getAllSessions()) {
+        for (const [ws, session] of ClientManager.getAllSessions()) {
             session.close();
         }
         
@@ -436,6 +458,13 @@ export class GateServer {
         await this.framework.shutdown();
         
         logger.info('Gate 服务器已关闭', 'GateServer');
+    }
+
+    async sendMessage(serverType: string, id: number, message: any): Promise<void> {
+        const logger = this.framework.getLogger();
+        logger.info(`[GateServer] 发送消息给 ${serverType} 服务器 ${id}`, 'GateServer');
+        
+        this.framework.sendMessage(serverType, id, message);
     }
 }
 

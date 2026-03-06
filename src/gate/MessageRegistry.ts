@@ -1,10 +1,10 @@
-import { PlayerSession } from './PlayerSession';
+import { ClientSession } from './ClientSession';
 import * as protobuf from 'protobufjs';
 
 /**
  * 消息处理器类型定义
  */
-export type MessageHandlerFn = (session: PlayerSession, data: Uint8Array, protoType: protobuf.Type) => void;
+export type MessageHandlerFn = (session: ClientSession, data: Uint8Array, protoType: protobuf.Type) => void;
 
 /**
  * 消息 ID 配置

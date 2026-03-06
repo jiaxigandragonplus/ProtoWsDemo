@@ -9,6 +9,15 @@ import { DatabaseManager } from './db/DatabaseManager';
 import { NetworkManager } from './network/NetworkManager';
 import { ServiceDiscovery, DiscoveryConfig } from './discovery/ServiceDiscovery';
 import { RedisClient } from './db/RedisClient';
+import WebSocket from 'ws';
+
+/**
+ * WebSocket 消息处理函数类型
+ * @param data - 接收到的消息数据
+ * @param serverType - 服务器类型（gate/game 等）
+ * @param id - 服务器实例 ID
+ */
+export type WebsocketMessageHandler = (data: Buffer, serverType: string, id: number) => void | Promise<void>;
 
 /**
  * 框架配置接口
@@ -16,6 +25,7 @@ import { RedisClient } from './db/RedisClient';
 export interface FrameworkConfig {
   configPath?: string;
   config?: AppConfig;
+  handleMessage?: WebsocketMessageHandler;
 }
 
 /**
@@ -31,6 +41,7 @@ export class Framework {
   private isInitialized: boolean = false;
   private isRunning: boolean = false;
   protected serverId: number = 0;
+  private handleMessageCallback: WebsocketMessageHandler | null = null;
 
   private constructor() {
     this.configManager = ConfigManager.getInstance();
@@ -95,6 +106,11 @@ export class Framework {
 
     this.serverId = serverId;
 
+    // 保存消息处理回调
+    if (config.handleMessage) {
+      this.handleMessageCallback = config.handleMessage;
+    }
+
     // 加载配置
     if (config.configPath) {
       this.configManager.load(config.configPath);
@@ -128,6 +144,14 @@ export class Framework {
       host: serverConfig.host,
       port: serverConfig.port + this.serverId
     });
+
+    // 注册服务器端消息处理
+    const wsServer = this.networkManager.getServer();
+    if (wsServer) {
+      wsServer.on('message', (event: { socket: WebSocket; data: Buffer }) => {
+        this.handleWebsocketMessage(event.data, 'local', this.serverId);
+      });
+    }
 
     this.isInitialized = true;
     this.logger.info('框架初始化完成', 'Framework');
@@ -247,6 +271,10 @@ export class Framework {
       client = await this.networkManager.createClient(serverType, id, {
         url: `ws://${serviceInfo.host}:${serviceInfo.port}`,
       });
+
+      client.on('message', (data: Buffer) => {
+        this.handleWebsocketMessage(data, serverType, id);
+      });
     }
 
     // 将消息对象序列化为 JSON 字符串
@@ -255,6 +283,24 @@ export class Framework {
     
     if (!success) {
       this.logger.warn(`发送消息失败：${serverType}:${id}`, 'Framework');
+    }
+  }
+
+  /**
+   * 处理 WebSocket 消息
+   * @param data - 接收到的消息数据
+   * @param serverType - 服务器类型
+   * @param id - 服务器实例 ID
+   */
+  private handleWebsocketMessage(data: Buffer, serverType: string, id: number): void {
+    if (this.handleMessageCallback) {
+      try {
+        this.handleMessageCallback(data, serverType, id);
+      } catch (error) {
+        this.logger.error('WebSocket 消息处理异常', error as Error, 'Framework');
+      }
+    } else {
+      this.logger.warn('未注册 WebSocket 消息处理器', 'Framework');
     }
   }
 }

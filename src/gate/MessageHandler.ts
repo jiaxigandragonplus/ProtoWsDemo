@@ -1,8 +1,8 @@
-import { PlayerSession } from './PlayerSession';
+import { ClientSession } from './ClientSession';
 import { ProtoLoader } from './ProtoLoader';
 import { MessageRegistry } from './MessageRegistry';
 import * as protobuf from 'protobufjs';
-import { PlayerManager } from './PlayerManager';
+import { ClientManager } from './ClientManager';
 
 /**
  * 消息 ID 定义（保留用于向后兼容）
@@ -40,7 +40,7 @@ export class MessageHandler {
      * 使用 WebsocketMessage 格式，先按 PBPackage 解压，然后根据 message_type 找处理函数
      * 根据 uri 前缀判断消息发往哪个服务器
      */
-    static handleMessage(session: PlayerSession, data: Uint8Array): void {
+    static handleMessage(session: ClientSession, data: Uint8Array): void {
         try {
             // 使用 PBPackage 解压
             const pbPackageType = ProtoLoader.PBPackage;
@@ -68,7 +68,7 @@ export class MessageHandler {
      * 处理 WebsocketMessage 格式的消息
      * 根据 uri 前缀判断消息发往哪个服务器
      */
-    static handleWebsocketMessage(session: PlayerSession, data: Uint8Array, onForwardToGame: (wsMessage: any) => void): void {
+    static handleWebsocketMessage(session: ClientSession, data: Uint8Array, onForwardToGame: (wsMessage: any) => void): void {
         try {
             // 使用 WebsocketMessage 解压
             const wsMessageType = ProtoLoader.WebsocketMessage;
@@ -105,7 +105,7 @@ export class MessageHandler {
     /**
      * 处理登录请求
      */
-    static handleLogin(session: PlayerSession, data: Uint8Array, protoType: protobuf.Type): void {
+    static handleLogin(session: ClientSession, data: Uint8Array, protoType: protobuf.Type): void {
         try {
             const loginRequest = protoType.decode(data) as any;
             console.log(`收到登录请求 - 用户名：${loginRequest.name}, 密码：${loginRequest.password}`);
@@ -137,7 +137,7 @@ export class MessageHandler {
     /**
      * 处理回显请求
      */
-    static handleEcho(session: PlayerSession, data: Uint8Array, protoType: protobuf.Type): void {
+    static handleEcho(session: ClientSession, data: Uint8Array, protoType: protobuf.Type): void {
         try {
             // 检查是否已登录
             if (!session.isLogin()) {
@@ -165,7 +165,7 @@ export class MessageHandler {
     /**
      * 发送响应给客户端（使用 WebsocketMessage 格式）
      */
-    private static sendWebsocketResponse(session: PlayerSession, messageType: string, uri: string, payload: Uint8Array): void {
+    private static sendWebsocketResponse(session: ClientSession, messageType: string, uri: string, payload: Uint8Array): void {
         try {
             const wsMessageType = ProtoLoader.WebsocketMessage;
             const wsMessage = wsMessageType.create({
@@ -214,7 +214,7 @@ export class MessageHandler {
             console.log(`[MessageHandler] GameToGate - SessionId: ${sessionId}, MessageId: ${messageId}, MessageType: ${messageType}`);
 
             // 获取玩家会话
-            const session = PlayerManager.getSessionByGateId(sessionId);
+            const session = ClientManager.getSessionByGateId(sessionId);
             if (!session) {
                 console.warn(`[MessageHandler] 未找到会话 - SessionId: ${sessionId}`);
                 return;

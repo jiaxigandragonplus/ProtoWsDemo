@@ -1,10 +1,10 @@
 import WebSocket from 'ws';
 
 /**
- * 玩家会话类
+ * 客户端会话类
  * 负责管理单个客户端的连接状态和玩家信息
  */
-export class PlayerSession {
+export class ClientSession {
     private ws: WebSocket;
     private playerId: number = 0;
     private isLoggedIn: boolean = false;
