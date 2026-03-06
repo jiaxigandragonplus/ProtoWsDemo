@@ -8211,200 +8211,200 @@ export namespace game {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a CGetGuildList. */
-    interface ICGetGuildList {
+    /** Properties of a CGameGetGuildList. */
+    interface ICGameGetGuildList {
 
-        /** CGetGuildList offset */
+        /** CGameGetGuildList offset */
         offset?: (number|null);
 
-        /** CGetGuildList limit */
+        /** CGameGetGuildList limit */
         limit?: (number|null);
     }
 
-    /** Represents a CGetGuildList. */
-    class CGetGuildList implements ICGetGuildList {
+    /** Represents a CGameGetGuildList. */
+    class CGameGetGuildList implements ICGameGetGuildList {
 
         /**
-         * Constructs a new CGetGuildList.
+         * Constructs a new CGameGetGuildList.
          * @param [properties] Properties to set
          */
-        constructor(properties?: game.ICGetGuildList);
+        constructor(properties?: game.ICGameGetGuildList);
 
-        /** CGetGuildList offset. */
+        /** CGameGetGuildList offset. */
         public offset: number;
 
-        /** CGetGuildList limit. */
+        /** CGameGetGuildList limit. */
         public limit: number;
 
         /**
-         * Creates a new CGetGuildList instance using the specified properties.
+         * Creates a new CGameGetGuildList instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns CGetGuildList instance
+         * @returns CGameGetGuildList instance
          */
-        public static create(properties?: game.ICGetGuildList): game.CGetGuildList;
+        public static create(properties?: game.ICGameGetGuildList): game.CGameGetGuildList;
 
         /**
-         * Encodes the specified CGetGuildList message. Does not implicitly {@link game.CGetGuildList.verify|verify} messages.
-         * @param message CGetGuildList message or plain object to encode
+         * Encodes the specified CGameGetGuildList message. Does not implicitly {@link game.CGameGetGuildList.verify|verify} messages.
+         * @param message CGameGetGuildList message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: game.ICGetGuildList, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game.ICGameGetGuildList, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified CGetGuildList message, length delimited. Does not implicitly {@link game.CGetGuildList.verify|verify} messages.
-         * @param message CGetGuildList message or plain object to encode
+         * Encodes the specified CGameGetGuildList message, length delimited. Does not implicitly {@link game.CGameGetGuildList.verify|verify} messages.
+         * @param message CGameGetGuildList message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: game.ICGetGuildList, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game.ICGameGetGuildList, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a CGetGuildList message from the specified reader or buffer.
+         * Decodes a CGameGetGuildList message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns CGetGuildList
+         * @returns CGameGetGuildList
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.CGetGuildList;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.CGameGetGuildList;
 
         /**
-         * Decodes a CGetGuildList message from the specified reader or buffer, length delimited.
+         * Decodes a CGameGetGuildList message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns CGetGuildList
+         * @returns CGameGetGuildList
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.CGetGuildList;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.CGameGetGuildList;
 
         /**
-         * Verifies a CGetGuildList message.
+         * Verifies a CGameGetGuildList message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a CGetGuildList message from a plain object. Also converts values to their respective internal types.
+         * Creates a CGameGetGuildList message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns CGetGuildList
+         * @returns CGameGetGuildList
          */
-        public static fromObject(object: { [k: string]: any }): game.CGetGuildList;
+        public static fromObject(object: { [k: string]: any }): game.CGameGetGuildList;
 
         /**
-         * Creates a plain object from a CGetGuildList message. Also converts values to other types if specified.
-         * @param message CGetGuildList
+         * Creates a plain object from a CGameGetGuildList message. Also converts values to other types if specified.
+         * @param message CGameGetGuildList
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: game.CGetGuildList, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game.CGameGetGuildList, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this CGetGuildList to JSON.
+         * Converts this CGameGetGuildList to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for CGetGuildList
+         * Gets the default type url for CGameGetGuildList
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a SGetGuildList. */
-    interface ISGetGuildList {
+    /** Properties of a SGameGetGuildList. */
+    interface ISGameGetGuildList {
 
-        /** SGetGuildList list */
+        /** SGameGetGuildList list */
         list?: (common.IGuildSimpleInfo[]|null);
     }
 
-    /** Represents a SGetGuildList. */
-    class SGetGuildList implements ISGetGuildList {
+    /** Represents a SGameGetGuildList. */
+    class SGameGetGuildList implements ISGameGetGuildList {
 
         /**
-         * Constructs a new SGetGuildList.
+         * Constructs a new SGameGetGuildList.
          * @param [properties] Properties to set
          */
-        constructor(properties?: game.ISGetGuildList);
+        constructor(properties?: game.ISGameGetGuildList);
 
-        /** SGetGuildList list. */
+        /** SGameGetGuildList list. */
         public list: common.IGuildSimpleInfo[];
 
         /**
-         * Creates a new SGetGuildList instance using the specified properties.
+         * Creates a new SGameGetGuildList instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns SGetGuildList instance
+         * @returns SGameGetGuildList instance
          */
-        public static create(properties?: game.ISGetGuildList): game.SGetGuildList;
+        public static create(properties?: game.ISGameGetGuildList): game.SGameGetGuildList;
 
         /**
-         * Encodes the specified SGetGuildList message. Does not implicitly {@link game.SGetGuildList.verify|verify} messages.
-         * @param message SGetGuildList message or plain object to encode
+         * Encodes the specified SGameGetGuildList message. Does not implicitly {@link game.SGameGetGuildList.verify|verify} messages.
+         * @param message SGameGetGuildList message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: game.ISGetGuildList, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game.ISGameGetGuildList, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified SGetGuildList message, length delimited. Does not implicitly {@link game.SGetGuildList.verify|verify} messages.
-         * @param message SGetGuildList message or plain object to encode
+         * Encodes the specified SGameGetGuildList message, length delimited. Does not implicitly {@link game.SGameGetGuildList.verify|verify} messages.
+         * @param message SGameGetGuildList message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: game.ISGetGuildList, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game.ISGameGetGuildList, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a SGetGuildList message from the specified reader or buffer.
+         * Decodes a SGameGetGuildList message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns SGetGuildList
+         * @returns SGameGetGuildList
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.SGetGuildList;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.SGameGetGuildList;
 
         /**
-         * Decodes a SGetGuildList message from the specified reader or buffer, length delimited.
+         * Decodes a SGameGetGuildList message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns SGetGuildList
+         * @returns SGameGetGuildList
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.SGetGuildList;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.SGameGetGuildList;
 
         /**
-         * Verifies a SGetGuildList message.
+         * Verifies a SGameGetGuildList message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a SGetGuildList message from a plain object. Also converts values to their respective internal types.
+         * Creates a SGameGetGuildList message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns SGetGuildList
+         * @returns SGameGetGuildList
          */
-        public static fromObject(object: { [k: string]: any }): game.SGetGuildList;
+        public static fromObject(object: { [k: string]: any }): game.SGameGetGuildList;
 
         /**
-         * Creates a plain object from a SGetGuildList message. Also converts values to other types if specified.
-         * @param message SGetGuildList
+         * Creates a plain object from a SGameGetGuildList message. Also converts values to other types if specified.
+         * @param message SGameGetGuildList
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: game.SGetGuildList, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game.SGameGetGuildList, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this SGetGuildList to JSON.
+         * Converts this SGameGetGuildList to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for SGetGuildList
+         * Gets the default type url for SGameGetGuildList
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */

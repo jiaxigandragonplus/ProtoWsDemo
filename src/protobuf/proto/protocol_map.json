@@ -211,9 +211,9 @@
         "method": "POST",
         "uri": "/game/guild/get_guild"
     },
-    "CGetGuildList": {
+    "CGameGetGuildList": {
         "method": "POST",
-        "uri": "/game/guild/get_guild_list"
+        "uri": "/game/guild/game_get_guild_list"
     },
     "CCreateGuild": {
         "method": "POST",

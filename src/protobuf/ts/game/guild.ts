@@ -19,12 +19,12 @@ export interface SGetGuild {
 }
 
 /** 获取公会列表 */
-export interface CGetGuildList {
+export interface CGameGetGuildList {
   offset: number;
   limit: number;
 }
 
-export interface SGetGuildList {
+export interface SGameGetGuildList {
   list: GuildSimpleInfo[];
 }
 

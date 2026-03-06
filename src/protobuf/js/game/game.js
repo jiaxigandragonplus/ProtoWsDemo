@@ -18154,25 +18154,25 @@ $root.game = (function() {
         return SGetGuild;
     })();
 
-    game.CGetGuildList = (function() {
+    game.CGameGetGuildList = (function() {
 
         /**
-         * Properties of a CGetGuildList.
+         * Properties of a CGameGetGuildList.
          * @memberof game
-         * @interface ICGetGuildList
-         * @property {number|null} [offset] CGetGuildList offset
-         * @property {number|null} [limit] CGetGuildList limit
+         * @interface ICGameGetGuildList
+         * @property {number|null} [offset] CGameGetGuildList offset
+         * @property {number|null} [limit] CGameGetGuildList limit
          */
 
         /**
-         * Constructs a new CGetGuildList.
+         * Constructs a new CGameGetGuildList.
          * @memberof game
-         * @classdesc Represents a CGetGuildList.
-         * @implements ICGetGuildList
+         * @classdesc Represents a CGameGetGuildList.
+         * @implements ICGameGetGuildList
          * @constructor
-         * @param {game.ICGetGuildList=} [properties] Properties to set
+         * @param {game.ICGameGetGuildList=} [properties] Properties to set
          */
-        function CGetGuildList(properties) {
+        function CGameGetGuildList(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -18180,43 +18180,43 @@ $root.game = (function() {
         }
 
         /**
-         * CGetGuildList offset.
+         * CGameGetGuildList offset.
          * @member {number} offset
-         * @memberof game.CGetGuildList
+         * @memberof game.CGameGetGuildList
          * @instance
          */
-        CGetGuildList.prototype.offset = 0;
+        CGameGetGuildList.prototype.offset = 0;
 
         /**
-         * CGetGuildList limit.
+         * CGameGetGuildList limit.
          * @member {number} limit
-         * @memberof game.CGetGuildList
+         * @memberof game.CGameGetGuildList
          * @instance
          */
-        CGetGuildList.prototype.limit = 0;
+        CGameGetGuildList.prototype.limit = 0;
 
         /**
-         * Creates a new CGetGuildList instance using the specified properties.
+         * Creates a new CGameGetGuildList instance using the specified properties.
          * @function create
-         * @memberof game.CGetGuildList
+         * @memberof game.CGameGetGuildList
          * @static
-         * @param {game.ICGetGuildList=} [properties] Properties to set
-         * @returns {game.CGetGuildList} CGetGuildList instance
+         * @param {game.ICGameGetGuildList=} [properties] Properties to set
+         * @returns {game.CGameGetGuildList} CGameGetGuildList instance
          */
-        CGetGuildList.create = function create(properties) {
-            return new CGetGuildList(properties);
+        CGameGetGuildList.create = function create(properties) {
+            return new CGameGetGuildList(properties);
         };
 
         /**
-         * Encodes the specified CGetGuildList message. Does not implicitly {@link game.CGetGuildList.verify|verify} messages.
+         * Encodes the specified CGameGetGuildList message. Does not implicitly {@link game.CGameGetGuildList.verify|verify} messages.
          * @function encode
-         * @memberof game.CGetGuildList
+         * @memberof game.CGameGetGuildList
          * @static
-         * @param {game.ICGetGuildList} message CGetGuildList message or plain object to encode
+         * @param {game.ICGameGetGuildList} message CGameGetGuildList message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        CGetGuildList.encode = function encode(message, writer) {
+        CGameGetGuildList.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.offset != null && Object.hasOwnProperty.call(message, "offset"))
@@ -18227,33 +18227,33 @@ $root.game = (function() {
         };
 
         /**
-         * Encodes the specified CGetGuildList message, length delimited. Does not implicitly {@link game.CGetGuildList.verify|verify} messages.
+         * Encodes the specified CGameGetGuildList message, length delimited. Does not implicitly {@link game.CGameGetGuildList.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof game.CGetGuildList
+         * @memberof game.CGameGetGuildList
          * @static
-         * @param {game.ICGetGuildList} message CGetGuildList message or plain object to encode
+         * @param {game.ICGameGetGuildList} message CGameGetGuildList message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        CGetGuildList.encodeDelimited = function encodeDelimited(message, writer) {
+        CGameGetGuildList.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a CGetGuildList message from the specified reader or buffer.
+         * Decodes a CGameGetGuildList message from the specified reader or buffer.
          * @function decode
-         * @memberof game.CGetGuildList
+         * @memberof game.CGameGetGuildList
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {game.CGetGuildList} CGetGuildList
+         * @returns {game.CGameGetGuildList} CGameGetGuildList
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        CGetGuildList.decode = function decode(reader, length, error) {
+        CGameGetGuildList.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.CGetGuildList();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.CGameGetGuildList();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -18276,30 +18276,30 @@ $root.game = (function() {
         };
 
         /**
-         * Decodes a CGetGuildList message from the specified reader or buffer, length delimited.
+         * Decodes a CGameGetGuildList message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof game.CGetGuildList
+         * @memberof game.CGameGetGuildList
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {game.CGetGuildList} CGetGuildList
+         * @returns {game.CGameGetGuildList} CGameGetGuildList
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        CGetGuildList.decodeDelimited = function decodeDelimited(reader) {
+        CGameGetGuildList.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a CGetGuildList message.
+         * Verifies a CGameGetGuildList message.
          * @function verify
-         * @memberof game.CGetGuildList
+         * @memberof game.CGameGetGuildList
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        CGetGuildList.verify = function verify(message) {
+        CGameGetGuildList.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.offset != null && message.hasOwnProperty("offset"))
@@ -18312,17 +18312,17 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a CGetGuildList message from a plain object. Also converts values to their respective internal types.
+         * Creates a CGameGetGuildList message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof game.CGetGuildList
+         * @memberof game.CGameGetGuildList
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {game.CGetGuildList} CGetGuildList
+         * @returns {game.CGameGetGuildList} CGameGetGuildList
          */
-        CGetGuildList.fromObject = function fromObject(object) {
-            if (object instanceof $root.game.CGetGuildList)
+        CGameGetGuildList.fromObject = function fromObject(object) {
+            if (object instanceof $root.game.CGameGetGuildList)
                 return object;
-            var message = new $root.game.CGetGuildList();
+            var message = new $root.game.CGameGetGuildList();
             if (object.offset != null)
                 message.offset = object.offset | 0;
             if (object.limit != null)
@@ -18331,15 +18331,15 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a plain object from a CGetGuildList message. Also converts values to other types if specified.
+         * Creates a plain object from a CGameGetGuildList message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof game.CGetGuildList
+         * @memberof game.CGameGetGuildList
          * @static
-         * @param {game.CGetGuildList} message CGetGuildList
+         * @param {game.CGameGetGuildList} message CGameGetGuildList
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        CGetGuildList.toObject = function toObject(message, options) {
+        CGameGetGuildList.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
@@ -18355,52 +18355,52 @@ $root.game = (function() {
         };
 
         /**
-         * Converts this CGetGuildList to JSON.
+         * Converts this CGameGetGuildList to JSON.
          * @function toJSON
-         * @memberof game.CGetGuildList
+         * @memberof game.CGameGetGuildList
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        CGetGuildList.prototype.toJSON = function toJSON() {
+        CGameGetGuildList.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for CGetGuildList
+         * Gets the default type url for CGameGetGuildList
          * @function getTypeUrl
-         * @memberof game.CGetGuildList
+         * @memberof game.CGameGetGuildList
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        CGetGuildList.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        CGameGetGuildList.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/game.CGetGuildList";
+            return typeUrlPrefix + "/game.CGameGetGuildList";
         };
 
-        return CGetGuildList;
+        return CGameGetGuildList;
     })();
 
-    game.SGetGuildList = (function() {
+    game.SGameGetGuildList = (function() {
 
         /**
-         * Properties of a SGetGuildList.
+         * Properties of a SGameGetGuildList.
          * @memberof game
-         * @interface ISGetGuildList
-         * @property {Array.<common.IGuildSimpleInfo>|null} [list] SGetGuildList list
+         * @interface ISGameGetGuildList
+         * @property {Array.<common.IGuildSimpleInfo>|null} [list] SGameGetGuildList list
          */
 
         /**
-         * Constructs a new SGetGuildList.
+         * Constructs a new SGameGetGuildList.
          * @memberof game
-         * @classdesc Represents a SGetGuildList.
-         * @implements ISGetGuildList
+         * @classdesc Represents a SGameGetGuildList.
+         * @implements ISGameGetGuildList
          * @constructor
-         * @param {game.ISGetGuildList=} [properties] Properties to set
+         * @param {game.ISGameGetGuildList=} [properties] Properties to set
          */
-        function SGetGuildList(properties) {
+        function SGameGetGuildList(properties) {
             this.list = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
@@ -18409,35 +18409,35 @@ $root.game = (function() {
         }
 
         /**
-         * SGetGuildList list.
+         * SGameGetGuildList list.
          * @member {Array.<common.IGuildSimpleInfo>} list
-         * @memberof game.SGetGuildList
+         * @memberof game.SGameGetGuildList
          * @instance
          */
-        SGetGuildList.prototype.list = $util.emptyArray;
+        SGameGetGuildList.prototype.list = $util.emptyArray;
 
         /**
-         * Creates a new SGetGuildList instance using the specified properties.
+         * Creates a new SGameGetGuildList instance using the specified properties.
          * @function create
-         * @memberof game.SGetGuildList
+         * @memberof game.SGameGetGuildList
          * @static
-         * @param {game.ISGetGuildList=} [properties] Properties to set
-         * @returns {game.SGetGuildList} SGetGuildList instance
+         * @param {game.ISGameGetGuildList=} [properties] Properties to set
+         * @returns {game.SGameGetGuildList} SGameGetGuildList instance
          */
-        SGetGuildList.create = function create(properties) {
-            return new SGetGuildList(properties);
+        SGameGetGuildList.create = function create(properties) {
+            return new SGameGetGuildList(properties);
         };
 
         /**
-         * Encodes the specified SGetGuildList message. Does not implicitly {@link game.SGetGuildList.verify|verify} messages.
+         * Encodes the specified SGameGetGuildList message. Does not implicitly {@link game.SGameGetGuildList.verify|verify} messages.
          * @function encode
-         * @memberof game.SGetGuildList
+         * @memberof game.SGameGetGuildList
          * @static
-         * @param {game.ISGetGuildList} message SGetGuildList message or plain object to encode
+         * @param {game.ISGameGetGuildList} message SGameGetGuildList message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        SGetGuildList.encode = function encode(message, writer) {
+        SGameGetGuildList.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.list != null && message.list.length)
@@ -18447,33 +18447,33 @@ $root.game = (function() {
         };
 
         /**
-         * Encodes the specified SGetGuildList message, length delimited. Does not implicitly {@link game.SGetGuildList.verify|verify} messages.
+         * Encodes the specified SGameGetGuildList message, length delimited. Does not implicitly {@link game.SGameGetGuildList.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof game.SGetGuildList
+         * @memberof game.SGameGetGuildList
          * @static
-         * @param {game.ISGetGuildList} message SGetGuildList message or plain object to encode
+         * @param {game.ISGameGetGuildList} message SGameGetGuildList message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        SGetGuildList.encodeDelimited = function encodeDelimited(message, writer) {
+        SGameGetGuildList.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a SGetGuildList message from the specified reader or buffer.
+         * Decodes a SGameGetGuildList message from the specified reader or buffer.
          * @function decode
-         * @memberof game.SGetGuildList
+         * @memberof game.SGameGetGuildList
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {game.SGetGuildList} SGetGuildList
+         * @returns {game.SGameGetGuildList} SGameGetGuildList
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        SGetGuildList.decode = function decode(reader, length, error) {
+        SGameGetGuildList.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.SGetGuildList();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.SGameGetGuildList();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -18494,30 +18494,30 @@ $root.game = (function() {
         };
 
         /**
-         * Decodes a SGetGuildList message from the specified reader or buffer, length delimited.
+         * Decodes a SGameGetGuildList message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof game.SGetGuildList
+         * @memberof game.SGameGetGuildList
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {game.SGetGuildList} SGetGuildList
+         * @returns {game.SGameGetGuildList} SGameGetGuildList
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        SGetGuildList.decodeDelimited = function decodeDelimited(reader) {
+        SGameGetGuildList.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a SGetGuildList message.
+         * Verifies a SGameGetGuildList message.
          * @function verify
-         * @memberof game.SGetGuildList
+         * @memberof game.SGameGetGuildList
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        SGetGuildList.verify = function verify(message) {
+        SGameGetGuildList.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.list != null && message.hasOwnProperty("list")) {
@@ -18533,24 +18533,24 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a SGetGuildList message from a plain object. Also converts values to their respective internal types.
+         * Creates a SGameGetGuildList message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof game.SGetGuildList
+         * @memberof game.SGameGetGuildList
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {game.SGetGuildList} SGetGuildList
+         * @returns {game.SGameGetGuildList} SGameGetGuildList
          */
-        SGetGuildList.fromObject = function fromObject(object) {
-            if (object instanceof $root.game.SGetGuildList)
+        SGameGetGuildList.fromObject = function fromObject(object) {
+            if (object instanceof $root.game.SGameGetGuildList)
                 return object;
-            var message = new $root.game.SGetGuildList();
+            var message = new $root.game.SGameGetGuildList();
             if (object.list) {
                 if (!Array.isArray(object.list))
-                    throw TypeError(".game.SGetGuildList.list: array expected");
+                    throw TypeError(".game.SGameGetGuildList.list: array expected");
                 message.list = [];
                 for (var i = 0; i < object.list.length; ++i) {
                     if (typeof object.list[i] !== "object")
-                        throw TypeError(".game.SGetGuildList.list: object expected");
+                        throw TypeError(".game.SGameGetGuildList.list: object expected");
                     message.list[i] = $root.common.GuildSimpleInfo.fromObject(object.list[i]);
                 }
             }
@@ -18558,15 +18558,15 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a plain object from a SGetGuildList message. Also converts values to other types if specified.
+         * Creates a plain object from a SGameGetGuildList message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof game.SGetGuildList
+         * @memberof game.SGameGetGuildList
          * @static
-         * @param {game.SGetGuildList} message SGetGuildList
+         * @param {game.SGameGetGuildList} message SGameGetGuildList
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        SGetGuildList.toObject = function toObject(message, options) {
+        SGameGetGuildList.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
@@ -18581,32 +18581,32 @@ $root.game = (function() {
         };
 
         /**
-         * Converts this SGetGuildList to JSON.
+         * Converts this SGameGetGuildList to JSON.
          * @function toJSON
-         * @memberof game.SGetGuildList
+         * @memberof game.SGameGetGuildList
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        SGetGuildList.prototype.toJSON = function toJSON() {
+        SGameGetGuildList.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for SGetGuildList
+         * Gets the default type url for SGameGetGuildList
          * @function getTypeUrl
-         * @memberof game.SGetGuildList
+         * @memberof game.SGameGetGuildList
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        SGetGuildList.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        SGameGetGuildList.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/game.SGetGuildList";
+            return typeUrlPrefix + "/game.SGameGetGuildList";
         };
 
-        return SGetGuildList;
+        return SGameGetGuildList;
     })();
 
     game.CCreateGuild = (function() {

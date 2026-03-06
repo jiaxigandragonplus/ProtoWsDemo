@@ -14,12 +14,12 @@ message SGetGuild {
 }
 
 // 获取公会列表
-message CGetGuildList {
+message CGameGetGuildList {
     int32 offset = 1;
     int32 limit = 2;
 }
 
-message SGetGuildList {
+message SGameGetGuildList {
     repeated common.GuildSimpleInfo list = 1;
 }
 
