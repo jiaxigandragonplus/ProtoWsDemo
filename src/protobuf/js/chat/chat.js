@@ -1504,7 +1504,7 @@ $root.common = (function() {
      * @property {number} CONTENT_IMAGE=2 CONTENT_IMAGE value
      * @property {number} CONTENT_CARD=3 CONTENT_CARD value
      * @property {number} CONTENT_AUDIO=4 CONTENT_AUDIO value
-     * @property {number} CONTENT_VEDIO=5 CONTENT_VEDIO value
+     * @property {number} CONTENT_VIDEO=5 CONTENT_VIDEO value
      * @property {number} CONTENT_EMOJI=6 CONTENT_EMOJI value
      */
     common.ContentType = (function() {
@@ -1514,7 +1514,7 @@ $root.common = (function() {
         values[valuesById[2] = "CONTENT_IMAGE"] = 2;
         values[valuesById[3] = "CONTENT_CARD"] = 3;
         values[valuesById[4] = "CONTENT_AUDIO"] = 4;
-        values[valuesById[5] = "CONTENT_VEDIO"] = 5;
+        values[valuesById[5] = "CONTENT_VIDEO"] = 5;
         values[valuesById[6] = "CONTENT_EMOJI"] = 6;
         return values;
     })();
@@ -1537,14 +1537,14 @@ $root.common = (function() {
      * ChatType enum.
      * @name common.ChatType
      * @enum {number}
-     * @property {number} CHAT_TYPE_UNKONOWN=0 CHAT_TYPE_UNKONOWN value
+     * @property {number} CHAT_TYPE_UNKNOWN=0 CHAT_TYPE_UNKNOWN value
      * @property {number} CHAT_TYPE_USER_MESSAGE=1 CHAT_TYPE_USER_MESSAGE value
      * @property {number} CHAT_TYPE_SYSTEM_MESSAGE=2 CHAT_TYPE_SYSTEM_MESSAGE value
      * @property {number} CHAT_TYPE_GUILD_NOTICE=3 CHAT_TYPE_GUILD_NOTICE value
      */
     common.ChatType = (function() {
         var valuesById = {}, values = Object.create(valuesById);
-        values[valuesById[0] = "CHAT_TYPE_UNKONOWN"] = 0;
+        values[valuesById[0] = "CHAT_TYPE_UNKNOWN"] = 0;
         values[valuesById[1] = "CHAT_TYPE_USER_MESSAGE"] = 1;
         values[valuesById[2] = "CHAT_TYPE_SYSTEM_MESSAGE"] = 2;
         values[valuesById[3] = "CHAT_TYPE_GUILD_NOTICE"] = 3;
@@ -1594,7 +1594,7 @@ $root.common = (function() {
          * @memberof common
          * @interface IGetChatTipsParam
          * @property {string|null} [channelId] GetChatTipsParam channelId
-         * @property {number|null} [maxReadedMessageId] GetChatTipsParam maxReadedMessageId
+         * @property {number|null} [maxReadMessageId] GetChatTipsParam maxReadMessageId
          */
 
         /**
@@ -1621,12 +1621,12 @@ $root.common = (function() {
         GetChatTipsParam.prototype.channelId = "";
 
         /**
-         * GetChatTipsParam maxReadedMessageId.
-         * @member {number} maxReadedMessageId
+         * GetChatTipsParam maxReadMessageId.
+         * @member {number} maxReadMessageId
          * @memberof common.GetChatTipsParam
          * @instance
          */
-        GetChatTipsParam.prototype.maxReadedMessageId = 0;
+        GetChatTipsParam.prototype.maxReadMessageId = 0;
 
         /**
          * Creates a new GetChatTipsParam instance using the specified properties.
@@ -1654,8 +1654,8 @@ $root.common = (function() {
                 writer = $Writer.create();
             if (message.channelId != null && Object.hasOwnProperty.call(message, "channelId"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.channelId);
-            if (message.maxReadedMessageId != null && Object.hasOwnProperty.call(message, "maxReadedMessageId"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.maxReadedMessageId);
+            if (message.maxReadMessageId != null && Object.hasOwnProperty.call(message, "maxReadMessageId"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.maxReadMessageId);
             return writer;
         };
 
@@ -1697,7 +1697,7 @@ $root.common = (function() {
                         break;
                     }
                 case 2: {
-                        message.maxReadedMessageId = reader.int32();
+                        message.maxReadMessageId = reader.int32();
                         break;
                     }
                 default:
@@ -1738,9 +1738,9 @@ $root.common = (function() {
             if (message.channelId != null && message.hasOwnProperty("channelId"))
                 if (!$util.isString(message.channelId))
                     return "channelId: string expected";
-            if (message.maxReadedMessageId != null && message.hasOwnProperty("maxReadedMessageId"))
-                if (!$util.isInteger(message.maxReadedMessageId))
-                    return "maxReadedMessageId: integer expected";
+            if (message.maxReadMessageId != null && message.hasOwnProperty("maxReadMessageId"))
+                if (!$util.isInteger(message.maxReadMessageId))
+                    return "maxReadMessageId: integer expected";
             return null;
         };
 
@@ -1758,8 +1758,8 @@ $root.common = (function() {
             var message = new $root.common.GetChatTipsParam();
             if (object.channelId != null)
                 message.channelId = String(object.channelId);
-            if (object.maxReadedMessageId != null)
-                message.maxReadedMessageId = object.maxReadedMessageId | 0;
+            if (object.maxReadMessageId != null)
+                message.maxReadMessageId = object.maxReadMessageId | 0;
             return message;
         };
 
@@ -1778,12 +1778,12 @@ $root.common = (function() {
             var object = {};
             if (options.defaults) {
                 object.channelId = "";
-                object.maxReadedMessageId = 0;
+                object.maxReadMessageId = 0;
             }
             if (message.channelId != null && message.hasOwnProperty("channelId"))
                 object.channelId = message.channelId;
-            if (message.maxReadedMessageId != null && message.hasOwnProperty("maxReadedMessageId"))
-                object.maxReadedMessageId = message.maxReadedMessageId;
+            if (message.maxReadMessageId != null && message.hasOwnProperty("maxReadMessageId"))
+                object.maxReadMessageId = message.maxReadMessageId;
             return object;
         };
 
@@ -2526,7 +2526,7 @@ $root.common = (function() {
             case 4:
                 message.type = 4;
                 break;
-            case "CONTENT_VEDIO":
+            case "CONTENT_VIDEO":
             case 5:
                 message.type = 5;
                 break;
@@ -2866,7 +2866,7 @@ $root.common = (function() {
                     break;
                 }
                 break;
-            case "CHAT_TYPE_UNKONOWN":
+            case "CHAT_TYPE_UNKNOWN":
             case 0:
                 message.chatType = 0;
                 break;
@@ -2906,7 +2906,7 @@ $root.common = (function() {
                 object.sender = null;
                 object.content = null;
                 object.timestamp = 0;
-                object.chatType = options.enums === String ? "CHAT_TYPE_UNKONOWN" : 0;
+                object.chatType = options.enums === String ? "CHAT_TYPE_UNKNOWN" : 0;
                 object.channelId = "";
             }
             if (message.messageId != null && message.hasOwnProperty("messageId"))

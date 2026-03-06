@@ -981,7 +981,7 @@ export namespace common {
     enum MailStatus {
         MAIL_STATUS_INVALID = 0,
         MAIL_STATUS_NEW = 1,
-        MAIL_STATUS_READED = 2,
+        MAIL_STATUS_READ = 2,
         MAIL_STATUS_CLAIMED = 3,
         MAIL_STATUS_DELETED = 4
     }

@@ -23,7 +23,7 @@ export interface SSendCommand {
 }
 
 /** 通知服务器资源加载完成 */
-export interface CResLoadCommpelte {
+export interface CResLoadComplete {
 }
 
 export interface SResLoadComplete {

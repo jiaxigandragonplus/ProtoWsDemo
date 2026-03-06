@@ -11,8 +11,8 @@ export enum MailStatus {
   MAIL_STATUS_INVALID = 0,
   /** MAIL_STATUS_NEW - 新邮件 */
   MAIL_STATUS_NEW = 1,
-  /** MAIL_STATUS_READED - 已读 */
-  MAIL_STATUS_READED = 2,
+  /** MAIL_STATUS_READ - 已读 */
+  MAIL_STATUS_READ = 2,
   /** MAIL_STATUS_CLAIMED - 已领取 */
   MAIL_STATUS_CLAIMED = 3,
   /** MAIL_STATUS_DELETED - 已删除 */

@@ -483,23 +483,23 @@ $root.battle = (function() {
         return SSendCommand;
     })();
 
-    battle.CResLoadCommpelte = (function() {
+    battle.CResLoadComplete = (function() {
 
         /**
-         * Properties of a CResLoadCommpelte.
+         * Properties of a CResLoadComplete.
          * @memberof battle
-         * @interface ICResLoadCommpelte
+         * @interface ICResLoadComplete
          */
 
         /**
-         * Constructs a new CResLoadCommpelte.
+         * Constructs a new CResLoadComplete.
          * @memberof battle
-         * @classdesc Represents a CResLoadCommpelte.
-         * @implements ICResLoadCommpelte
+         * @classdesc Represents a CResLoadComplete.
+         * @implements ICResLoadComplete
          * @constructor
-         * @param {battle.ICResLoadCommpelte=} [properties] Properties to set
+         * @param {battle.ICResLoadComplete=} [properties] Properties to set
          */
-        function CResLoadCommpelte(properties) {
+        function CResLoadComplete(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -507,60 +507,60 @@ $root.battle = (function() {
         }
 
         /**
-         * Creates a new CResLoadCommpelte instance using the specified properties.
+         * Creates a new CResLoadComplete instance using the specified properties.
          * @function create
-         * @memberof battle.CResLoadCommpelte
+         * @memberof battle.CResLoadComplete
          * @static
-         * @param {battle.ICResLoadCommpelte=} [properties] Properties to set
-         * @returns {battle.CResLoadCommpelte} CResLoadCommpelte instance
+         * @param {battle.ICResLoadComplete=} [properties] Properties to set
+         * @returns {battle.CResLoadComplete} CResLoadComplete instance
          */
-        CResLoadCommpelte.create = function create(properties) {
-            return new CResLoadCommpelte(properties);
+        CResLoadComplete.create = function create(properties) {
+            return new CResLoadComplete(properties);
         };
 
         /**
-         * Encodes the specified CResLoadCommpelte message. Does not implicitly {@link battle.CResLoadCommpelte.verify|verify} messages.
+         * Encodes the specified CResLoadComplete message. Does not implicitly {@link battle.CResLoadComplete.verify|verify} messages.
          * @function encode
-         * @memberof battle.CResLoadCommpelte
+         * @memberof battle.CResLoadComplete
          * @static
-         * @param {battle.ICResLoadCommpelte} message CResLoadCommpelte message or plain object to encode
+         * @param {battle.ICResLoadComplete} message CResLoadComplete message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        CResLoadCommpelte.encode = function encode(message, writer) {
+        CResLoadComplete.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             return writer;
         };
 
         /**
-         * Encodes the specified CResLoadCommpelte message, length delimited. Does not implicitly {@link battle.CResLoadCommpelte.verify|verify} messages.
+         * Encodes the specified CResLoadComplete message, length delimited. Does not implicitly {@link battle.CResLoadComplete.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof battle.CResLoadCommpelte
+         * @memberof battle.CResLoadComplete
          * @static
-         * @param {battle.ICResLoadCommpelte} message CResLoadCommpelte message or plain object to encode
+         * @param {battle.ICResLoadComplete} message CResLoadComplete message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        CResLoadCommpelte.encodeDelimited = function encodeDelimited(message, writer) {
+        CResLoadComplete.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a CResLoadCommpelte message from the specified reader or buffer.
+         * Decodes a CResLoadComplete message from the specified reader or buffer.
          * @function decode
-         * @memberof battle.CResLoadCommpelte
+         * @memberof battle.CResLoadComplete
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {battle.CResLoadCommpelte} CResLoadCommpelte
+         * @returns {battle.CResLoadComplete} CResLoadComplete
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        CResLoadCommpelte.decode = function decode(reader, length, error) {
+        CResLoadComplete.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.battle.CResLoadCommpelte();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.battle.CResLoadComplete();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -575,89 +575,89 @@ $root.battle = (function() {
         };
 
         /**
-         * Decodes a CResLoadCommpelte message from the specified reader or buffer, length delimited.
+         * Decodes a CResLoadComplete message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof battle.CResLoadCommpelte
+         * @memberof battle.CResLoadComplete
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {battle.CResLoadCommpelte} CResLoadCommpelte
+         * @returns {battle.CResLoadComplete} CResLoadComplete
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        CResLoadCommpelte.decodeDelimited = function decodeDelimited(reader) {
+        CResLoadComplete.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a CResLoadCommpelte message.
+         * Verifies a CResLoadComplete message.
          * @function verify
-         * @memberof battle.CResLoadCommpelte
+         * @memberof battle.CResLoadComplete
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        CResLoadCommpelte.verify = function verify(message) {
+        CResLoadComplete.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             return null;
         };
 
         /**
-         * Creates a CResLoadCommpelte message from a plain object. Also converts values to their respective internal types.
+         * Creates a CResLoadComplete message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof battle.CResLoadCommpelte
+         * @memberof battle.CResLoadComplete
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {battle.CResLoadCommpelte} CResLoadCommpelte
+         * @returns {battle.CResLoadComplete} CResLoadComplete
          */
-        CResLoadCommpelte.fromObject = function fromObject(object) {
-            if (object instanceof $root.battle.CResLoadCommpelte)
+        CResLoadComplete.fromObject = function fromObject(object) {
+            if (object instanceof $root.battle.CResLoadComplete)
                 return object;
-            return new $root.battle.CResLoadCommpelte();
+            return new $root.battle.CResLoadComplete();
         };
 
         /**
-         * Creates a plain object from a CResLoadCommpelte message. Also converts values to other types if specified.
+         * Creates a plain object from a CResLoadComplete message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof battle.CResLoadCommpelte
+         * @memberof battle.CResLoadComplete
          * @static
-         * @param {battle.CResLoadCommpelte} message CResLoadCommpelte
+         * @param {battle.CResLoadComplete} message CResLoadComplete
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        CResLoadCommpelte.toObject = function toObject() {
+        CResLoadComplete.toObject = function toObject() {
             return {};
         };
 
         /**
-         * Converts this CResLoadCommpelte to JSON.
+         * Converts this CResLoadComplete to JSON.
          * @function toJSON
-         * @memberof battle.CResLoadCommpelte
+         * @memberof battle.CResLoadComplete
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        CResLoadCommpelte.prototype.toJSON = function toJSON() {
+        CResLoadComplete.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for CResLoadCommpelte
+         * Gets the default type url for CResLoadComplete
          * @function getTypeUrl
-         * @memberof battle.CResLoadCommpelte
+         * @memberof battle.CResLoadComplete
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        CResLoadCommpelte.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        CResLoadComplete.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/battle.CResLoadCommpelte";
+            return typeUrlPrefix + "/battle.CResLoadComplete";
         };
 
-        return CResLoadCommpelte;
+        return CResLoadComplete;
     })();
 
     battle.SResLoadComplete = (function() {
@@ -4810,8 +4810,8 @@ $root.common = (function() {
      * @property {number} EFFECT_TYPE_UNKNOWN=0 EFFECT_TYPE_UNKNOWN value
      * @property {number} BAN_MOVE=1 BAN_MOVE value
      * @property {number} BAN_ATTACK=2 BAN_ATTACK value
-     * @property {number} IMMNUE_CONTROL=3 IMMNUE_CONTROL value
-     * @property {number} IMMNUE_DAMAGE=4 IMMNUE_DAMAGE value
+     * @property {number} IMMUNE_CONTROL=3 IMMUNE_CONTROL value
+     * @property {number} IMMUNE_DAMAGE=4 IMMUNE_DAMAGE value
      * @property {number} INVINCIBLE=5 INVINCIBLE value
      */
     common.BuffEffectType = (function() {
@@ -4819,8 +4819,8 @@ $root.common = (function() {
         values[valuesById[0] = "EFFECT_TYPE_UNKNOWN"] = 0;
         values[valuesById[1] = "BAN_MOVE"] = 1;
         values[valuesById[2] = "BAN_ATTACK"] = 2;
-        values[valuesById[3] = "IMMNUE_CONTROL"] = 3;
-        values[valuesById[4] = "IMMNUE_DAMAGE"] = 4;
+        values[valuesById[3] = "IMMUNE_CONTROL"] = 3;
+        values[valuesById[4] = "IMMUNE_DAMAGE"] = 4;
         values[valuesById[5] = "INVINCIBLE"] = 5;
         return values;
     })();
@@ -4846,7 +4846,7 @@ $root.common = (function() {
      * @property {number} CritPer=2 CritPer value
      * @property {number} BlockPer=3 BlockPer value
      * @property {number} DodgePer=4 DodgePer value
-     * @property {number} CrtiDmgPer=5 CrtiDmgPer value
+     * @property {number} CritDmgPer=5 CritDmgPer value
      * @property {number} SuckBloodPer=6 SuckBloodPer value
      */
     common.DamageAttrIndex = (function() {
@@ -4856,7 +4856,7 @@ $root.common = (function() {
         values[valuesById[2] = "CritPer"] = 2;
         values[valuesById[3] = "BlockPer"] = 3;
         values[valuesById[4] = "DodgePer"] = 4;
-        values[valuesById[5] = "CrtiDmgPer"] = 5;
+        values[valuesById[5] = "CritDmgPer"] = 5;
         values[valuesById[6] = "SuckBloodPer"] = 6;
         return values;
     })();
@@ -5714,24 +5714,24 @@ $root.common = (function() {
         return Command;
     })();
 
-    common.RemoveCardCommond = (function() {
+    common.RemoveCardCommand = (function() {
 
         /**
-         * Properties of a RemoveCardCommond.
+         * Properties of a RemoveCardCommand.
          * @memberof common
-         * @interface IRemoveCardCommond
-         * @property {number|null} [instId] RemoveCardCommond instId
+         * @interface IRemoveCardCommand
+         * @property {number|null} [instId] RemoveCardCommand instId
          */
 
         /**
-         * Constructs a new RemoveCardCommond.
+         * Constructs a new RemoveCardCommand.
          * @memberof common
-         * @classdesc Represents a RemoveCardCommond.
-         * @implements IRemoveCardCommond
+         * @classdesc Represents a RemoveCardCommand.
+         * @implements IRemoveCardCommand
          * @constructor
-         * @param {common.IRemoveCardCommond=} [properties] Properties to set
+         * @param {common.IRemoveCardCommand=} [properties] Properties to set
          */
-        function RemoveCardCommond(properties) {
+        function RemoveCardCommand(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -5739,35 +5739,35 @@ $root.common = (function() {
         }
 
         /**
-         * RemoveCardCommond instId.
+         * RemoveCardCommand instId.
          * @member {number} instId
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @instance
          */
-        RemoveCardCommond.prototype.instId = 0;
+        RemoveCardCommand.prototype.instId = 0;
 
         /**
-         * Creates a new RemoveCardCommond instance using the specified properties.
+         * Creates a new RemoveCardCommand instance using the specified properties.
          * @function create
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
-         * @param {common.IRemoveCardCommond=} [properties] Properties to set
-         * @returns {common.RemoveCardCommond} RemoveCardCommond instance
+         * @param {common.IRemoveCardCommand=} [properties] Properties to set
+         * @returns {common.RemoveCardCommand} RemoveCardCommand instance
          */
-        RemoveCardCommond.create = function create(properties) {
-            return new RemoveCardCommond(properties);
+        RemoveCardCommand.create = function create(properties) {
+            return new RemoveCardCommand(properties);
         };
 
         /**
-         * Encodes the specified RemoveCardCommond message. Does not implicitly {@link common.RemoveCardCommond.verify|verify} messages.
+         * Encodes the specified RemoveCardCommand message. Does not implicitly {@link common.RemoveCardCommand.verify|verify} messages.
          * @function encode
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
-         * @param {common.IRemoveCardCommond} message RemoveCardCommond message or plain object to encode
+         * @param {common.IRemoveCardCommand} message RemoveCardCommand message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        RemoveCardCommond.encode = function encode(message, writer) {
+        RemoveCardCommand.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.instId != null && Object.hasOwnProperty.call(message, "instId"))
@@ -5776,33 +5776,33 @@ $root.common = (function() {
         };
 
         /**
-         * Encodes the specified RemoveCardCommond message, length delimited. Does not implicitly {@link common.RemoveCardCommond.verify|verify} messages.
+         * Encodes the specified RemoveCardCommand message, length delimited. Does not implicitly {@link common.RemoveCardCommand.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
-         * @param {common.IRemoveCardCommond} message RemoveCardCommond message or plain object to encode
+         * @param {common.IRemoveCardCommand} message RemoveCardCommand message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        RemoveCardCommond.encodeDelimited = function encodeDelimited(message, writer) {
+        RemoveCardCommand.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a RemoveCardCommond message from the specified reader or buffer.
+         * Decodes a RemoveCardCommand message from the specified reader or buffer.
          * @function decode
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {common.RemoveCardCommond} RemoveCardCommond
+         * @returns {common.RemoveCardCommand} RemoveCardCommand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        RemoveCardCommond.decode = function decode(reader, length, error) {
+        RemoveCardCommand.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.common.RemoveCardCommond();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.common.RemoveCardCommand();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -5821,30 +5821,30 @@ $root.common = (function() {
         };
 
         /**
-         * Decodes a RemoveCardCommond message from the specified reader or buffer, length delimited.
+         * Decodes a RemoveCardCommand message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {common.RemoveCardCommond} RemoveCardCommond
+         * @returns {common.RemoveCardCommand} RemoveCardCommand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        RemoveCardCommond.decodeDelimited = function decodeDelimited(reader) {
+        RemoveCardCommand.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a RemoveCardCommond message.
+         * Verifies a RemoveCardCommand message.
          * @function verify
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        RemoveCardCommond.verify = function verify(message) {
+        RemoveCardCommand.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.instId != null && message.hasOwnProperty("instId"))
@@ -5854,32 +5854,32 @@ $root.common = (function() {
         };
 
         /**
-         * Creates a RemoveCardCommond message from a plain object. Also converts values to their respective internal types.
+         * Creates a RemoveCardCommand message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {common.RemoveCardCommond} RemoveCardCommond
+         * @returns {common.RemoveCardCommand} RemoveCardCommand
          */
-        RemoveCardCommond.fromObject = function fromObject(object) {
-            if (object instanceof $root.common.RemoveCardCommond)
+        RemoveCardCommand.fromObject = function fromObject(object) {
+            if (object instanceof $root.common.RemoveCardCommand)
                 return object;
-            var message = new $root.common.RemoveCardCommond();
+            var message = new $root.common.RemoveCardCommand();
             if (object.instId != null)
                 message.instId = object.instId | 0;
             return message;
         };
 
         /**
-         * Creates a plain object from a RemoveCardCommond message. Also converts values to other types if specified.
+         * Creates a plain object from a RemoveCardCommand message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
-         * @param {common.RemoveCardCommond} message RemoveCardCommond
+         * @param {common.RemoveCardCommand} message RemoveCardCommand
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        RemoveCardCommond.toObject = function toObject(message, options) {
+        RemoveCardCommand.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
@@ -5891,32 +5891,32 @@ $root.common = (function() {
         };
 
         /**
-         * Converts this RemoveCardCommond to JSON.
+         * Converts this RemoveCardCommand to JSON.
          * @function toJSON
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        RemoveCardCommond.prototype.toJSON = function toJSON() {
+        RemoveCardCommand.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for RemoveCardCommond
+         * Gets the default type url for RemoveCardCommand
          * @function getTypeUrl
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        RemoveCardCommond.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        RemoveCardCommand.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/common.RemoveCardCommond";
+            return typeUrlPrefix + "/common.RemoveCardCommand";
         };
 
-        return RemoveCardCommond;
+        return RemoveCardCommand;
     })();
 
     common.Equip = (function() {

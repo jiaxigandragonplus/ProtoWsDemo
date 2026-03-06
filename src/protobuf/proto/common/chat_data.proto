@@ -17,7 +17,7 @@ enum ContentType {
     CONTENT_IMAGE = 2;      // 图片
     CONTENT_CARD = 3;       // 卡片
     CONTENT_AUDIO = 4;      // 音频
-    CONTENT_VEDIO = 5;      // 视频
+    CONTENT_VIDEO = 5;      // 视频
     CONTENT_EMOJI = 6;      // 表情
 }
 
@@ -29,7 +29,7 @@ enum MessageLoadType {
 
 // 聊天消息类型
 enum ChatType {
-    CHAT_TYPE_UNKONOWN = 0;       // 未知类型
+    CHAT_TYPE_UNKNOWN = 0;          // 未知类型
     CHAT_TYPE_USER_MESSAGE = 1;       // 用户消息
     CHAT_TYPE_SYSTEM_MESSAGE = 2;     // 系统消息，如时间提示
     CHAT_TYPE_GUILD_NOTICE = 3;       // 公会提示消息
@@ -53,7 +53,7 @@ enum ChatItemType {
 
 message GetChatTipsParam {
     string channel_id = 1;  // 频道id
-    int32 max_readed_message_id = 2;    // 已读消息的最大id
+    int32 max_read_message_id = 2;    // 已读消息的最大id
 }
 
 message ChatTipsInfo {
@@ -72,7 +72,7 @@ message ChatSenderInfo {
 // 聊天内容
 message ChatContentInfo {
     ContentType type = 1;   // 消息类型
-    string content = 2;     // 消息本身,当 ContentType 为 TEXT: 文本字符串， PICTURE/AUDIO/VIDIO: 媒体文件url，CARD/CUSTOM: 序列化json字符串
+    string content = 2;     // 消息本身,当 ContentType 为 TEXT: 文本字符串， PICTURE/AUDIO/VIDEO: 媒体文件url，CARD/CUSTOM: 序列化json字符串
 }
 
 // 一条聊天消息内容

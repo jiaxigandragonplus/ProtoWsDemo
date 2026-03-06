@@ -67,8 +67,8 @@ export namespace common {
         EFFECT_TYPE_UNKNOWN = 0,
         BAN_MOVE = 1,
         BAN_ATTACK = 2,
-        IMMNUE_CONTROL = 3,
-        IMMNUE_DAMAGE = 4,
+        IMMUNE_CONTROL = 3,
+        IMMUNE_DAMAGE = 4,
         INVINCIBLE = 5
     }
 
@@ -84,7 +84,7 @@ export namespace common {
         CritPer = 2,
         BlockPer = 3,
         DodgePer = 4,
-        CrtiDmgPer = 5,
+        CritDmgPer = 5,
         SuckBloodPer = 6
     }
 
@@ -438,97 +438,97 @@ export namespace common {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a RemoveCardCommond. */
-    interface IRemoveCardCommond {
+    /** Properties of a RemoveCardCommand. */
+    interface IRemoveCardCommand {
 
-        /** RemoveCardCommond instId */
+        /** RemoveCardCommand instId */
         instId?: (number|null);
     }
 
-    /** Represents a RemoveCardCommond. */
-    class RemoveCardCommond implements IRemoveCardCommond {
+    /** Represents a RemoveCardCommand. */
+    class RemoveCardCommand implements IRemoveCardCommand {
 
         /**
-         * Constructs a new RemoveCardCommond.
+         * Constructs a new RemoveCardCommand.
          * @param [properties] Properties to set
          */
-        constructor(properties?: common.IRemoveCardCommond);
+        constructor(properties?: common.IRemoveCardCommand);
 
-        /** RemoveCardCommond instId. */
+        /** RemoveCardCommand instId. */
         public instId: number;
 
         /**
-         * Creates a new RemoveCardCommond instance using the specified properties.
+         * Creates a new RemoveCardCommand instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns RemoveCardCommond instance
+         * @returns RemoveCardCommand instance
          */
-        public static create(properties?: common.IRemoveCardCommond): common.RemoveCardCommond;
+        public static create(properties?: common.IRemoveCardCommand): common.RemoveCardCommand;
 
         /**
-         * Encodes the specified RemoveCardCommond message. Does not implicitly {@link common.RemoveCardCommond.verify|verify} messages.
-         * @param message RemoveCardCommond message or plain object to encode
+         * Encodes the specified RemoveCardCommand message. Does not implicitly {@link common.RemoveCardCommand.verify|verify} messages.
+         * @param message RemoveCardCommand message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: common.IRemoveCardCommond, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: common.IRemoveCardCommand, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified RemoveCardCommond message, length delimited. Does not implicitly {@link common.RemoveCardCommond.verify|verify} messages.
-         * @param message RemoveCardCommond message or plain object to encode
+         * Encodes the specified RemoveCardCommand message, length delimited. Does not implicitly {@link common.RemoveCardCommand.verify|verify} messages.
+         * @param message RemoveCardCommand message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: common.IRemoveCardCommond, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: common.IRemoveCardCommand, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a RemoveCardCommond message from the specified reader or buffer.
+         * Decodes a RemoveCardCommand message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns RemoveCardCommond
+         * @returns RemoveCardCommand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): common.RemoveCardCommond;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): common.RemoveCardCommand;
 
         /**
-         * Decodes a RemoveCardCommond message from the specified reader or buffer, length delimited.
+         * Decodes a RemoveCardCommand message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns RemoveCardCommond
+         * @returns RemoveCardCommand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): common.RemoveCardCommond;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): common.RemoveCardCommand;
 
         /**
-         * Verifies a RemoveCardCommond message.
+         * Verifies a RemoveCardCommand message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a RemoveCardCommond message from a plain object. Also converts values to their respective internal types.
+         * Creates a RemoveCardCommand message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns RemoveCardCommond
+         * @returns RemoveCardCommand
          */
-        public static fromObject(object: { [k: string]: any }): common.RemoveCardCommond;
+        public static fromObject(object: { [k: string]: any }): common.RemoveCardCommand;
 
         /**
-         * Creates a plain object from a RemoveCardCommond message. Also converts values to other types if specified.
-         * @param message RemoveCardCommond
+         * Creates a plain object from a RemoveCardCommand message. Also converts values to other types if specified.
+         * @param message RemoveCardCommand
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: common.RemoveCardCommond, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: common.RemoveCardCommand, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this RemoveCardCommond to JSON.
+         * Converts this RemoveCardCommand to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for RemoveCardCommond
+         * Gets the default type url for RemoveCardCommand
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -2469,7 +2469,7 @@ export namespace common {
         CONTENT_IMAGE = 2,
         CONTENT_CARD = 3,
         CONTENT_AUDIO = 4,
-        CONTENT_VEDIO = 5,
+        CONTENT_VIDEO = 5,
         CONTENT_EMOJI = 6
     }
 
@@ -2481,7 +2481,7 @@ export namespace common {
 
     /** ChatType enum. */
     enum ChatType {
-        CHAT_TYPE_UNKONOWN = 0,
+        CHAT_TYPE_UNKNOWN = 0,
         CHAT_TYPE_USER_MESSAGE = 1,
         CHAT_TYPE_SYSTEM_MESSAGE = 2,
         CHAT_TYPE_GUILD_NOTICE = 3
@@ -2509,8 +2509,8 @@ export namespace common {
         /** GetChatTipsParam channelId */
         channelId?: (string|null);
 
-        /** GetChatTipsParam maxReadedMessageId */
-        maxReadedMessageId?: (number|null);
+        /** GetChatTipsParam maxReadMessageId */
+        maxReadMessageId?: (number|null);
     }
 
     /** Represents a GetChatTipsParam. */
@@ -2525,8 +2525,8 @@ export namespace common {
         /** GetChatTipsParam channelId. */
         public channelId: string;
 
-        /** GetChatTipsParam maxReadedMessageId. */
-        public maxReadedMessageId: number;
+        /** GetChatTipsParam maxReadMessageId. */
+        public maxReadMessageId: number;
 
         /**
          * Creates a new GetChatTipsParam instance using the specified properties.
@@ -3175,11 +3175,11 @@ export namespace common {
         /** WebsocketMessage uuid */
         uuid?: (string|null);
 
-        /** WebsocketMessage errno */
-        errno?: (number|null);
+        /** WebsocketMessage errCode */
+        errCode?: (number|null);
 
-        /** WebsocketMessage errmsg */
-        errmsg?: (string|null);
+        /** WebsocketMessage errMsg */
+        errMsg?: (string|null);
     }
 
     /** Represents a WebsocketMessage. */
@@ -3206,11 +3206,11 @@ export namespace common {
         /** WebsocketMessage uuid. */
         public uuid: string;
 
-        /** WebsocketMessage errno. */
-        public errno: number;
+        /** WebsocketMessage errCode. */
+        public errCode: number;
 
-        /** WebsocketMessage errmsg. */
-        public errmsg: string;
+        /** WebsocketMessage errMsg. */
+        public errMsg: string;
 
         /**
          * Creates a new WebsocketMessage instance using the specified properties.
@@ -3696,15 +3696,15 @@ export namespace common {
 
     /** GuildEventType enum. */
     enum GuildEventType {
-        GUILD_EVVENT_UNKNOWN = 0,
-        GUILD_EVVENT_CREATE = 1,
-        GUILD_EVVENT_JOIN = 2,
-        GUILD_EVVENT_LEAVE = 3,
-        GUILD_EVVENT_KICK = 4,
-        GUILD_EVVENT_MODIFY_NOTICE = 5,
-        GUILD_EVVENT_MODIFY_FLAG = 6,
-        GUILD_EVVENT_MODIFY_NAME = 7,
-        GUILD_EVVENT_TRANSFER = 8
+        GUILD_EVENT_UNKNOWN = 0,
+        GUILD_EVENT_CREATE = 1,
+        GUILD_EVENT_JOIN = 2,
+        GUILD_EVENT_LEAVE = 3,
+        GUILD_EVENT_KICK = 4,
+        GUILD_EVENT_MODIFY_NOTICE = 5,
+        GUILD_EVENT_MODIFY_FLAG = 6,
+        GUILD_EVENT_MODIFY_NAME = 7,
+        GUILD_EVENT_TRANSFER = 8
     }
 
     /** GuildMemberType enum. */
@@ -4675,7 +4675,7 @@ export namespace common {
     enum MailStatus {
         MAIL_STATUS_INVALID = 0,
         MAIL_STATUS_NEW = 1,
-        MAIL_STATUS_READED = 2,
+        MAIL_STATUS_READ = 2,
         MAIL_STATUS_CLAIMED = 3,
         MAIL_STATUS_DELETED = 4
     }
@@ -9674,8 +9674,8 @@ export namespace common {
         /** SaleItemInfo markCount */
         markCount?: (number|null);
 
-        /** SaleItemInfo salerId */
-        salerId?: (string|null);
+        /** SaleItemInfo sellerId */
+        sellerId?: (string|null);
 
         /** SaleItemInfo publicityTime */
         publicityTime?: (number|null);
@@ -9717,8 +9717,8 @@ export namespace common {
         /** SaleItemInfo markCount. */
         public markCount: number;
 
-        /** SaleItemInfo salerId. */
-        public salerId: string;
+        /** SaleItemInfo sellerId. */
+        public sellerId: string;
 
         /** SaleItemInfo publicityTime. */
         public publicityTime: number;

@@ -635,7 +635,7 @@ export namespace common {
         CONTENT_IMAGE = 2,
         CONTENT_CARD = 3,
         CONTENT_AUDIO = 4,
-        CONTENT_VEDIO = 5,
+        CONTENT_VIDEO = 5,
         CONTENT_EMOJI = 6
     }
 
@@ -647,7 +647,7 @@ export namespace common {
 
     /** ChatType enum. */
     enum ChatType {
-        CHAT_TYPE_UNKONOWN = 0,
+        CHAT_TYPE_UNKNOWN = 0,
         CHAT_TYPE_USER_MESSAGE = 1,
         CHAT_TYPE_SYSTEM_MESSAGE = 2,
         CHAT_TYPE_GUILD_NOTICE = 3
@@ -675,8 +675,8 @@ export namespace common {
         /** GetChatTipsParam channelId */
         channelId?: (string|null);
 
-        /** GetChatTipsParam maxReadedMessageId */
-        maxReadedMessageId?: (number|null);
+        /** GetChatTipsParam maxReadMessageId */
+        maxReadMessageId?: (number|null);
     }
 
     /** Represents a GetChatTipsParam. */
@@ -691,8 +691,8 @@ export namespace common {
         /** GetChatTipsParam channelId. */
         public channelId: string;
 
-        /** GetChatTipsParam maxReadedMessageId. */
-        public maxReadedMessageId: number;
+        /** GetChatTipsParam maxReadMessageId. */
+        public maxReadMessageId: number;
 
         /**
          * Creates a new GetChatTipsParam instance using the specified properties.

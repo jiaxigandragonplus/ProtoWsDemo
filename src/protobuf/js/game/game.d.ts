@@ -2764,8 +2764,8 @@ export namespace game {
     /** Properties of a CDecomposeEquip. */
     interface ICDecomposeEquip {
 
-        /** CDecomposeEquip eids */
-        eids?: ((number|Long)[]|null);
+        /** CDecomposeEquip equipIds */
+        equipIds?: ((number|Long)[]|null);
 
         /** CDecomposeEquip quality */
         quality?: (number|null);
@@ -2780,8 +2780,8 @@ export namespace game {
          */
         constructor(properties?: game.ICDecomposeEquip);
 
-        /** CDecomposeEquip eids. */
-        public eids: (number|Long)[];
+        /** CDecomposeEquip equipIds. */
+        public equipIds: (number|Long)[];
 
         /** CDecomposeEquip quality. */
         public quality: number;
@@ -17607,812 +17607,812 @@ export namespace game {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a CGetRecommandPrice. */
-    interface ICGetRecommandPrice {
+    /** Properties of a CGetRecommendPrice. */
+    interface ICGetRecommendPrice {
 
-        /** CGetRecommandPrice itemId */
+        /** CGetRecommendPrice itemId */
         itemId?: (number|null);
     }
 
-    /** Represents a CGetRecommandPrice. */
-    class CGetRecommandPrice implements ICGetRecommandPrice {
+    /** Represents a CGetRecommendPrice. */
+    class CGetRecommendPrice implements ICGetRecommendPrice {
 
         /**
-         * Constructs a new CGetRecommandPrice.
+         * Constructs a new CGetRecommendPrice.
          * @param [properties] Properties to set
          */
-        constructor(properties?: game.ICGetRecommandPrice);
+        constructor(properties?: game.ICGetRecommendPrice);
 
-        /** CGetRecommandPrice itemId. */
+        /** CGetRecommendPrice itemId. */
         public itemId: number;
 
         /**
-         * Creates a new CGetRecommandPrice instance using the specified properties.
+         * Creates a new CGetRecommendPrice instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns CGetRecommandPrice instance
+         * @returns CGetRecommendPrice instance
          */
-        public static create(properties?: game.ICGetRecommandPrice): game.CGetRecommandPrice;
+        public static create(properties?: game.ICGetRecommendPrice): game.CGetRecommendPrice;
 
         /**
-         * Encodes the specified CGetRecommandPrice message. Does not implicitly {@link game.CGetRecommandPrice.verify|verify} messages.
-         * @param message CGetRecommandPrice message or plain object to encode
+         * Encodes the specified CGetRecommendPrice message. Does not implicitly {@link game.CGetRecommendPrice.verify|verify} messages.
+         * @param message CGetRecommendPrice message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: game.ICGetRecommandPrice, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game.ICGetRecommendPrice, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified CGetRecommandPrice message, length delimited. Does not implicitly {@link game.CGetRecommandPrice.verify|verify} messages.
-         * @param message CGetRecommandPrice message or plain object to encode
+         * Encodes the specified CGetRecommendPrice message, length delimited. Does not implicitly {@link game.CGetRecommendPrice.verify|verify} messages.
+         * @param message CGetRecommendPrice message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: game.ICGetRecommandPrice, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game.ICGetRecommendPrice, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a CGetRecommandPrice message from the specified reader or buffer.
+         * Decodes a CGetRecommendPrice message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns CGetRecommandPrice
+         * @returns CGetRecommendPrice
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.CGetRecommandPrice;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.CGetRecommendPrice;
 
         /**
-         * Decodes a CGetRecommandPrice message from the specified reader or buffer, length delimited.
+         * Decodes a CGetRecommendPrice message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns CGetRecommandPrice
+         * @returns CGetRecommendPrice
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.CGetRecommandPrice;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.CGetRecommendPrice;
 
         /**
-         * Verifies a CGetRecommandPrice message.
+         * Verifies a CGetRecommendPrice message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a CGetRecommandPrice message from a plain object. Also converts values to their respective internal types.
+         * Creates a CGetRecommendPrice message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns CGetRecommandPrice
+         * @returns CGetRecommendPrice
          */
-        public static fromObject(object: { [k: string]: any }): game.CGetRecommandPrice;
+        public static fromObject(object: { [k: string]: any }): game.CGetRecommendPrice;
 
         /**
-         * Creates a plain object from a CGetRecommandPrice message. Also converts values to other types if specified.
-         * @param message CGetRecommandPrice
+         * Creates a plain object from a CGetRecommendPrice message. Also converts values to other types if specified.
+         * @param message CGetRecommendPrice
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: game.CGetRecommandPrice, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game.CGetRecommendPrice, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this CGetRecommandPrice to JSON.
+         * Converts this CGetRecommendPrice to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for CGetRecommandPrice
+         * Gets the default type url for CGetRecommendPrice
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a SGetRecommandPrice. */
-    interface ISGetRecommandPrice {
+    /** Properties of a SGetRecommendPrice. */
+    interface ISGetRecommendPrice {
 
-        /** SGetRecommandPrice price */
+        /** SGetRecommendPrice price */
         price?: (number|null);
     }
 
-    /** Represents a SGetRecommandPrice. */
-    class SGetRecommandPrice implements ISGetRecommandPrice {
+    /** Represents a SGetRecommendPrice. */
+    class SGetRecommendPrice implements ISGetRecommendPrice {
 
         /**
-         * Constructs a new SGetRecommandPrice.
+         * Constructs a new SGetRecommendPrice.
          * @param [properties] Properties to set
          */
-        constructor(properties?: game.ISGetRecommandPrice);
+        constructor(properties?: game.ISGetRecommendPrice);
 
-        /** SGetRecommandPrice price. */
+        /** SGetRecommendPrice price. */
         public price: number;
 
         /**
-         * Creates a new SGetRecommandPrice instance using the specified properties.
+         * Creates a new SGetRecommendPrice instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns SGetRecommandPrice instance
+         * @returns SGetRecommendPrice instance
          */
-        public static create(properties?: game.ISGetRecommandPrice): game.SGetRecommandPrice;
+        public static create(properties?: game.ISGetRecommendPrice): game.SGetRecommendPrice;
 
         /**
-         * Encodes the specified SGetRecommandPrice message. Does not implicitly {@link game.SGetRecommandPrice.verify|verify} messages.
-         * @param message SGetRecommandPrice message or plain object to encode
+         * Encodes the specified SGetRecommendPrice message. Does not implicitly {@link game.SGetRecommendPrice.verify|verify} messages.
+         * @param message SGetRecommendPrice message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: game.ISGetRecommandPrice, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game.ISGetRecommendPrice, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified SGetRecommandPrice message, length delimited. Does not implicitly {@link game.SGetRecommandPrice.verify|verify} messages.
-         * @param message SGetRecommandPrice message or plain object to encode
+         * Encodes the specified SGetRecommendPrice message, length delimited. Does not implicitly {@link game.SGetRecommendPrice.verify|verify} messages.
+         * @param message SGetRecommendPrice message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: game.ISGetRecommandPrice, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game.ISGetRecommendPrice, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a SGetRecommandPrice message from the specified reader or buffer.
+         * Decodes a SGetRecommendPrice message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns SGetRecommandPrice
+         * @returns SGetRecommendPrice
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.SGetRecommandPrice;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.SGetRecommendPrice;
 
         /**
-         * Decodes a SGetRecommandPrice message from the specified reader or buffer, length delimited.
+         * Decodes a SGetRecommendPrice message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns SGetRecommandPrice
+         * @returns SGetRecommendPrice
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.SGetRecommandPrice;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.SGetRecommendPrice;
 
         /**
-         * Verifies a SGetRecommandPrice message.
+         * Verifies a SGetRecommendPrice message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a SGetRecommandPrice message from a plain object. Also converts values to their respective internal types.
+         * Creates a SGetRecommendPrice message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns SGetRecommandPrice
+         * @returns SGetRecommendPrice
          */
-        public static fromObject(object: { [k: string]: any }): game.SGetRecommandPrice;
+        public static fromObject(object: { [k: string]: any }): game.SGetRecommendPrice;
 
         /**
-         * Creates a plain object from a SGetRecommandPrice message. Also converts values to other types if specified.
-         * @param message SGetRecommandPrice
+         * Creates a plain object from a SGetRecommendPrice message. Also converts values to other types if specified.
+         * @param message SGetRecommendPrice
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: game.SGetRecommandPrice, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game.SGetRecommendPrice, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this SGetRecommandPrice to JSON.
+         * Converts this SGetRecommendPrice to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for SGetRecommandPrice
+         * Gets the default type url for SGetRecommendPrice
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a CUnlockTreatureBox. */
-    interface ICUnlockTreatureBox {
+    /** Properties of a CUnlockTreasureBox. */
+    interface ICUnlockTreasureBox {
 
-        /** CUnlockTreatureBox bid */
+        /** CUnlockTreasureBox bid */
         bid?: (number|Long|null);
 
-        /** CUnlockTreatureBox useCash */
+        /** CUnlockTreasureBox useCash */
         useCash?: (boolean|null);
     }
 
-    /** Represents a CUnlockTreatureBox. */
-    class CUnlockTreatureBox implements ICUnlockTreatureBox {
+    /** Represents a CUnlockTreasureBox. */
+    class CUnlockTreasureBox implements ICUnlockTreasureBox {
 
         /**
-         * Constructs a new CUnlockTreatureBox.
+         * Constructs a new CUnlockTreasureBox.
          * @param [properties] Properties to set
          */
-        constructor(properties?: game.ICUnlockTreatureBox);
+        constructor(properties?: game.ICUnlockTreasureBox);
 
-        /** CUnlockTreatureBox bid. */
+        /** CUnlockTreasureBox bid. */
         public bid: (number|Long);
 
-        /** CUnlockTreatureBox useCash. */
+        /** CUnlockTreasureBox useCash. */
         public useCash: boolean;
 
         /**
-         * Creates a new CUnlockTreatureBox instance using the specified properties.
+         * Creates a new CUnlockTreasureBox instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns CUnlockTreatureBox instance
+         * @returns CUnlockTreasureBox instance
          */
-        public static create(properties?: game.ICUnlockTreatureBox): game.CUnlockTreatureBox;
+        public static create(properties?: game.ICUnlockTreasureBox): game.CUnlockTreasureBox;
 
         /**
-         * Encodes the specified CUnlockTreatureBox message. Does not implicitly {@link game.CUnlockTreatureBox.verify|verify} messages.
-         * @param message CUnlockTreatureBox message or plain object to encode
+         * Encodes the specified CUnlockTreasureBox message. Does not implicitly {@link game.CUnlockTreasureBox.verify|verify} messages.
+         * @param message CUnlockTreasureBox message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: game.ICUnlockTreatureBox, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game.ICUnlockTreasureBox, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified CUnlockTreatureBox message, length delimited. Does not implicitly {@link game.CUnlockTreatureBox.verify|verify} messages.
-         * @param message CUnlockTreatureBox message or plain object to encode
+         * Encodes the specified CUnlockTreasureBox message, length delimited. Does not implicitly {@link game.CUnlockTreasureBox.verify|verify} messages.
+         * @param message CUnlockTreasureBox message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: game.ICUnlockTreatureBox, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game.ICUnlockTreasureBox, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a CUnlockTreatureBox message from the specified reader or buffer.
+         * Decodes a CUnlockTreasureBox message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns CUnlockTreatureBox
+         * @returns CUnlockTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.CUnlockTreatureBox;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.CUnlockTreasureBox;
 
         /**
-         * Decodes a CUnlockTreatureBox message from the specified reader or buffer, length delimited.
+         * Decodes a CUnlockTreasureBox message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns CUnlockTreatureBox
+         * @returns CUnlockTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.CUnlockTreatureBox;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.CUnlockTreasureBox;
 
         /**
-         * Verifies a CUnlockTreatureBox message.
+         * Verifies a CUnlockTreasureBox message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a CUnlockTreatureBox message from a plain object. Also converts values to their respective internal types.
+         * Creates a CUnlockTreasureBox message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns CUnlockTreatureBox
+         * @returns CUnlockTreasureBox
          */
-        public static fromObject(object: { [k: string]: any }): game.CUnlockTreatureBox;
+        public static fromObject(object: { [k: string]: any }): game.CUnlockTreasureBox;
 
         /**
-         * Creates a plain object from a CUnlockTreatureBox message. Also converts values to other types if specified.
-         * @param message CUnlockTreatureBox
+         * Creates a plain object from a CUnlockTreasureBox message. Also converts values to other types if specified.
+         * @param message CUnlockTreasureBox
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: game.CUnlockTreatureBox, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game.CUnlockTreasureBox, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this CUnlockTreatureBox to JSON.
+         * Converts this CUnlockTreasureBox to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for CUnlockTreatureBox
+         * Gets the default type url for CUnlockTreasureBox
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a SUnlockTreatureBox. */
-    interface ISUnlockTreatureBox {
+    /** Properties of a SUnlockTreasureBox. */
+    interface ISUnlockTreasureBox {
 
-        /** SUnlockTreatureBox time */
+        /** SUnlockTreasureBox time */
         time?: (number|Long|null);
 
-        /** SUnlockTreatureBox awards */
+        /** SUnlockTreasureBox awards */
         awards?: (common.IReward[]|null);
 
-        /** SUnlockTreatureBox costs */
+        /** SUnlockTreasureBox costs */
         costs?: (common.IReward[]|null);
     }
 
-    /** Represents a SUnlockTreatureBox. */
-    class SUnlockTreatureBox implements ISUnlockTreatureBox {
+    /** Represents a SUnlockTreasureBox. */
+    class SUnlockTreasureBox implements ISUnlockTreasureBox {
 
         /**
-         * Constructs a new SUnlockTreatureBox.
+         * Constructs a new SUnlockTreasureBox.
          * @param [properties] Properties to set
          */
-        constructor(properties?: game.ISUnlockTreatureBox);
+        constructor(properties?: game.ISUnlockTreasureBox);
 
-        /** SUnlockTreatureBox time. */
+        /** SUnlockTreasureBox time. */
         public time: (number|Long);
 
-        /** SUnlockTreatureBox awards. */
+        /** SUnlockTreasureBox awards. */
         public awards: common.IReward[];
 
-        /** SUnlockTreatureBox costs. */
+        /** SUnlockTreasureBox costs. */
         public costs: common.IReward[];
 
         /**
-         * Creates a new SUnlockTreatureBox instance using the specified properties.
+         * Creates a new SUnlockTreasureBox instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns SUnlockTreatureBox instance
+         * @returns SUnlockTreasureBox instance
          */
-        public static create(properties?: game.ISUnlockTreatureBox): game.SUnlockTreatureBox;
+        public static create(properties?: game.ISUnlockTreasureBox): game.SUnlockTreasureBox;
 
         /**
-         * Encodes the specified SUnlockTreatureBox message. Does not implicitly {@link game.SUnlockTreatureBox.verify|verify} messages.
-         * @param message SUnlockTreatureBox message or plain object to encode
+         * Encodes the specified SUnlockTreasureBox message. Does not implicitly {@link game.SUnlockTreasureBox.verify|verify} messages.
+         * @param message SUnlockTreasureBox message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: game.ISUnlockTreatureBox, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game.ISUnlockTreasureBox, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified SUnlockTreatureBox message, length delimited. Does not implicitly {@link game.SUnlockTreatureBox.verify|verify} messages.
-         * @param message SUnlockTreatureBox message or plain object to encode
+         * Encodes the specified SUnlockTreasureBox message, length delimited. Does not implicitly {@link game.SUnlockTreasureBox.verify|verify} messages.
+         * @param message SUnlockTreasureBox message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: game.ISUnlockTreatureBox, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game.ISUnlockTreasureBox, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a SUnlockTreatureBox message from the specified reader or buffer.
+         * Decodes a SUnlockTreasureBox message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns SUnlockTreatureBox
+         * @returns SUnlockTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.SUnlockTreatureBox;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.SUnlockTreasureBox;
 
         /**
-         * Decodes a SUnlockTreatureBox message from the specified reader or buffer, length delimited.
+         * Decodes a SUnlockTreasureBox message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns SUnlockTreatureBox
+         * @returns SUnlockTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.SUnlockTreatureBox;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.SUnlockTreasureBox;
 
         /**
-         * Verifies a SUnlockTreatureBox message.
+         * Verifies a SUnlockTreasureBox message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a SUnlockTreatureBox message from a plain object. Also converts values to their respective internal types.
+         * Creates a SUnlockTreasureBox message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns SUnlockTreatureBox
+         * @returns SUnlockTreasureBox
          */
-        public static fromObject(object: { [k: string]: any }): game.SUnlockTreatureBox;
+        public static fromObject(object: { [k: string]: any }): game.SUnlockTreasureBox;
 
         /**
-         * Creates a plain object from a SUnlockTreatureBox message. Also converts values to other types if specified.
-         * @param message SUnlockTreatureBox
+         * Creates a plain object from a SUnlockTreasureBox message. Also converts values to other types if specified.
+         * @param message SUnlockTreasureBox
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: game.SUnlockTreatureBox, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game.SUnlockTreasureBox, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this SUnlockTreatureBox to JSON.
+         * Converts this SUnlockTreasureBox to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for SUnlockTreatureBox
+         * Gets the default type url for SUnlockTreasureBox
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a COpenTreatureBox. */
-    interface ICOpenTreatureBox {
+    /** Properties of a COpenTreasureBox. */
+    interface ICOpenTreasureBox {
 
-        /** COpenTreatureBox bid */
+        /** COpenTreasureBox bid */
         bid?: (number|Long|null);
 
-        /** COpenTreatureBox useCash */
+        /** COpenTreasureBox useCash */
         useCash?: (boolean|null);
     }
 
-    /** Represents a COpenTreatureBox. */
-    class COpenTreatureBox implements ICOpenTreatureBox {
+    /** Represents a COpenTreasureBox. */
+    class COpenTreasureBox implements ICOpenTreasureBox {
 
         /**
-         * Constructs a new COpenTreatureBox.
+         * Constructs a new COpenTreasureBox.
          * @param [properties] Properties to set
          */
-        constructor(properties?: game.ICOpenTreatureBox);
+        constructor(properties?: game.ICOpenTreasureBox);
 
-        /** COpenTreatureBox bid. */
+        /** COpenTreasureBox bid. */
         public bid: (number|Long);
 
-        /** COpenTreatureBox useCash. */
+        /** COpenTreasureBox useCash. */
         public useCash: boolean;
 
         /**
-         * Creates a new COpenTreatureBox instance using the specified properties.
+         * Creates a new COpenTreasureBox instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns COpenTreatureBox instance
+         * @returns COpenTreasureBox instance
          */
-        public static create(properties?: game.ICOpenTreatureBox): game.COpenTreatureBox;
+        public static create(properties?: game.ICOpenTreasureBox): game.COpenTreasureBox;
 
         /**
-         * Encodes the specified COpenTreatureBox message. Does not implicitly {@link game.COpenTreatureBox.verify|verify} messages.
-         * @param message COpenTreatureBox message or plain object to encode
+         * Encodes the specified COpenTreasureBox message. Does not implicitly {@link game.COpenTreasureBox.verify|verify} messages.
+         * @param message COpenTreasureBox message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: game.ICOpenTreatureBox, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game.ICOpenTreasureBox, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified COpenTreatureBox message, length delimited. Does not implicitly {@link game.COpenTreatureBox.verify|verify} messages.
-         * @param message COpenTreatureBox message or plain object to encode
+         * Encodes the specified COpenTreasureBox message, length delimited. Does not implicitly {@link game.COpenTreasureBox.verify|verify} messages.
+         * @param message COpenTreasureBox message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: game.ICOpenTreatureBox, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game.ICOpenTreasureBox, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a COpenTreatureBox message from the specified reader or buffer.
+         * Decodes a COpenTreasureBox message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns COpenTreatureBox
+         * @returns COpenTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.COpenTreatureBox;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.COpenTreasureBox;
 
         /**
-         * Decodes a COpenTreatureBox message from the specified reader or buffer, length delimited.
+         * Decodes a COpenTreasureBox message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns COpenTreatureBox
+         * @returns COpenTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.COpenTreatureBox;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.COpenTreasureBox;
 
         /**
-         * Verifies a COpenTreatureBox message.
+         * Verifies a COpenTreasureBox message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a COpenTreatureBox message from a plain object. Also converts values to their respective internal types.
+         * Creates a COpenTreasureBox message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns COpenTreatureBox
+         * @returns COpenTreasureBox
          */
-        public static fromObject(object: { [k: string]: any }): game.COpenTreatureBox;
+        public static fromObject(object: { [k: string]: any }): game.COpenTreasureBox;
 
         /**
-         * Creates a plain object from a COpenTreatureBox message. Also converts values to other types if specified.
-         * @param message COpenTreatureBox
+         * Creates a plain object from a COpenTreasureBox message. Also converts values to other types if specified.
+         * @param message COpenTreasureBox
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: game.COpenTreatureBox, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game.COpenTreasureBox, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this COpenTreatureBox to JSON.
+         * Converts this COpenTreasureBox to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for COpenTreatureBox
+         * Gets the default type url for COpenTreasureBox
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a SOpenTreatureBox. */
-    interface ISOpenTreatureBox {
+    /** Properties of a SOpenTreasureBox. */
+    interface ISOpenTreasureBox {
 
-        /** SOpenTreatureBox awards */
+        /** SOpenTreasureBox awards */
         awards?: (common.IReward[]|null);
 
-        /** SOpenTreatureBox costs */
+        /** SOpenTreasureBox costs */
         costs?: (common.IReward[]|null);
     }
 
-    /** Represents a SOpenTreatureBox. */
-    class SOpenTreatureBox implements ISOpenTreatureBox {
+    /** Represents a SOpenTreasureBox. */
+    class SOpenTreasureBox implements ISOpenTreasureBox {
 
         /**
-         * Constructs a new SOpenTreatureBox.
+         * Constructs a new SOpenTreasureBox.
          * @param [properties] Properties to set
          */
-        constructor(properties?: game.ISOpenTreatureBox);
+        constructor(properties?: game.ISOpenTreasureBox);
 
-        /** SOpenTreatureBox awards. */
+        /** SOpenTreasureBox awards. */
         public awards: common.IReward[];
 
-        /** SOpenTreatureBox costs. */
+        /** SOpenTreasureBox costs. */
         public costs: common.IReward[];
 
         /**
-         * Creates a new SOpenTreatureBox instance using the specified properties.
+         * Creates a new SOpenTreasureBox instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns SOpenTreatureBox instance
+         * @returns SOpenTreasureBox instance
          */
-        public static create(properties?: game.ISOpenTreatureBox): game.SOpenTreatureBox;
+        public static create(properties?: game.ISOpenTreasureBox): game.SOpenTreasureBox;
 
         /**
-         * Encodes the specified SOpenTreatureBox message. Does not implicitly {@link game.SOpenTreatureBox.verify|verify} messages.
-         * @param message SOpenTreatureBox message or plain object to encode
+         * Encodes the specified SOpenTreasureBox message. Does not implicitly {@link game.SOpenTreasureBox.verify|verify} messages.
+         * @param message SOpenTreasureBox message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: game.ISOpenTreatureBox, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game.ISOpenTreasureBox, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified SOpenTreatureBox message, length delimited. Does not implicitly {@link game.SOpenTreatureBox.verify|verify} messages.
-         * @param message SOpenTreatureBox message or plain object to encode
+         * Encodes the specified SOpenTreasureBox message, length delimited. Does not implicitly {@link game.SOpenTreasureBox.verify|verify} messages.
+         * @param message SOpenTreasureBox message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: game.ISOpenTreatureBox, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game.ISOpenTreasureBox, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a SOpenTreatureBox message from the specified reader or buffer.
+         * Decodes a SOpenTreasureBox message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns SOpenTreatureBox
+         * @returns SOpenTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.SOpenTreatureBox;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.SOpenTreasureBox;
 
         /**
-         * Decodes a SOpenTreatureBox message from the specified reader or buffer, length delimited.
+         * Decodes a SOpenTreasureBox message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns SOpenTreatureBox
+         * @returns SOpenTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.SOpenTreatureBox;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.SOpenTreasureBox;
 
         /**
-         * Verifies a SOpenTreatureBox message.
+         * Verifies a SOpenTreasureBox message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a SOpenTreatureBox message from a plain object. Also converts values to their respective internal types.
+         * Creates a SOpenTreasureBox message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns SOpenTreatureBox
+         * @returns SOpenTreasureBox
          */
-        public static fromObject(object: { [k: string]: any }): game.SOpenTreatureBox;
+        public static fromObject(object: { [k: string]: any }): game.SOpenTreasureBox;
 
         /**
-         * Creates a plain object from a SOpenTreatureBox message. Also converts values to other types if specified.
-         * @param message SOpenTreatureBox
+         * Creates a plain object from a SOpenTreasureBox message. Also converts values to other types if specified.
+         * @param message SOpenTreasureBox
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: game.SOpenTreatureBox, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game.SOpenTreasureBox, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this SOpenTreatureBox to JSON.
+         * Converts this SOpenTreasureBox to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for SOpenTreatureBox
+         * Gets the default type url for SOpenTreasureBox
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a CSpeedUpTreatureBox. */
-    interface ICSpeedUpTreatureBox {
+    /** Properties of a CSpeedUpTreasureBox. */
+    interface ICSpeedUpTreasureBox {
 
-        /** CSpeedUpTreatureBox bid */
+        /** CSpeedUpTreasureBox bid */
         bid?: (number|Long|null);
     }
 
-    /** Represents a CSpeedUpTreatureBox. */
-    class CSpeedUpTreatureBox implements ICSpeedUpTreatureBox {
+    /** Represents a CSpeedUpTreasureBox. */
+    class CSpeedUpTreasureBox implements ICSpeedUpTreasureBox {
 
         /**
-         * Constructs a new CSpeedUpTreatureBox.
+         * Constructs a new CSpeedUpTreasureBox.
          * @param [properties] Properties to set
          */
-        constructor(properties?: game.ICSpeedUpTreatureBox);
+        constructor(properties?: game.ICSpeedUpTreasureBox);
 
-        /** CSpeedUpTreatureBox bid. */
+        /** CSpeedUpTreasureBox bid. */
         public bid: (number|Long);
 
         /**
-         * Creates a new CSpeedUpTreatureBox instance using the specified properties.
+         * Creates a new CSpeedUpTreasureBox instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns CSpeedUpTreatureBox instance
+         * @returns CSpeedUpTreasureBox instance
          */
-        public static create(properties?: game.ICSpeedUpTreatureBox): game.CSpeedUpTreatureBox;
+        public static create(properties?: game.ICSpeedUpTreasureBox): game.CSpeedUpTreasureBox;
 
         /**
-         * Encodes the specified CSpeedUpTreatureBox message. Does not implicitly {@link game.CSpeedUpTreatureBox.verify|verify} messages.
-         * @param message CSpeedUpTreatureBox message or plain object to encode
+         * Encodes the specified CSpeedUpTreasureBox message. Does not implicitly {@link game.CSpeedUpTreasureBox.verify|verify} messages.
+         * @param message CSpeedUpTreasureBox message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: game.ICSpeedUpTreatureBox, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game.ICSpeedUpTreasureBox, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified CSpeedUpTreatureBox message, length delimited. Does not implicitly {@link game.CSpeedUpTreatureBox.verify|verify} messages.
-         * @param message CSpeedUpTreatureBox message or plain object to encode
+         * Encodes the specified CSpeedUpTreasureBox message, length delimited. Does not implicitly {@link game.CSpeedUpTreasureBox.verify|verify} messages.
+         * @param message CSpeedUpTreasureBox message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: game.ICSpeedUpTreatureBox, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game.ICSpeedUpTreasureBox, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a CSpeedUpTreatureBox message from the specified reader or buffer.
+         * Decodes a CSpeedUpTreasureBox message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns CSpeedUpTreatureBox
+         * @returns CSpeedUpTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.CSpeedUpTreatureBox;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.CSpeedUpTreasureBox;
 
         /**
-         * Decodes a CSpeedUpTreatureBox message from the specified reader or buffer, length delimited.
+         * Decodes a CSpeedUpTreasureBox message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns CSpeedUpTreatureBox
+         * @returns CSpeedUpTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.CSpeedUpTreatureBox;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.CSpeedUpTreasureBox;
 
         /**
-         * Verifies a CSpeedUpTreatureBox message.
+         * Verifies a CSpeedUpTreasureBox message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a CSpeedUpTreatureBox message from a plain object. Also converts values to their respective internal types.
+         * Creates a CSpeedUpTreasureBox message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns CSpeedUpTreatureBox
+         * @returns CSpeedUpTreasureBox
          */
-        public static fromObject(object: { [k: string]: any }): game.CSpeedUpTreatureBox;
+        public static fromObject(object: { [k: string]: any }): game.CSpeedUpTreasureBox;
 
         /**
-         * Creates a plain object from a CSpeedUpTreatureBox message. Also converts values to other types if specified.
-         * @param message CSpeedUpTreatureBox
+         * Creates a plain object from a CSpeedUpTreasureBox message. Also converts values to other types if specified.
+         * @param message CSpeedUpTreasureBox
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: game.CSpeedUpTreatureBox, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game.CSpeedUpTreasureBox, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this CSpeedUpTreatureBox to JSON.
+         * Converts this CSpeedUpTreasureBox to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for CSpeedUpTreatureBox
+         * Gets the default type url for CSpeedUpTreasureBox
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a SSpeedUpTreatureBox. */
-    interface ISSpeedUpTreatureBox {
+    /** Properties of a SSpeedUpTreasureBox. */
+    interface ISSpeedUpTreasureBox {
 
-        /** SSpeedUpTreatureBox boxId */
+        /** SSpeedUpTreasureBox boxId */
         boxId?: (number|null);
 
-        /** SSpeedUpTreatureBox time */
+        /** SSpeedUpTreasureBox time */
         time?: (number|Long|null);
     }
 
-    /** Represents a SSpeedUpTreatureBox. */
-    class SSpeedUpTreatureBox implements ISSpeedUpTreatureBox {
+    /** Represents a SSpeedUpTreasureBox. */
+    class SSpeedUpTreasureBox implements ISSpeedUpTreasureBox {
 
         /**
-         * Constructs a new SSpeedUpTreatureBox.
+         * Constructs a new SSpeedUpTreasureBox.
          * @param [properties] Properties to set
          */
-        constructor(properties?: game.ISSpeedUpTreatureBox);
+        constructor(properties?: game.ISSpeedUpTreasureBox);
 
-        /** SSpeedUpTreatureBox boxId. */
+        /** SSpeedUpTreasureBox boxId. */
         public boxId: number;
 
-        /** SSpeedUpTreatureBox time. */
+        /** SSpeedUpTreasureBox time. */
         public time: (number|Long);
 
         /**
-         * Creates a new SSpeedUpTreatureBox instance using the specified properties.
+         * Creates a new SSpeedUpTreasureBox instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns SSpeedUpTreatureBox instance
+         * @returns SSpeedUpTreasureBox instance
          */
-        public static create(properties?: game.ISSpeedUpTreatureBox): game.SSpeedUpTreatureBox;
+        public static create(properties?: game.ISSpeedUpTreasureBox): game.SSpeedUpTreasureBox;
 
         /**
-         * Encodes the specified SSpeedUpTreatureBox message. Does not implicitly {@link game.SSpeedUpTreatureBox.verify|verify} messages.
-         * @param message SSpeedUpTreatureBox message or plain object to encode
+         * Encodes the specified SSpeedUpTreasureBox message. Does not implicitly {@link game.SSpeedUpTreasureBox.verify|verify} messages.
+         * @param message SSpeedUpTreasureBox message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: game.ISSpeedUpTreatureBox, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game.ISSpeedUpTreasureBox, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified SSpeedUpTreatureBox message, length delimited. Does not implicitly {@link game.SSpeedUpTreatureBox.verify|verify} messages.
-         * @param message SSpeedUpTreatureBox message or plain object to encode
+         * Encodes the specified SSpeedUpTreasureBox message, length delimited. Does not implicitly {@link game.SSpeedUpTreasureBox.verify|verify} messages.
+         * @param message SSpeedUpTreasureBox message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: game.ISSpeedUpTreatureBox, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game.ISSpeedUpTreasureBox, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a SSpeedUpTreatureBox message from the specified reader or buffer.
+         * Decodes a SSpeedUpTreasureBox message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns SSpeedUpTreatureBox
+         * @returns SSpeedUpTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.SSpeedUpTreatureBox;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game.SSpeedUpTreasureBox;
 
         /**
-         * Decodes a SSpeedUpTreatureBox message from the specified reader or buffer, length delimited.
+         * Decodes a SSpeedUpTreasureBox message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns SSpeedUpTreatureBox
+         * @returns SSpeedUpTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.SSpeedUpTreatureBox;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game.SSpeedUpTreasureBox;
 
         /**
-         * Verifies a SSpeedUpTreatureBox message.
+         * Verifies a SSpeedUpTreasureBox message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a SSpeedUpTreatureBox message from a plain object. Also converts values to their respective internal types.
+         * Creates a SSpeedUpTreasureBox message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns SSpeedUpTreatureBox
+         * @returns SSpeedUpTreasureBox
          */
-        public static fromObject(object: { [k: string]: any }): game.SSpeedUpTreatureBox;
+        public static fromObject(object: { [k: string]: any }): game.SSpeedUpTreasureBox;
 
         /**
-         * Creates a plain object from a SSpeedUpTreatureBox message. Also converts values to other types if specified.
-         * @param message SSpeedUpTreatureBox
+         * Creates a plain object from a SSpeedUpTreasureBox message. Also converts values to other types if specified.
+         * @param message SSpeedUpTreasureBox
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: game.SSpeedUpTreatureBox, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game.SSpeedUpTreasureBox, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this SSpeedUpTreatureBox to JSON.
+         * Converts this SSpeedUpTreasureBox to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for SSpeedUpTreatureBox
+         * Gets the default type url for SSpeedUpTreasureBox
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -23493,15 +23493,15 @@ export namespace common {
 
     /** GuildEventType enum. */
     enum GuildEventType {
-        GUILD_EVVENT_UNKNOWN = 0,
-        GUILD_EVVENT_CREATE = 1,
-        GUILD_EVVENT_JOIN = 2,
-        GUILD_EVVENT_LEAVE = 3,
-        GUILD_EVVENT_KICK = 4,
-        GUILD_EVVENT_MODIFY_NOTICE = 5,
-        GUILD_EVVENT_MODIFY_FLAG = 6,
-        GUILD_EVVENT_MODIFY_NAME = 7,
-        GUILD_EVVENT_TRANSFER = 8
+        GUILD_EVENT_UNKNOWN = 0,
+        GUILD_EVENT_CREATE = 1,
+        GUILD_EVENT_JOIN = 2,
+        GUILD_EVENT_LEAVE = 3,
+        GUILD_EVENT_KICK = 4,
+        GUILD_EVENT_MODIFY_NOTICE = 5,
+        GUILD_EVENT_MODIFY_FLAG = 6,
+        GUILD_EVENT_MODIFY_NAME = 7,
+        GUILD_EVENT_TRANSFER = 8
     }
 
     /** GuildMemberType enum. */
@@ -24405,8 +24405,8 @@ export namespace common {
         EFFECT_TYPE_UNKNOWN = 0,
         BAN_MOVE = 1,
         BAN_ATTACK = 2,
-        IMMNUE_CONTROL = 3,
-        IMMNUE_DAMAGE = 4,
+        IMMUNE_CONTROL = 3,
+        IMMUNE_DAMAGE = 4,
         INVINCIBLE = 5
     }
 
@@ -24422,7 +24422,7 @@ export namespace common {
         CritPer = 2,
         BlockPer = 3,
         DodgePer = 4,
-        CrtiDmgPer = 5,
+        CritDmgPer = 5,
         SuckBloodPer = 6
     }
 
@@ -24776,97 +24776,97 @@ export namespace common {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a RemoveCardCommond. */
-    interface IRemoveCardCommond {
+    /** Properties of a RemoveCardCommand. */
+    interface IRemoveCardCommand {
 
-        /** RemoveCardCommond instId */
+        /** RemoveCardCommand instId */
         instId?: (number|null);
     }
 
-    /** Represents a RemoveCardCommond. */
-    class RemoveCardCommond implements IRemoveCardCommond {
+    /** Represents a RemoveCardCommand. */
+    class RemoveCardCommand implements IRemoveCardCommand {
 
         /**
-         * Constructs a new RemoveCardCommond.
+         * Constructs a new RemoveCardCommand.
          * @param [properties] Properties to set
          */
-        constructor(properties?: common.IRemoveCardCommond);
+        constructor(properties?: common.IRemoveCardCommand);
 
-        /** RemoveCardCommond instId. */
+        /** RemoveCardCommand instId. */
         public instId: number;
 
         /**
-         * Creates a new RemoveCardCommond instance using the specified properties.
+         * Creates a new RemoveCardCommand instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns RemoveCardCommond instance
+         * @returns RemoveCardCommand instance
          */
-        public static create(properties?: common.IRemoveCardCommond): common.RemoveCardCommond;
+        public static create(properties?: common.IRemoveCardCommand): common.RemoveCardCommand;
 
         /**
-         * Encodes the specified RemoveCardCommond message. Does not implicitly {@link common.RemoveCardCommond.verify|verify} messages.
-         * @param message RemoveCardCommond message or plain object to encode
+         * Encodes the specified RemoveCardCommand message. Does not implicitly {@link common.RemoveCardCommand.verify|verify} messages.
+         * @param message RemoveCardCommand message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: common.IRemoveCardCommond, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: common.IRemoveCardCommand, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified RemoveCardCommond message, length delimited. Does not implicitly {@link common.RemoveCardCommond.verify|verify} messages.
-         * @param message RemoveCardCommond message or plain object to encode
+         * Encodes the specified RemoveCardCommand message, length delimited. Does not implicitly {@link common.RemoveCardCommand.verify|verify} messages.
+         * @param message RemoveCardCommand message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: common.IRemoveCardCommond, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: common.IRemoveCardCommand, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a RemoveCardCommond message from the specified reader or buffer.
+         * Decodes a RemoveCardCommand message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns RemoveCardCommond
+         * @returns RemoveCardCommand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): common.RemoveCardCommond;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): common.RemoveCardCommand;
 
         /**
-         * Decodes a RemoveCardCommond message from the specified reader or buffer, length delimited.
+         * Decodes a RemoveCardCommand message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns RemoveCardCommond
+         * @returns RemoveCardCommand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): common.RemoveCardCommond;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): common.RemoveCardCommand;
 
         /**
-         * Verifies a RemoveCardCommond message.
+         * Verifies a RemoveCardCommand message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a RemoveCardCommond message from a plain object. Also converts values to their respective internal types.
+         * Creates a RemoveCardCommand message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns RemoveCardCommond
+         * @returns RemoveCardCommand
          */
-        public static fromObject(object: { [k: string]: any }): common.RemoveCardCommond;
+        public static fromObject(object: { [k: string]: any }): common.RemoveCardCommand;
 
         /**
-         * Creates a plain object from a RemoveCardCommond message. Also converts values to other types if specified.
-         * @param message RemoveCardCommond
+         * Creates a plain object from a RemoveCardCommand message. Also converts values to other types if specified.
+         * @param message RemoveCardCommand
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: common.RemoveCardCommond, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: common.RemoveCardCommand, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this RemoveCardCommond to JSON.
+         * Converts this RemoveCardCommand to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for RemoveCardCommond
+         * Gets the default type url for RemoveCardCommand
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -26958,8 +26958,8 @@ export namespace common {
         /** SaleItemInfo markCount */
         markCount?: (number|null);
 
-        /** SaleItemInfo salerId */
-        salerId?: (string|null);
+        /** SaleItemInfo sellerId */
+        sellerId?: (string|null);
 
         /** SaleItemInfo publicityTime */
         publicityTime?: (number|null);
@@ -27001,8 +27001,8 @@ export namespace common {
         /** SaleItemInfo markCount. */
         public markCount: number;
 
-        /** SaleItemInfo salerId. */
-        public salerId: string;
+        /** SaleItemInfo sellerId. */
+        public sellerId: string;
 
         /** SaleItemInfo publicityTime. */
         public publicityTime: number;

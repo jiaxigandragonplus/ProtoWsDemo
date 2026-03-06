@@ -6218,7 +6218,7 @@ $root.game = (function() {
          * Properties of a CDecomposeEquip.
          * @memberof game
          * @interface ICDecomposeEquip
-         * @property {Array.<number|Long>|null} [eids] CDecomposeEquip eids
+         * @property {Array.<number|Long>|null} [equipIds] CDecomposeEquip equipIds
          * @property {number|null} [quality] CDecomposeEquip quality
          */
 
@@ -6231,7 +6231,7 @@ $root.game = (function() {
          * @param {game.ICDecomposeEquip=} [properties] Properties to set
          */
         function CDecomposeEquip(properties) {
-            this.eids = [];
+            this.equipIds = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -6239,12 +6239,12 @@ $root.game = (function() {
         }
 
         /**
-         * CDecomposeEquip eids.
-         * @member {Array.<number|Long>} eids
+         * CDecomposeEquip equipIds.
+         * @member {Array.<number|Long>} equipIds
          * @memberof game.CDecomposeEquip
          * @instance
          */
-        CDecomposeEquip.prototype.eids = $util.emptyArray;
+        CDecomposeEquip.prototype.equipIds = $util.emptyArray;
 
         /**
          * CDecomposeEquip quality.
@@ -6278,10 +6278,10 @@ $root.game = (function() {
         CDecomposeEquip.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.eids != null && message.eids.length) {
+            if (message.equipIds != null && message.equipIds.length) {
                 writer.uint32(/* id 1, wireType 2 =*/10).fork();
-                for (var i = 0; i < message.eids.length; ++i)
-                    writer.int64(message.eids[i]);
+                for (var i = 0; i < message.equipIds.length; ++i)
+                    writer.int64(message.equipIds[i]);
                 writer.ldelim();
             }
             if (message.quality != null && Object.hasOwnProperty.call(message, "quality"))
@@ -6323,14 +6323,14 @@ $root.game = (function() {
                     break;
                 switch (tag >>> 3) {
                 case 1: {
-                        if (!(message.eids && message.eids.length))
-                            message.eids = [];
+                        if (!(message.equipIds && message.equipIds.length))
+                            message.equipIds = [];
                         if ((tag & 7) === 2) {
                             var end2 = reader.uint32() + reader.pos;
                             while (reader.pos < end2)
-                                message.eids.push(reader.int64());
+                                message.equipIds.push(reader.int64());
                         } else
-                            message.eids.push(reader.int64());
+                            message.equipIds.push(reader.int64());
                         break;
                     }
                 case 2: {
@@ -6372,12 +6372,12 @@ $root.game = (function() {
         CDecomposeEquip.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.eids != null && message.hasOwnProperty("eids")) {
-                if (!Array.isArray(message.eids))
-                    return "eids: array expected";
-                for (var i = 0; i < message.eids.length; ++i)
-                    if (!$util.isInteger(message.eids[i]) && !(message.eids[i] && $util.isInteger(message.eids[i].low) && $util.isInteger(message.eids[i].high)))
-                        return "eids: integer|Long[] expected";
+            if (message.equipIds != null && message.hasOwnProperty("equipIds")) {
+                if (!Array.isArray(message.equipIds))
+                    return "equipIds: array expected";
+                for (var i = 0; i < message.equipIds.length; ++i)
+                    if (!$util.isInteger(message.equipIds[i]) && !(message.equipIds[i] && $util.isInteger(message.equipIds[i].low) && $util.isInteger(message.equipIds[i].high)))
+                        return "equipIds: integer|Long[] expected";
             }
             if (message.quality != null && message.hasOwnProperty("quality"))
                 if (!$util.isInteger(message.quality))
@@ -6397,19 +6397,19 @@ $root.game = (function() {
             if (object instanceof $root.game.CDecomposeEquip)
                 return object;
             var message = new $root.game.CDecomposeEquip();
-            if (object.eids) {
-                if (!Array.isArray(object.eids))
-                    throw TypeError(".game.CDecomposeEquip.eids: array expected");
-                message.eids = [];
-                for (var i = 0; i < object.eids.length; ++i)
+            if (object.equipIds) {
+                if (!Array.isArray(object.equipIds))
+                    throw TypeError(".game.CDecomposeEquip.equipIds: array expected");
+                message.equipIds = [];
+                for (var i = 0; i < object.equipIds.length; ++i)
                     if ($util.Long)
-                        (message.eids[i] = $util.Long.fromValue(object.eids[i])).unsigned = false;
-                    else if (typeof object.eids[i] === "string")
-                        message.eids[i] = parseInt(object.eids[i], 10);
-                    else if (typeof object.eids[i] === "number")
-                        message.eids[i] = object.eids[i];
-                    else if (typeof object.eids[i] === "object")
-                        message.eids[i] = new $util.LongBits(object.eids[i].low >>> 0, object.eids[i].high >>> 0).toNumber();
+                        (message.equipIds[i] = $util.Long.fromValue(object.equipIds[i])).unsigned = false;
+                    else if (typeof object.equipIds[i] === "string")
+                        message.equipIds[i] = parseInt(object.equipIds[i], 10);
+                    else if (typeof object.equipIds[i] === "number")
+                        message.equipIds[i] = object.equipIds[i];
+                    else if (typeof object.equipIds[i] === "object")
+                        message.equipIds[i] = new $util.LongBits(object.equipIds[i].low >>> 0, object.equipIds[i].high >>> 0).toNumber();
             }
             if (object.quality != null)
                 message.quality = object.quality | 0;
@@ -6430,16 +6430,16 @@ $root.game = (function() {
                 options = {};
             var object = {};
             if (options.arrays || options.defaults)
-                object.eids = [];
+                object.equipIds = [];
             if (options.defaults)
                 object.quality = 0;
-            if (message.eids && message.eids.length) {
-                object.eids = [];
-                for (var j = 0; j < message.eids.length; ++j)
-                    if (typeof message.eids[j] === "number")
-                        object.eids[j] = options.longs === String ? String(message.eids[j]) : message.eids[j];
+            if (message.equipIds && message.equipIds.length) {
+                object.equipIds = [];
+                for (var j = 0; j < message.equipIds.length; ++j)
+                    if (typeof message.equipIds[j] === "number")
+                        object.equipIds[j] = options.longs === String ? String(message.equipIds[j]) : message.equipIds[j];
                     else
-                        object.eids[j] = options.longs === String ? $util.Long.prototype.toString.call(message.eids[j]) : options.longs === Number ? new $util.LongBits(message.eids[j].low >>> 0, message.eids[j].high >>> 0).toNumber() : message.eids[j];
+                        object.equipIds[j] = options.longs === String ? $util.Long.prototype.toString.call(message.equipIds[j]) : options.longs === Number ? new $util.LongBits(message.equipIds[j].low >>> 0, message.equipIds[j].high >>> 0).toNumber() : message.equipIds[j];
             }
             if (message.quality != null && message.hasOwnProperty("quality"))
                 object.quality = message.quality;
@@ -38581,24 +38581,24 @@ $root.game = (function() {
         return SGetMyMarkedGoods;
     })();
 
-    game.CGetRecommandPrice = (function() {
+    game.CGetRecommendPrice = (function() {
 
         /**
-         * Properties of a CGetRecommandPrice.
+         * Properties of a CGetRecommendPrice.
          * @memberof game
-         * @interface ICGetRecommandPrice
-         * @property {number|null} [itemId] CGetRecommandPrice itemId
+         * @interface ICGetRecommendPrice
+         * @property {number|null} [itemId] CGetRecommendPrice itemId
          */
 
         /**
-         * Constructs a new CGetRecommandPrice.
+         * Constructs a new CGetRecommendPrice.
          * @memberof game
-         * @classdesc Represents a CGetRecommandPrice.
-         * @implements ICGetRecommandPrice
+         * @classdesc Represents a CGetRecommendPrice.
+         * @implements ICGetRecommendPrice
          * @constructor
-         * @param {game.ICGetRecommandPrice=} [properties] Properties to set
+         * @param {game.ICGetRecommendPrice=} [properties] Properties to set
          */
-        function CGetRecommandPrice(properties) {
+        function CGetRecommendPrice(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -38606,35 +38606,35 @@ $root.game = (function() {
         }
 
         /**
-         * CGetRecommandPrice itemId.
+         * CGetRecommendPrice itemId.
          * @member {number} itemId
-         * @memberof game.CGetRecommandPrice
+         * @memberof game.CGetRecommendPrice
          * @instance
          */
-        CGetRecommandPrice.prototype.itemId = 0;
+        CGetRecommendPrice.prototype.itemId = 0;
 
         /**
-         * Creates a new CGetRecommandPrice instance using the specified properties.
+         * Creates a new CGetRecommendPrice instance using the specified properties.
          * @function create
-         * @memberof game.CGetRecommandPrice
+         * @memberof game.CGetRecommendPrice
          * @static
-         * @param {game.ICGetRecommandPrice=} [properties] Properties to set
-         * @returns {game.CGetRecommandPrice} CGetRecommandPrice instance
+         * @param {game.ICGetRecommendPrice=} [properties] Properties to set
+         * @returns {game.CGetRecommendPrice} CGetRecommendPrice instance
          */
-        CGetRecommandPrice.create = function create(properties) {
-            return new CGetRecommandPrice(properties);
+        CGetRecommendPrice.create = function create(properties) {
+            return new CGetRecommendPrice(properties);
         };
 
         /**
-         * Encodes the specified CGetRecommandPrice message. Does not implicitly {@link game.CGetRecommandPrice.verify|verify} messages.
+         * Encodes the specified CGetRecommendPrice message. Does not implicitly {@link game.CGetRecommendPrice.verify|verify} messages.
          * @function encode
-         * @memberof game.CGetRecommandPrice
+         * @memberof game.CGetRecommendPrice
          * @static
-         * @param {game.ICGetRecommandPrice} message CGetRecommandPrice message or plain object to encode
+         * @param {game.ICGetRecommendPrice} message CGetRecommendPrice message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        CGetRecommandPrice.encode = function encode(message, writer) {
+        CGetRecommendPrice.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.itemId != null && Object.hasOwnProperty.call(message, "itemId"))
@@ -38643,33 +38643,33 @@ $root.game = (function() {
         };
 
         /**
-         * Encodes the specified CGetRecommandPrice message, length delimited. Does not implicitly {@link game.CGetRecommandPrice.verify|verify} messages.
+         * Encodes the specified CGetRecommendPrice message, length delimited. Does not implicitly {@link game.CGetRecommendPrice.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof game.CGetRecommandPrice
+         * @memberof game.CGetRecommendPrice
          * @static
-         * @param {game.ICGetRecommandPrice} message CGetRecommandPrice message or plain object to encode
+         * @param {game.ICGetRecommendPrice} message CGetRecommendPrice message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        CGetRecommandPrice.encodeDelimited = function encodeDelimited(message, writer) {
+        CGetRecommendPrice.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a CGetRecommandPrice message from the specified reader or buffer.
+         * Decodes a CGetRecommendPrice message from the specified reader or buffer.
          * @function decode
-         * @memberof game.CGetRecommandPrice
+         * @memberof game.CGetRecommendPrice
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {game.CGetRecommandPrice} CGetRecommandPrice
+         * @returns {game.CGetRecommendPrice} CGetRecommendPrice
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        CGetRecommandPrice.decode = function decode(reader, length, error) {
+        CGetRecommendPrice.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.CGetRecommandPrice();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.CGetRecommendPrice();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -38688,30 +38688,30 @@ $root.game = (function() {
         };
 
         /**
-         * Decodes a CGetRecommandPrice message from the specified reader or buffer, length delimited.
+         * Decodes a CGetRecommendPrice message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof game.CGetRecommandPrice
+         * @memberof game.CGetRecommendPrice
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {game.CGetRecommandPrice} CGetRecommandPrice
+         * @returns {game.CGetRecommendPrice} CGetRecommendPrice
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        CGetRecommandPrice.decodeDelimited = function decodeDelimited(reader) {
+        CGetRecommendPrice.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a CGetRecommandPrice message.
+         * Verifies a CGetRecommendPrice message.
          * @function verify
-         * @memberof game.CGetRecommandPrice
+         * @memberof game.CGetRecommendPrice
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        CGetRecommandPrice.verify = function verify(message) {
+        CGetRecommendPrice.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.itemId != null && message.hasOwnProperty("itemId"))
@@ -38721,32 +38721,32 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a CGetRecommandPrice message from a plain object. Also converts values to their respective internal types.
+         * Creates a CGetRecommendPrice message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof game.CGetRecommandPrice
+         * @memberof game.CGetRecommendPrice
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {game.CGetRecommandPrice} CGetRecommandPrice
+         * @returns {game.CGetRecommendPrice} CGetRecommendPrice
          */
-        CGetRecommandPrice.fromObject = function fromObject(object) {
-            if (object instanceof $root.game.CGetRecommandPrice)
+        CGetRecommendPrice.fromObject = function fromObject(object) {
+            if (object instanceof $root.game.CGetRecommendPrice)
                 return object;
-            var message = new $root.game.CGetRecommandPrice();
+            var message = new $root.game.CGetRecommendPrice();
             if (object.itemId != null)
                 message.itemId = object.itemId | 0;
             return message;
         };
 
         /**
-         * Creates a plain object from a CGetRecommandPrice message. Also converts values to other types if specified.
+         * Creates a plain object from a CGetRecommendPrice message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof game.CGetRecommandPrice
+         * @memberof game.CGetRecommendPrice
          * @static
-         * @param {game.CGetRecommandPrice} message CGetRecommandPrice
+         * @param {game.CGetRecommendPrice} message CGetRecommendPrice
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        CGetRecommandPrice.toObject = function toObject(message, options) {
+        CGetRecommendPrice.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
@@ -38758,52 +38758,52 @@ $root.game = (function() {
         };
 
         /**
-         * Converts this CGetRecommandPrice to JSON.
+         * Converts this CGetRecommendPrice to JSON.
          * @function toJSON
-         * @memberof game.CGetRecommandPrice
+         * @memberof game.CGetRecommendPrice
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        CGetRecommandPrice.prototype.toJSON = function toJSON() {
+        CGetRecommendPrice.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for CGetRecommandPrice
+         * Gets the default type url for CGetRecommendPrice
          * @function getTypeUrl
-         * @memberof game.CGetRecommandPrice
+         * @memberof game.CGetRecommendPrice
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        CGetRecommandPrice.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        CGetRecommendPrice.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/game.CGetRecommandPrice";
+            return typeUrlPrefix + "/game.CGetRecommendPrice";
         };
 
-        return CGetRecommandPrice;
+        return CGetRecommendPrice;
     })();
 
-    game.SGetRecommandPrice = (function() {
+    game.SGetRecommendPrice = (function() {
 
         /**
-         * Properties of a SGetRecommandPrice.
+         * Properties of a SGetRecommendPrice.
          * @memberof game
-         * @interface ISGetRecommandPrice
-         * @property {number|null} [price] SGetRecommandPrice price
+         * @interface ISGetRecommendPrice
+         * @property {number|null} [price] SGetRecommendPrice price
          */
 
         /**
-         * Constructs a new SGetRecommandPrice.
+         * Constructs a new SGetRecommendPrice.
          * @memberof game
-         * @classdesc Represents a SGetRecommandPrice.
-         * @implements ISGetRecommandPrice
+         * @classdesc Represents a SGetRecommendPrice.
+         * @implements ISGetRecommendPrice
          * @constructor
-         * @param {game.ISGetRecommandPrice=} [properties] Properties to set
+         * @param {game.ISGetRecommendPrice=} [properties] Properties to set
          */
-        function SGetRecommandPrice(properties) {
+        function SGetRecommendPrice(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -38811,35 +38811,35 @@ $root.game = (function() {
         }
 
         /**
-         * SGetRecommandPrice price.
+         * SGetRecommendPrice price.
          * @member {number} price
-         * @memberof game.SGetRecommandPrice
+         * @memberof game.SGetRecommendPrice
          * @instance
          */
-        SGetRecommandPrice.prototype.price = 0;
+        SGetRecommendPrice.prototype.price = 0;
 
         /**
-         * Creates a new SGetRecommandPrice instance using the specified properties.
+         * Creates a new SGetRecommendPrice instance using the specified properties.
          * @function create
-         * @memberof game.SGetRecommandPrice
+         * @memberof game.SGetRecommendPrice
          * @static
-         * @param {game.ISGetRecommandPrice=} [properties] Properties to set
-         * @returns {game.SGetRecommandPrice} SGetRecommandPrice instance
+         * @param {game.ISGetRecommendPrice=} [properties] Properties to set
+         * @returns {game.SGetRecommendPrice} SGetRecommendPrice instance
          */
-        SGetRecommandPrice.create = function create(properties) {
-            return new SGetRecommandPrice(properties);
+        SGetRecommendPrice.create = function create(properties) {
+            return new SGetRecommendPrice(properties);
         };
 
         /**
-         * Encodes the specified SGetRecommandPrice message. Does not implicitly {@link game.SGetRecommandPrice.verify|verify} messages.
+         * Encodes the specified SGetRecommendPrice message. Does not implicitly {@link game.SGetRecommendPrice.verify|verify} messages.
          * @function encode
-         * @memberof game.SGetRecommandPrice
+         * @memberof game.SGetRecommendPrice
          * @static
-         * @param {game.ISGetRecommandPrice} message SGetRecommandPrice message or plain object to encode
+         * @param {game.ISGetRecommendPrice} message SGetRecommendPrice message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        SGetRecommandPrice.encode = function encode(message, writer) {
+        SGetRecommendPrice.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.price != null && Object.hasOwnProperty.call(message, "price"))
@@ -38848,33 +38848,33 @@ $root.game = (function() {
         };
 
         /**
-         * Encodes the specified SGetRecommandPrice message, length delimited. Does not implicitly {@link game.SGetRecommandPrice.verify|verify} messages.
+         * Encodes the specified SGetRecommendPrice message, length delimited. Does not implicitly {@link game.SGetRecommendPrice.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof game.SGetRecommandPrice
+         * @memberof game.SGetRecommendPrice
          * @static
-         * @param {game.ISGetRecommandPrice} message SGetRecommandPrice message or plain object to encode
+         * @param {game.ISGetRecommendPrice} message SGetRecommendPrice message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        SGetRecommandPrice.encodeDelimited = function encodeDelimited(message, writer) {
+        SGetRecommendPrice.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a SGetRecommandPrice message from the specified reader or buffer.
+         * Decodes a SGetRecommendPrice message from the specified reader or buffer.
          * @function decode
-         * @memberof game.SGetRecommandPrice
+         * @memberof game.SGetRecommendPrice
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {game.SGetRecommandPrice} SGetRecommandPrice
+         * @returns {game.SGetRecommendPrice} SGetRecommendPrice
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        SGetRecommandPrice.decode = function decode(reader, length, error) {
+        SGetRecommendPrice.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.SGetRecommandPrice();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.SGetRecommendPrice();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -38893,30 +38893,30 @@ $root.game = (function() {
         };
 
         /**
-         * Decodes a SGetRecommandPrice message from the specified reader or buffer, length delimited.
+         * Decodes a SGetRecommendPrice message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof game.SGetRecommandPrice
+         * @memberof game.SGetRecommendPrice
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {game.SGetRecommandPrice} SGetRecommandPrice
+         * @returns {game.SGetRecommendPrice} SGetRecommendPrice
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        SGetRecommandPrice.decodeDelimited = function decodeDelimited(reader) {
+        SGetRecommendPrice.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a SGetRecommandPrice message.
+         * Verifies a SGetRecommendPrice message.
          * @function verify
-         * @memberof game.SGetRecommandPrice
+         * @memberof game.SGetRecommendPrice
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        SGetRecommandPrice.verify = function verify(message) {
+        SGetRecommendPrice.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.price != null && message.hasOwnProperty("price"))
@@ -38926,32 +38926,32 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a SGetRecommandPrice message from a plain object. Also converts values to their respective internal types.
+         * Creates a SGetRecommendPrice message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof game.SGetRecommandPrice
+         * @memberof game.SGetRecommendPrice
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {game.SGetRecommandPrice} SGetRecommandPrice
+         * @returns {game.SGetRecommendPrice} SGetRecommendPrice
          */
-        SGetRecommandPrice.fromObject = function fromObject(object) {
-            if (object instanceof $root.game.SGetRecommandPrice)
+        SGetRecommendPrice.fromObject = function fromObject(object) {
+            if (object instanceof $root.game.SGetRecommendPrice)
                 return object;
-            var message = new $root.game.SGetRecommandPrice();
+            var message = new $root.game.SGetRecommendPrice();
             if (object.price != null)
                 message.price = object.price | 0;
             return message;
         };
 
         /**
-         * Creates a plain object from a SGetRecommandPrice message. Also converts values to other types if specified.
+         * Creates a plain object from a SGetRecommendPrice message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof game.SGetRecommandPrice
+         * @memberof game.SGetRecommendPrice
          * @static
-         * @param {game.SGetRecommandPrice} message SGetRecommandPrice
+         * @param {game.SGetRecommendPrice} message SGetRecommendPrice
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        SGetRecommandPrice.toObject = function toObject(message, options) {
+        SGetRecommendPrice.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
@@ -38963,53 +38963,53 @@ $root.game = (function() {
         };
 
         /**
-         * Converts this SGetRecommandPrice to JSON.
+         * Converts this SGetRecommendPrice to JSON.
          * @function toJSON
-         * @memberof game.SGetRecommandPrice
+         * @memberof game.SGetRecommendPrice
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        SGetRecommandPrice.prototype.toJSON = function toJSON() {
+        SGetRecommendPrice.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for SGetRecommandPrice
+         * Gets the default type url for SGetRecommendPrice
          * @function getTypeUrl
-         * @memberof game.SGetRecommandPrice
+         * @memberof game.SGetRecommendPrice
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        SGetRecommandPrice.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        SGetRecommendPrice.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/game.SGetRecommandPrice";
+            return typeUrlPrefix + "/game.SGetRecommendPrice";
         };
 
-        return SGetRecommandPrice;
+        return SGetRecommendPrice;
     })();
 
-    game.CUnlockTreatureBox = (function() {
+    game.CUnlockTreasureBox = (function() {
 
         /**
-         * Properties of a CUnlockTreatureBox.
+         * Properties of a CUnlockTreasureBox.
          * @memberof game
-         * @interface ICUnlockTreatureBox
-         * @property {number|Long|null} [bid] CUnlockTreatureBox bid
-         * @property {boolean|null} [useCash] CUnlockTreatureBox useCash
+         * @interface ICUnlockTreasureBox
+         * @property {number|Long|null} [bid] CUnlockTreasureBox bid
+         * @property {boolean|null} [useCash] CUnlockTreasureBox useCash
          */
 
         /**
-         * Constructs a new CUnlockTreatureBox.
+         * Constructs a new CUnlockTreasureBox.
          * @memberof game
-         * @classdesc Represents a CUnlockTreatureBox.
-         * @implements ICUnlockTreatureBox
+         * @classdesc Represents a CUnlockTreasureBox.
+         * @implements ICUnlockTreasureBox
          * @constructor
-         * @param {game.ICUnlockTreatureBox=} [properties] Properties to set
+         * @param {game.ICUnlockTreasureBox=} [properties] Properties to set
          */
-        function CUnlockTreatureBox(properties) {
+        function CUnlockTreasureBox(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -39017,43 +39017,43 @@ $root.game = (function() {
         }
 
         /**
-         * CUnlockTreatureBox bid.
+         * CUnlockTreasureBox bid.
          * @member {number|Long} bid
-         * @memberof game.CUnlockTreatureBox
+         * @memberof game.CUnlockTreasureBox
          * @instance
          */
-        CUnlockTreatureBox.prototype.bid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        CUnlockTreasureBox.prototype.bid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
-         * CUnlockTreatureBox useCash.
+         * CUnlockTreasureBox useCash.
          * @member {boolean} useCash
-         * @memberof game.CUnlockTreatureBox
+         * @memberof game.CUnlockTreasureBox
          * @instance
          */
-        CUnlockTreatureBox.prototype.useCash = false;
+        CUnlockTreasureBox.prototype.useCash = false;
 
         /**
-         * Creates a new CUnlockTreatureBox instance using the specified properties.
+         * Creates a new CUnlockTreasureBox instance using the specified properties.
          * @function create
-         * @memberof game.CUnlockTreatureBox
+         * @memberof game.CUnlockTreasureBox
          * @static
-         * @param {game.ICUnlockTreatureBox=} [properties] Properties to set
-         * @returns {game.CUnlockTreatureBox} CUnlockTreatureBox instance
+         * @param {game.ICUnlockTreasureBox=} [properties] Properties to set
+         * @returns {game.CUnlockTreasureBox} CUnlockTreasureBox instance
          */
-        CUnlockTreatureBox.create = function create(properties) {
-            return new CUnlockTreatureBox(properties);
+        CUnlockTreasureBox.create = function create(properties) {
+            return new CUnlockTreasureBox(properties);
         };
 
         /**
-         * Encodes the specified CUnlockTreatureBox message. Does not implicitly {@link game.CUnlockTreatureBox.verify|verify} messages.
+         * Encodes the specified CUnlockTreasureBox message. Does not implicitly {@link game.CUnlockTreasureBox.verify|verify} messages.
          * @function encode
-         * @memberof game.CUnlockTreatureBox
+         * @memberof game.CUnlockTreasureBox
          * @static
-         * @param {game.ICUnlockTreatureBox} message CUnlockTreatureBox message or plain object to encode
+         * @param {game.ICUnlockTreasureBox} message CUnlockTreasureBox message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        CUnlockTreatureBox.encode = function encode(message, writer) {
+        CUnlockTreasureBox.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.bid != null && Object.hasOwnProperty.call(message, "bid"))
@@ -39064,33 +39064,33 @@ $root.game = (function() {
         };
 
         /**
-         * Encodes the specified CUnlockTreatureBox message, length delimited. Does not implicitly {@link game.CUnlockTreatureBox.verify|verify} messages.
+         * Encodes the specified CUnlockTreasureBox message, length delimited. Does not implicitly {@link game.CUnlockTreasureBox.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof game.CUnlockTreatureBox
+         * @memberof game.CUnlockTreasureBox
          * @static
-         * @param {game.ICUnlockTreatureBox} message CUnlockTreatureBox message or plain object to encode
+         * @param {game.ICUnlockTreasureBox} message CUnlockTreasureBox message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        CUnlockTreatureBox.encodeDelimited = function encodeDelimited(message, writer) {
+        CUnlockTreasureBox.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a CUnlockTreatureBox message from the specified reader or buffer.
+         * Decodes a CUnlockTreasureBox message from the specified reader or buffer.
          * @function decode
-         * @memberof game.CUnlockTreatureBox
+         * @memberof game.CUnlockTreasureBox
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {game.CUnlockTreatureBox} CUnlockTreatureBox
+         * @returns {game.CUnlockTreasureBox} CUnlockTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        CUnlockTreatureBox.decode = function decode(reader, length, error) {
+        CUnlockTreasureBox.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.CUnlockTreatureBox();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.CUnlockTreasureBox();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -39113,30 +39113,30 @@ $root.game = (function() {
         };
 
         /**
-         * Decodes a CUnlockTreatureBox message from the specified reader or buffer, length delimited.
+         * Decodes a CUnlockTreasureBox message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof game.CUnlockTreatureBox
+         * @memberof game.CUnlockTreasureBox
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {game.CUnlockTreatureBox} CUnlockTreatureBox
+         * @returns {game.CUnlockTreasureBox} CUnlockTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        CUnlockTreatureBox.decodeDelimited = function decodeDelimited(reader) {
+        CUnlockTreasureBox.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a CUnlockTreatureBox message.
+         * Verifies a CUnlockTreasureBox message.
          * @function verify
-         * @memberof game.CUnlockTreatureBox
+         * @memberof game.CUnlockTreasureBox
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        CUnlockTreatureBox.verify = function verify(message) {
+        CUnlockTreasureBox.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.bid != null && message.hasOwnProperty("bid"))
@@ -39149,17 +39149,17 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a CUnlockTreatureBox message from a plain object. Also converts values to their respective internal types.
+         * Creates a CUnlockTreasureBox message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof game.CUnlockTreatureBox
+         * @memberof game.CUnlockTreasureBox
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {game.CUnlockTreatureBox} CUnlockTreatureBox
+         * @returns {game.CUnlockTreasureBox} CUnlockTreasureBox
          */
-        CUnlockTreatureBox.fromObject = function fromObject(object) {
-            if (object instanceof $root.game.CUnlockTreatureBox)
+        CUnlockTreasureBox.fromObject = function fromObject(object) {
+            if (object instanceof $root.game.CUnlockTreasureBox)
                 return object;
-            var message = new $root.game.CUnlockTreatureBox();
+            var message = new $root.game.CUnlockTreasureBox();
             if (object.bid != null)
                 if ($util.Long)
                     (message.bid = $util.Long.fromValue(object.bid)).unsigned = false;
@@ -39175,15 +39175,15 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a plain object from a CUnlockTreatureBox message. Also converts values to other types if specified.
+         * Creates a plain object from a CUnlockTreasureBox message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof game.CUnlockTreatureBox
+         * @memberof game.CUnlockTreasureBox
          * @static
-         * @param {game.CUnlockTreatureBox} message CUnlockTreatureBox
+         * @param {game.CUnlockTreasureBox} message CUnlockTreasureBox
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        CUnlockTreatureBox.toObject = function toObject(message, options) {
+        CUnlockTreasureBox.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
@@ -39206,54 +39206,54 @@ $root.game = (function() {
         };
 
         /**
-         * Converts this CUnlockTreatureBox to JSON.
+         * Converts this CUnlockTreasureBox to JSON.
          * @function toJSON
-         * @memberof game.CUnlockTreatureBox
+         * @memberof game.CUnlockTreasureBox
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        CUnlockTreatureBox.prototype.toJSON = function toJSON() {
+        CUnlockTreasureBox.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for CUnlockTreatureBox
+         * Gets the default type url for CUnlockTreasureBox
          * @function getTypeUrl
-         * @memberof game.CUnlockTreatureBox
+         * @memberof game.CUnlockTreasureBox
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        CUnlockTreatureBox.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        CUnlockTreasureBox.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/game.CUnlockTreatureBox";
+            return typeUrlPrefix + "/game.CUnlockTreasureBox";
         };
 
-        return CUnlockTreatureBox;
+        return CUnlockTreasureBox;
     })();
 
-    game.SUnlockTreatureBox = (function() {
+    game.SUnlockTreasureBox = (function() {
 
         /**
-         * Properties of a SUnlockTreatureBox.
+         * Properties of a SUnlockTreasureBox.
          * @memberof game
-         * @interface ISUnlockTreatureBox
-         * @property {number|Long|null} [time] SUnlockTreatureBox time
-         * @property {Array.<common.IReward>|null} [awards] SUnlockTreatureBox awards
-         * @property {Array.<common.IReward>|null} [costs] SUnlockTreatureBox costs
+         * @interface ISUnlockTreasureBox
+         * @property {number|Long|null} [time] SUnlockTreasureBox time
+         * @property {Array.<common.IReward>|null} [awards] SUnlockTreasureBox awards
+         * @property {Array.<common.IReward>|null} [costs] SUnlockTreasureBox costs
          */
 
         /**
-         * Constructs a new SUnlockTreatureBox.
+         * Constructs a new SUnlockTreasureBox.
          * @memberof game
-         * @classdesc Represents a SUnlockTreatureBox.
-         * @implements ISUnlockTreatureBox
+         * @classdesc Represents a SUnlockTreasureBox.
+         * @implements ISUnlockTreasureBox
          * @constructor
-         * @param {game.ISUnlockTreatureBox=} [properties] Properties to set
+         * @param {game.ISUnlockTreasureBox=} [properties] Properties to set
          */
-        function SUnlockTreatureBox(properties) {
+        function SUnlockTreasureBox(properties) {
             this.awards = [];
             this.costs = [];
             if (properties)
@@ -39263,51 +39263,51 @@ $root.game = (function() {
         }
 
         /**
-         * SUnlockTreatureBox time.
+         * SUnlockTreasureBox time.
          * @member {number|Long} time
-         * @memberof game.SUnlockTreatureBox
+         * @memberof game.SUnlockTreasureBox
          * @instance
          */
-        SUnlockTreatureBox.prototype.time = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        SUnlockTreasureBox.prototype.time = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
-         * SUnlockTreatureBox awards.
+         * SUnlockTreasureBox awards.
          * @member {Array.<common.IReward>} awards
-         * @memberof game.SUnlockTreatureBox
+         * @memberof game.SUnlockTreasureBox
          * @instance
          */
-        SUnlockTreatureBox.prototype.awards = $util.emptyArray;
+        SUnlockTreasureBox.prototype.awards = $util.emptyArray;
 
         /**
-         * SUnlockTreatureBox costs.
+         * SUnlockTreasureBox costs.
          * @member {Array.<common.IReward>} costs
-         * @memberof game.SUnlockTreatureBox
+         * @memberof game.SUnlockTreasureBox
          * @instance
          */
-        SUnlockTreatureBox.prototype.costs = $util.emptyArray;
+        SUnlockTreasureBox.prototype.costs = $util.emptyArray;
 
         /**
-         * Creates a new SUnlockTreatureBox instance using the specified properties.
+         * Creates a new SUnlockTreasureBox instance using the specified properties.
          * @function create
-         * @memberof game.SUnlockTreatureBox
+         * @memberof game.SUnlockTreasureBox
          * @static
-         * @param {game.ISUnlockTreatureBox=} [properties] Properties to set
-         * @returns {game.SUnlockTreatureBox} SUnlockTreatureBox instance
+         * @param {game.ISUnlockTreasureBox=} [properties] Properties to set
+         * @returns {game.SUnlockTreasureBox} SUnlockTreasureBox instance
          */
-        SUnlockTreatureBox.create = function create(properties) {
-            return new SUnlockTreatureBox(properties);
+        SUnlockTreasureBox.create = function create(properties) {
+            return new SUnlockTreasureBox(properties);
         };
 
         /**
-         * Encodes the specified SUnlockTreatureBox message. Does not implicitly {@link game.SUnlockTreatureBox.verify|verify} messages.
+         * Encodes the specified SUnlockTreasureBox message. Does not implicitly {@link game.SUnlockTreasureBox.verify|verify} messages.
          * @function encode
-         * @memberof game.SUnlockTreatureBox
+         * @memberof game.SUnlockTreasureBox
          * @static
-         * @param {game.ISUnlockTreatureBox} message SUnlockTreatureBox message or plain object to encode
+         * @param {game.ISUnlockTreasureBox} message SUnlockTreasureBox message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        SUnlockTreatureBox.encode = function encode(message, writer) {
+        SUnlockTreasureBox.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.time != null && Object.hasOwnProperty.call(message, "time"))
@@ -39322,33 +39322,33 @@ $root.game = (function() {
         };
 
         /**
-         * Encodes the specified SUnlockTreatureBox message, length delimited. Does not implicitly {@link game.SUnlockTreatureBox.verify|verify} messages.
+         * Encodes the specified SUnlockTreasureBox message, length delimited. Does not implicitly {@link game.SUnlockTreasureBox.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof game.SUnlockTreatureBox
+         * @memberof game.SUnlockTreasureBox
          * @static
-         * @param {game.ISUnlockTreatureBox} message SUnlockTreatureBox message or plain object to encode
+         * @param {game.ISUnlockTreasureBox} message SUnlockTreasureBox message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        SUnlockTreatureBox.encodeDelimited = function encodeDelimited(message, writer) {
+        SUnlockTreasureBox.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a SUnlockTreatureBox message from the specified reader or buffer.
+         * Decodes a SUnlockTreasureBox message from the specified reader or buffer.
          * @function decode
-         * @memberof game.SUnlockTreatureBox
+         * @memberof game.SUnlockTreasureBox
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {game.SUnlockTreatureBox} SUnlockTreatureBox
+         * @returns {game.SUnlockTreasureBox} SUnlockTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        SUnlockTreatureBox.decode = function decode(reader, length, error) {
+        SUnlockTreasureBox.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.SUnlockTreatureBox();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.SUnlockTreasureBox();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -39379,30 +39379,30 @@ $root.game = (function() {
         };
 
         /**
-         * Decodes a SUnlockTreatureBox message from the specified reader or buffer, length delimited.
+         * Decodes a SUnlockTreasureBox message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof game.SUnlockTreatureBox
+         * @memberof game.SUnlockTreasureBox
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {game.SUnlockTreatureBox} SUnlockTreatureBox
+         * @returns {game.SUnlockTreasureBox} SUnlockTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        SUnlockTreatureBox.decodeDelimited = function decodeDelimited(reader) {
+        SUnlockTreasureBox.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a SUnlockTreatureBox message.
+         * Verifies a SUnlockTreasureBox message.
          * @function verify
-         * @memberof game.SUnlockTreatureBox
+         * @memberof game.SUnlockTreasureBox
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        SUnlockTreatureBox.verify = function verify(message) {
+        SUnlockTreasureBox.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.time != null && message.hasOwnProperty("time"))
@@ -39430,17 +39430,17 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a SUnlockTreatureBox message from a plain object. Also converts values to their respective internal types.
+         * Creates a SUnlockTreasureBox message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof game.SUnlockTreatureBox
+         * @memberof game.SUnlockTreasureBox
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {game.SUnlockTreatureBox} SUnlockTreatureBox
+         * @returns {game.SUnlockTreasureBox} SUnlockTreasureBox
          */
-        SUnlockTreatureBox.fromObject = function fromObject(object) {
-            if (object instanceof $root.game.SUnlockTreatureBox)
+        SUnlockTreasureBox.fromObject = function fromObject(object) {
+            if (object instanceof $root.game.SUnlockTreasureBox)
                 return object;
-            var message = new $root.game.SUnlockTreatureBox();
+            var message = new $root.game.SUnlockTreasureBox();
             if (object.time != null)
                 if ($util.Long)
                     (message.time = $util.Long.fromValue(object.time)).unsigned = false;
@@ -39452,21 +39452,21 @@ $root.game = (function() {
                     message.time = new $util.LongBits(object.time.low >>> 0, object.time.high >>> 0).toNumber();
             if (object.awards) {
                 if (!Array.isArray(object.awards))
-                    throw TypeError(".game.SUnlockTreatureBox.awards: array expected");
+                    throw TypeError(".game.SUnlockTreasureBox.awards: array expected");
                 message.awards = [];
                 for (var i = 0; i < object.awards.length; ++i) {
                     if (typeof object.awards[i] !== "object")
-                        throw TypeError(".game.SUnlockTreatureBox.awards: object expected");
+                        throw TypeError(".game.SUnlockTreasureBox.awards: object expected");
                     message.awards[i] = $root.common.Reward.fromObject(object.awards[i]);
                 }
             }
             if (object.costs) {
                 if (!Array.isArray(object.costs))
-                    throw TypeError(".game.SUnlockTreatureBox.costs: array expected");
+                    throw TypeError(".game.SUnlockTreasureBox.costs: array expected");
                 message.costs = [];
                 for (var i = 0; i < object.costs.length; ++i) {
                     if (typeof object.costs[i] !== "object")
-                        throw TypeError(".game.SUnlockTreatureBox.costs: object expected");
+                        throw TypeError(".game.SUnlockTreasureBox.costs: object expected");
                     message.costs[i] = $root.common.Reward.fromObject(object.costs[i]);
                 }
             }
@@ -39474,15 +39474,15 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a plain object from a SUnlockTreatureBox message. Also converts values to other types if specified.
+         * Creates a plain object from a SUnlockTreasureBox message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof game.SUnlockTreatureBox
+         * @memberof game.SUnlockTreasureBox
          * @static
-         * @param {game.SUnlockTreatureBox} message SUnlockTreatureBox
+         * @param {game.SUnlockTreasureBox} message SUnlockTreasureBox
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        SUnlockTreatureBox.toObject = function toObject(message, options) {
+        SUnlockTreasureBox.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
@@ -39515,53 +39515,53 @@ $root.game = (function() {
         };
 
         /**
-         * Converts this SUnlockTreatureBox to JSON.
+         * Converts this SUnlockTreasureBox to JSON.
          * @function toJSON
-         * @memberof game.SUnlockTreatureBox
+         * @memberof game.SUnlockTreasureBox
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        SUnlockTreatureBox.prototype.toJSON = function toJSON() {
+        SUnlockTreasureBox.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for SUnlockTreatureBox
+         * Gets the default type url for SUnlockTreasureBox
          * @function getTypeUrl
-         * @memberof game.SUnlockTreatureBox
+         * @memberof game.SUnlockTreasureBox
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        SUnlockTreatureBox.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        SUnlockTreasureBox.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/game.SUnlockTreatureBox";
+            return typeUrlPrefix + "/game.SUnlockTreasureBox";
         };
 
-        return SUnlockTreatureBox;
+        return SUnlockTreasureBox;
     })();
 
-    game.COpenTreatureBox = (function() {
+    game.COpenTreasureBox = (function() {
 
         /**
-         * Properties of a COpenTreatureBox.
+         * Properties of a COpenTreasureBox.
          * @memberof game
-         * @interface ICOpenTreatureBox
-         * @property {number|Long|null} [bid] COpenTreatureBox bid
-         * @property {boolean|null} [useCash] COpenTreatureBox useCash
+         * @interface ICOpenTreasureBox
+         * @property {number|Long|null} [bid] COpenTreasureBox bid
+         * @property {boolean|null} [useCash] COpenTreasureBox useCash
          */
 
         /**
-         * Constructs a new COpenTreatureBox.
+         * Constructs a new COpenTreasureBox.
          * @memberof game
-         * @classdesc Represents a COpenTreatureBox.
-         * @implements ICOpenTreatureBox
+         * @classdesc Represents a COpenTreasureBox.
+         * @implements ICOpenTreasureBox
          * @constructor
-         * @param {game.ICOpenTreatureBox=} [properties] Properties to set
+         * @param {game.ICOpenTreasureBox=} [properties] Properties to set
          */
-        function COpenTreatureBox(properties) {
+        function COpenTreasureBox(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -39569,43 +39569,43 @@ $root.game = (function() {
         }
 
         /**
-         * COpenTreatureBox bid.
+         * COpenTreasureBox bid.
          * @member {number|Long} bid
-         * @memberof game.COpenTreatureBox
+         * @memberof game.COpenTreasureBox
          * @instance
          */
-        COpenTreatureBox.prototype.bid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        COpenTreasureBox.prototype.bid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
-         * COpenTreatureBox useCash.
+         * COpenTreasureBox useCash.
          * @member {boolean} useCash
-         * @memberof game.COpenTreatureBox
+         * @memberof game.COpenTreasureBox
          * @instance
          */
-        COpenTreatureBox.prototype.useCash = false;
+        COpenTreasureBox.prototype.useCash = false;
 
         /**
-         * Creates a new COpenTreatureBox instance using the specified properties.
+         * Creates a new COpenTreasureBox instance using the specified properties.
          * @function create
-         * @memberof game.COpenTreatureBox
+         * @memberof game.COpenTreasureBox
          * @static
-         * @param {game.ICOpenTreatureBox=} [properties] Properties to set
-         * @returns {game.COpenTreatureBox} COpenTreatureBox instance
+         * @param {game.ICOpenTreasureBox=} [properties] Properties to set
+         * @returns {game.COpenTreasureBox} COpenTreasureBox instance
          */
-        COpenTreatureBox.create = function create(properties) {
-            return new COpenTreatureBox(properties);
+        COpenTreasureBox.create = function create(properties) {
+            return new COpenTreasureBox(properties);
         };
 
         /**
-         * Encodes the specified COpenTreatureBox message. Does not implicitly {@link game.COpenTreatureBox.verify|verify} messages.
+         * Encodes the specified COpenTreasureBox message. Does not implicitly {@link game.COpenTreasureBox.verify|verify} messages.
          * @function encode
-         * @memberof game.COpenTreatureBox
+         * @memberof game.COpenTreasureBox
          * @static
-         * @param {game.ICOpenTreatureBox} message COpenTreatureBox message or plain object to encode
+         * @param {game.ICOpenTreasureBox} message COpenTreasureBox message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        COpenTreatureBox.encode = function encode(message, writer) {
+        COpenTreasureBox.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.bid != null && Object.hasOwnProperty.call(message, "bid"))
@@ -39616,33 +39616,33 @@ $root.game = (function() {
         };
 
         /**
-         * Encodes the specified COpenTreatureBox message, length delimited. Does not implicitly {@link game.COpenTreatureBox.verify|verify} messages.
+         * Encodes the specified COpenTreasureBox message, length delimited. Does not implicitly {@link game.COpenTreasureBox.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof game.COpenTreatureBox
+         * @memberof game.COpenTreasureBox
          * @static
-         * @param {game.ICOpenTreatureBox} message COpenTreatureBox message or plain object to encode
+         * @param {game.ICOpenTreasureBox} message COpenTreasureBox message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        COpenTreatureBox.encodeDelimited = function encodeDelimited(message, writer) {
+        COpenTreasureBox.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a COpenTreatureBox message from the specified reader or buffer.
+         * Decodes a COpenTreasureBox message from the specified reader or buffer.
          * @function decode
-         * @memberof game.COpenTreatureBox
+         * @memberof game.COpenTreasureBox
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {game.COpenTreatureBox} COpenTreatureBox
+         * @returns {game.COpenTreasureBox} COpenTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        COpenTreatureBox.decode = function decode(reader, length, error) {
+        COpenTreasureBox.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.COpenTreatureBox();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.COpenTreasureBox();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -39665,30 +39665,30 @@ $root.game = (function() {
         };
 
         /**
-         * Decodes a COpenTreatureBox message from the specified reader or buffer, length delimited.
+         * Decodes a COpenTreasureBox message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof game.COpenTreatureBox
+         * @memberof game.COpenTreasureBox
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {game.COpenTreatureBox} COpenTreatureBox
+         * @returns {game.COpenTreasureBox} COpenTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        COpenTreatureBox.decodeDelimited = function decodeDelimited(reader) {
+        COpenTreasureBox.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a COpenTreatureBox message.
+         * Verifies a COpenTreasureBox message.
          * @function verify
-         * @memberof game.COpenTreatureBox
+         * @memberof game.COpenTreasureBox
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        COpenTreatureBox.verify = function verify(message) {
+        COpenTreasureBox.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.bid != null && message.hasOwnProperty("bid"))
@@ -39701,17 +39701,17 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a COpenTreatureBox message from a plain object. Also converts values to their respective internal types.
+         * Creates a COpenTreasureBox message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof game.COpenTreatureBox
+         * @memberof game.COpenTreasureBox
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {game.COpenTreatureBox} COpenTreatureBox
+         * @returns {game.COpenTreasureBox} COpenTreasureBox
          */
-        COpenTreatureBox.fromObject = function fromObject(object) {
-            if (object instanceof $root.game.COpenTreatureBox)
+        COpenTreasureBox.fromObject = function fromObject(object) {
+            if (object instanceof $root.game.COpenTreasureBox)
                 return object;
-            var message = new $root.game.COpenTreatureBox();
+            var message = new $root.game.COpenTreasureBox();
             if (object.bid != null)
                 if ($util.Long)
                     (message.bid = $util.Long.fromValue(object.bid)).unsigned = false;
@@ -39727,15 +39727,15 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a plain object from a COpenTreatureBox message. Also converts values to other types if specified.
+         * Creates a plain object from a COpenTreasureBox message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof game.COpenTreatureBox
+         * @memberof game.COpenTreasureBox
          * @static
-         * @param {game.COpenTreatureBox} message COpenTreatureBox
+         * @param {game.COpenTreasureBox} message COpenTreasureBox
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        COpenTreatureBox.toObject = function toObject(message, options) {
+        COpenTreasureBox.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
@@ -39758,53 +39758,53 @@ $root.game = (function() {
         };
 
         /**
-         * Converts this COpenTreatureBox to JSON.
+         * Converts this COpenTreasureBox to JSON.
          * @function toJSON
-         * @memberof game.COpenTreatureBox
+         * @memberof game.COpenTreasureBox
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        COpenTreatureBox.prototype.toJSON = function toJSON() {
+        COpenTreasureBox.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for COpenTreatureBox
+         * Gets the default type url for COpenTreasureBox
          * @function getTypeUrl
-         * @memberof game.COpenTreatureBox
+         * @memberof game.COpenTreasureBox
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        COpenTreatureBox.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        COpenTreasureBox.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/game.COpenTreatureBox";
+            return typeUrlPrefix + "/game.COpenTreasureBox";
         };
 
-        return COpenTreatureBox;
+        return COpenTreasureBox;
     })();
 
-    game.SOpenTreatureBox = (function() {
+    game.SOpenTreasureBox = (function() {
 
         /**
-         * Properties of a SOpenTreatureBox.
+         * Properties of a SOpenTreasureBox.
          * @memberof game
-         * @interface ISOpenTreatureBox
-         * @property {Array.<common.IReward>|null} [awards] SOpenTreatureBox awards
-         * @property {Array.<common.IReward>|null} [costs] SOpenTreatureBox costs
+         * @interface ISOpenTreasureBox
+         * @property {Array.<common.IReward>|null} [awards] SOpenTreasureBox awards
+         * @property {Array.<common.IReward>|null} [costs] SOpenTreasureBox costs
          */
 
         /**
-         * Constructs a new SOpenTreatureBox.
+         * Constructs a new SOpenTreasureBox.
          * @memberof game
-         * @classdesc Represents a SOpenTreatureBox.
-         * @implements ISOpenTreatureBox
+         * @classdesc Represents a SOpenTreasureBox.
+         * @implements ISOpenTreasureBox
          * @constructor
-         * @param {game.ISOpenTreatureBox=} [properties] Properties to set
+         * @param {game.ISOpenTreasureBox=} [properties] Properties to set
          */
-        function SOpenTreatureBox(properties) {
+        function SOpenTreasureBox(properties) {
             this.awards = [];
             this.costs = [];
             if (properties)
@@ -39814,43 +39814,43 @@ $root.game = (function() {
         }
 
         /**
-         * SOpenTreatureBox awards.
+         * SOpenTreasureBox awards.
          * @member {Array.<common.IReward>} awards
-         * @memberof game.SOpenTreatureBox
+         * @memberof game.SOpenTreasureBox
          * @instance
          */
-        SOpenTreatureBox.prototype.awards = $util.emptyArray;
+        SOpenTreasureBox.prototype.awards = $util.emptyArray;
 
         /**
-         * SOpenTreatureBox costs.
+         * SOpenTreasureBox costs.
          * @member {Array.<common.IReward>} costs
-         * @memberof game.SOpenTreatureBox
+         * @memberof game.SOpenTreasureBox
          * @instance
          */
-        SOpenTreatureBox.prototype.costs = $util.emptyArray;
+        SOpenTreasureBox.prototype.costs = $util.emptyArray;
 
         /**
-         * Creates a new SOpenTreatureBox instance using the specified properties.
+         * Creates a new SOpenTreasureBox instance using the specified properties.
          * @function create
-         * @memberof game.SOpenTreatureBox
+         * @memberof game.SOpenTreasureBox
          * @static
-         * @param {game.ISOpenTreatureBox=} [properties] Properties to set
-         * @returns {game.SOpenTreatureBox} SOpenTreatureBox instance
+         * @param {game.ISOpenTreasureBox=} [properties] Properties to set
+         * @returns {game.SOpenTreasureBox} SOpenTreasureBox instance
          */
-        SOpenTreatureBox.create = function create(properties) {
-            return new SOpenTreatureBox(properties);
+        SOpenTreasureBox.create = function create(properties) {
+            return new SOpenTreasureBox(properties);
         };
 
         /**
-         * Encodes the specified SOpenTreatureBox message. Does not implicitly {@link game.SOpenTreatureBox.verify|verify} messages.
+         * Encodes the specified SOpenTreasureBox message. Does not implicitly {@link game.SOpenTreasureBox.verify|verify} messages.
          * @function encode
-         * @memberof game.SOpenTreatureBox
+         * @memberof game.SOpenTreasureBox
          * @static
-         * @param {game.ISOpenTreatureBox} message SOpenTreatureBox message or plain object to encode
+         * @param {game.ISOpenTreasureBox} message SOpenTreasureBox message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        SOpenTreatureBox.encode = function encode(message, writer) {
+        SOpenTreasureBox.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.awards != null && message.awards.length)
@@ -39863,33 +39863,33 @@ $root.game = (function() {
         };
 
         /**
-         * Encodes the specified SOpenTreatureBox message, length delimited. Does not implicitly {@link game.SOpenTreatureBox.verify|verify} messages.
+         * Encodes the specified SOpenTreasureBox message, length delimited. Does not implicitly {@link game.SOpenTreasureBox.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof game.SOpenTreatureBox
+         * @memberof game.SOpenTreasureBox
          * @static
-         * @param {game.ISOpenTreatureBox} message SOpenTreatureBox message or plain object to encode
+         * @param {game.ISOpenTreasureBox} message SOpenTreasureBox message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        SOpenTreatureBox.encodeDelimited = function encodeDelimited(message, writer) {
+        SOpenTreasureBox.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a SOpenTreatureBox message from the specified reader or buffer.
+         * Decodes a SOpenTreasureBox message from the specified reader or buffer.
          * @function decode
-         * @memberof game.SOpenTreatureBox
+         * @memberof game.SOpenTreasureBox
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {game.SOpenTreatureBox} SOpenTreatureBox
+         * @returns {game.SOpenTreasureBox} SOpenTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        SOpenTreatureBox.decode = function decode(reader, length, error) {
+        SOpenTreasureBox.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.SOpenTreatureBox();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.SOpenTreasureBox();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -39916,30 +39916,30 @@ $root.game = (function() {
         };
 
         /**
-         * Decodes a SOpenTreatureBox message from the specified reader or buffer, length delimited.
+         * Decodes a SOpenTreasureBox message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof game.SOpenTreatureBox
+         * @memberof game.SOpenTreasureBox
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {game.SOpenTreatureBox} SOpenTreatureBox
+         * @returns {game.SOpenTreasureBox} SOpenTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        SOpenTreatureBox.decodeDelimited = function decodeDelimited(reader) {
+        SOpenTreasureBox.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a SOpenTreatureBox message.
+         * Verifies a SOpenTreasureBox message.
          * @function verify
-         * @memberof game.SOpenTreatureBox
+         * @memberof game.SOpenTreasureBox
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        SOpenTreatureBox.verify = function verify(message) {
+        SOpenTreasureBox.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.awards != null && message.hasOwnProperty("awards")) {
@@ -39964,34 +39964,34 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a SOpenTreatureBox message from a plain object. Also converts values to their respective internal types.
+         * Creates a SOpenTreasureBox message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof game.SOpenTreatureBox
+         * @memberof game.SOpenTreasureBox
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {game.SOpenTreatureBox} SOpenTreatureBox
+         * @returns {game.SOpenTreasureBox} SOpenTreasureBox
          */
-        SOpenTreatureBox.fromObject = function fromObject(object) {
-            if (object instanceof $root.game.SOpenTreatureBox)
+        SOpenTreasureBox.fromObject = function fromObject(object) {
+            if (object instanceof $root.game.SOpenTreasureBox)
                 return object;
-            var message = new $root.game.SOpenTreatureBox();
+            var message = new $root.game.SOpenTreasureBox();
             if (object.awards) {
                 if (!Array.isArray(object.awards))
-                    throw TypeError(".game.SOpenTreatureBox.awards: array expected");
+                    throw TypeError(".game.SOpenTreasureBox.awards: array expected");
                 message.awards = [];
                 for (var i = 0; i < object.awards.length; ++i) {
                     if (typeof object.awards[i] !== "object")
-                        throw TypeError(".game.SOpenTreatureBox.awards: object expected");
+                        throw TypeError(".game.SOpenTreasureBox.awards: object expected");
                     message.awards[i] = $root.common.Reward.fromObject(object.awards[i]);
                 }
             }
             if (object.costs) {
                 if (!Array.isArray(object.costs))
-                    throw TypeError(".game.SOpenTreatureBox.costs: array expected");
+                    throw TypeError(".game.SOpenTreasureBox.costs: array expected");
                 message.costs = [];
                 for (var i = 0; i < object.costs.length; ++i) {
                     if (typeof object.costs[i] !== "object")
-                        throw TypeError(".game.SOpenTreatureBox.costs: object expected");
+                        throw TypeError(".game.SOpenTreasureBox.costs: object expected");
                     message.costs[i] = $root.common.Reward.fromObject(object.costs[i]);
                 }
             }
@@ -39999,15 +39999,15 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a plain object from a SOpenTreatureBox message. Also converts values to other types if specified.
+         * Creates a plain object from a SOpenTreasureBox message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof game.SOpenTreatureBox
+         * @memberof game.SOpenTreasureBox
          * @static
-         * @param {game.SOpenTreatureBox} message SOpenTreatureBox
+         * @param {game.SOpenTreasureBox} message SOpenTreasureBox
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        SOpenTreatureBox.toObject = function toObject(message, options) {
+        SOpenTreasureBox.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
@@ -40029,52 +40029,52 @@ $root.game = (function() {
         };
 
         /**
-         * Converts this SOpenTreatureBox to JSON.
+         * Converts this SOpenTreasureBox to JSON.
          * @function toJSON
-         * @memberof game.SOpenTreatureBox
+         * @memberof game.SOpenTreasureBox
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        SOpenTreatureBox.prototype.toJSON = function toJSON() {
+        SOpenTreasureBox.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for SOpenTreatureBox
+         * Gets the default type url for SOpenTreasureBox
          * @function getTypeUrl
-         * @memberof game.SOpenTreatureBox
+         * @memberof game.SOpenTreasureBox
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        SOpenTreatureBox.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        SOpenTreasureBox.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/game.SOpenTreatureBox";
+            return typeUrlPrefix + "/game.SOpenTreasureBox";
         };
 
-        return SOpenTreatureBox;
+        return SOpenTreasureBox;
     })();
 
-    game.CSpeedUpTreatureBox = (function() {
+    game.CSpeedUpTreasureBox = (function() {
 
         /**
-         * Properties of a CSpeedUpTreatureBox.
+         * Properties of a CSpeedUpTreasureBox.
          * @memberof game
-         * @interface ICSpeedUpTreatureBox
-         * @property {number|Long|null} [bid] CSpeedUpTreatureBox bid
+         * @interface ICSpeedUpTreasureBox
+         * @property {number|Long|null} [bid] CSpeedUpTreasureBox bid
          */
 
         /**
-         * Constructs a new CSpeedUpTreatureBox.
+         * Constructs a new CSpeedUpTreasureBox.
          * @memberof game
-         * @classdesc Represents a CSpeedUpTreatureBox.
-         * @implements ICSpeedUpTreatureBox
+         * @classdesc Represents a CSpeedUpTreasureBox.
+         * @implements ICSpeedUpTreasureBox
          * @constructor
-         * @param {game.ICSpeedUpTreatureBox=} [properties] Properties to set
+         * @param {game.ICSpeedUpTreasureBox=} [properties] Properties to set
          */
-        function CSpeedUpTreatureBox(properties) {
+        function CSpeedUpTreasureBox(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -40082,35 +40082,35 @@ $root.game = (function() {
         }
 
         /**
-         * CSpeedUpTreatureBox bid.
+         * CSpeedUpTreasureBox bid.
          * @member {number|Long} bid
-         * @memberof game.CSpeedUpTreatureBox
+         * @memberof game.CSpeedUpTreasureBox
          * @instance
          */
-        CSpeedUpTreatureBox.prototype.bid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        CSpeedUpTreasureBox.prototype.bid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
-         * Creates a new CSpeedUpTreatureBox instance using the specified properties.
+         * Creates a new CSpeedUpTreasureBox instance using the specified properties.
          * @function create
-         * @memberof game.CSpeedUpTreatureBox
+         * @memberof game.CSpeedUpTreasureBox
          * @static
-         * @param {game.ICSpeedUpTreatureBox=} [properties] Properties to set
-         * @returns {game.CSpeedUpTreatureBox} CSpeedUpTreatureBox instance
+         * @param {game.ICSpeedUpTreasureBox=} [properties] Properties to set
+         * @returns {game.CSpeedUpTreasureBox} CSpeedUpTreasureBox instance
          */
-        CSpeedUpTreatureBox.create = function create(properties) {
-            return new CSpeedUpTreatureBox(properties);
+        CSpeedUpTreasureBox.create = function create(properties) {
+            return new CSpeedUpTreasureBox(properties);
         };
 
         /**
-         * Encodes the specified CSpeedUpTreatureBox message. Does not implicitly {@link game.CSpeedUpTreatureBox.verify|verify} messages.
+         * Encodes the specified CSpeedUpTreasureBox message. Does not implicitly {@link game.CSpeedUpTreasureBox.verify|verify} messages.
          * @function encode
-         * @memberof game.CSpeedUpTreatureBox
+         * @memberof game.CSpeedUpTreasureBox
          * @static
-         * @param {game.ICSpeedUpTreatureBox} message CSpeedUpTreatureBox message or plain object to encode
+         * @param {game.ICSpeedUpTreasureBox} message CSpeedUpTreasureBox message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        CSpeedUpTreatureBox.encode = function encode(message, writer) {
+        CSpeedUpTreasureBox.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.bid != null && Object.hasOwnProperty.call(message, "bid"))
@@ -40119,33 +40119,33 @@ $root.game = (function() {
         };
 
         /**
-         * Encodes the specified CSpeedUpTreatureBox message, length delimited. Does not implicitly {@link game.CSpeedUpTreatureBox.verify|verify} messages.
+         * Encodes the specified CSpeedUpTreasureBox message, length delimited. Does not implicitly {@link game.CSpeedUpTreasureBox.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof game.CSpeedUpTreatureBox
+         * @memberof game.CSpeedUpTreasureBox
          * @static
-         * @param {game.ICSpeedUpTreatureBox} message CSpeedUpTreatureBox message or plain object to encode
+         * @param {game.ICSpeedUpTreasureBox} message CSpeedUpTreasureBox message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        CSpeedUpTreatureBox.encodeDelimited = function encodeDelimited(message, writer) {
+        CSpeedUpTreasureBox.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a CSpeedUpTreatureBox message from the specified reader or buffer.
+         * Decodes a CSpeedUpTreasureBox message from the specified reader or buffer.
          * @function decode
-         * @memberof game.CSpeedUpTreatureBox
+         * @memberof game.CSpeedUpTreasureBox
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {game.CSpeedUpTreatureBox} CSpeedUpTreatureBox
+         * @returns {game.CSpeedUpTreasureBox} CSpeedUpTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        CSpeedUpTreatureBox.decode = function decode(reader, length, error) {
+        CSpeedUpTreasureBox.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.CSpeedUpTreatureBox();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.CSpeedUpTreasureBox();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -40164,30 +40164,30 @@ $root.game = (function() {
         };
 
         /**
-         * Decodes a CSpeedUpTreatureBox message from the specified reader or buffer, length delimited.
+         * Decodes a CSpeedUpTreasureBox message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof game.CSpeedUpTreatureBox
+         * @memberof game.CSpeedUpTreasureBox
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {game.CSpeedUpTreatureBox} CSpeedUpTreatureBox
+         * @returns {game.CSpeedUpTreasureBox} CSpeedUpTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        CSpeedUpTreatureBox.decodeDelimited = function decodeDelimited(reader) {
+        CSpeedUpTreasureBox.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a CSpeedUpTreatureBox message.
+         * Verifies a CSpeedUpTreasureBox message.
          * @function verify
-         * @memberof game.CSpeedUpTreatureBox
+         * @memberof game.CSpeedUpTreasureBox
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        CSpeedUpTreatureBox.verify = function verify(message) {
+        CSpeedUpTreasureBox.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.bid != null && message.hasOwnProperty("bid"))
@@ -40197,17 +40197,17 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a CSpeedUpTreatureBox message from a plain object. Also converts values to their respective internal types.
+         * Creates a CSpeedUpTreasureBox message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof game.CSpeedUpTreatureBox
+         * @memberof game.CSpeedUpTreasureBox
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {game.CSpeedUpTreatureBox} CSpeedUpTreatureBox
+         * @returns {game.CSpeedUpTreasureBox} CSpeedUpTreasureBox
          */
-        CSpeedUpTreatureBox.fromObject = function fromObject(object) {
-            if (object instanceof $root.game.CSpeedUpTreatureBox)
+        CSpeedUpTreasureBox.fromObject = function fromObject(object) {
+            if (object instanceof $root.game.CSpeedUpTreasureBox)
                 return object;
-            var message = new $root.game.CSpeedUpTreatureBox();
+            var message = new $root.game.CSpeedUpTreasureBox();
             if (object.bid != null)
                 if ($util.Long)
                     (message.bid = $util.Long.fromValue(object.bid)).unsigned = false;
@@ -40221,15 +40221,15 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a plain object from a CSpeedUpTreatureBox message. Also converts values to other types if specified.
+         * Creates a plain object from a CSpeedUpTreasureBox message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof game.CSpeedUpTreatureBox
+         * @memberof game.CSpeedUpTreasureBox
          * @static
-         * @param {game.CSpeedUpTreatureBox} message CSpeedUpTreatureBox
+         * @param {game.CSpeedUpTreasureBox} message CSpeedUpTreasureBox
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        CSpeedUpTreatureBox.toObject = function toObject(message, options) {
+        CSpeedUpTreasureBox.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
@@ -40248,53 +40248,53 @@ $root.game = (function() {
         };
 
         /**
-         * Converts this CSpeedUpTreatureBox to JSON.
+         * Converts this CSpeedUpTreasureBox to JSON.
          * @function toJSON
-         * @memberof game.CSpeedUpTreatureBox
+         * @memberof game.CSpeedUpTreasureBox
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        CSpeedUpTreatureBox.prototype.toJSON = function toJSON() {
+        CSpeedUpTreasureBox.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for CSpeedUpTreatureBox
+         * Gets the default type url for CSpeedUpTreasureBox
          * @function getTypeUrl
-         * @memberof game.CSpeedUpTreatureBox
+         * @memberof game.CSpeedUpTreasureBox
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        CSpeedUpTreatureBox.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        CSpeedUpTreasureBox.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/game.CSpeedUpTreatureBox";
+            return typeUrlPrefix + "/game.CSpeedUpTreasureBox";
         };
 
-        return CSpeedUpTreatureBox;
+        return CSpeedUpTreasureBox;
     })();
 
-    game.SSpeedUpTreatureBox = (function() {
+    game.SSpeedUpTreasureBox = (function() {
 
         /**
-         * Properties of a SSpeedUpTreatureBox.
+         * Properties of a SSpeedUpTreasureBox.
          * @memberof game
-         * @interface ISSpeedUpTreatureBox
-         * @property {number|null} [boxId] SSpeedUpTreatureBox boxId
-         * @property {number|Long|null} [time] SSpeedUpTreatureBox time
+         * @interface ISSpeedUpTreasureBox
+         * @property {number|null} [boxId] SSpeedUpTreasureBox boxId
+         * @property {number|Long|null} [time] SSpeedUpTreasureBox time
          */
 
         /**
-         * Constructs a new SSpeedUpTreatureBox.
+         * Constructs a new SSpeedUpTreasureBox.
          * @memberof game
-         * @classdesc Represents a SSpeedUpTreatureBox.
-         * @implements ISSpeedUpTreatureBox
+         * @classdesc Represents a SSpeedUpTreasureBox.
+         * @implements ISSpeedUpTreasureBox
          * @constructor
-         * @param {game.ISSpeedUpTreatureBox=} [properties] Properties to set
+         * @param {game.ISSpeedUpTreasureBox=} [properties] Properties to set
          */
-        function SSpeedUpTreatureBox(properties) {
+        function SSpeedUpTreasureBox(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -40302,43 +40302,43 @@ $root.game = (function() {
         }
 
         /**
-         * SSpeedUpTreatureBox boxId.
+         * SSpeedUpTreasureBox boxId.
          * @member {number} boxId
-         * @memberof game.SSpeedUpTreatureBox
+         * @memberof game.SSpeedUpTreasureBox
          * @instance
          */
-        SSpeedUpTreatureBox.prototype.boxId = 0;
+        SSpeedUpTreasureBox.prototype.boxId = 0;
 
         /**
-         * SSpeedUpTreatureBox time.
+         * SSpeedUpTreasureBox time.
          * @member {number|Long} time
-         * @memberof game.SSpeedUpTreatureBox
+         * @memberof game.SSpeedUpTreasureBox
          * @instance
          */
-        SSpeedUpTreatureBox.prototype.time = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        SSpeedUpTreasureBox.prototype.time = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
-         * Creates a new SSpeedUpTreatureBox instance using the specified properties.
+         * Creates a new SSpeedUpTreasureBox instance using the specified properties.
          * @function create
-         * @memberof game.SSpeedUpTreatureBox
+         * @memberof game.SSpeedUpTreasureBox
          * @static
-         * @param {game.ISSpeedUpTreatureBox=} [properties] Properties to set
-         * @returns {game.SSpeedUpTreatureBox} SSpeedUpTreatureBox instance
+         * @param {game.ISSpeedUpTreasureBox=} [properties] Properties to set
+         * @returns {game.SSpeedUpTreasureBox} SSpeedUpTreasureBox instance
          */
-        SSpeedUpTreatureBox.create = function create(properties) {
-            return new SSpeedUpTreatureBox(properties);
+        SSpeedUpTreasureBox.create = function create(properties) {
+            return new SSpeedUpTreasureBox(properties);
         };
 
         /**
-         * Encodes the specified SSpeedUpTreatureBox message. Does not implicitly {@link game.SSpeedUpTreatureBox.verify|verify} messages.
+         * Encodes the specified SSpeedUpTreasureBox message. Does not implicitly {@link game.SSpeedUpTreasureBox.verify|verify} messages.
          * @function encode
-         * @memberof game.SSpeedUpTreatureBox
+         * @memberof game.SSpeedUpTreasureBox
          * @static
-         * @param {game.ISSpeedUpTreatureBox} message SSpeedUpTreatureBox message or plain object to encode
+         * @param {game.ISSpeedUpTreasureBox} message SSpeedUpTreasureBox message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        SSpeedUpTreatureBox.encode = function encode(message, writer) {
+        SSpeedUpTreasureBox.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.boxId != null && Object.hasOwnProperty.call(message, "boxId"))
@@ -40349,33 +40349,33 @@ $root.game = (function() {
         };
 
         /**
-         * Encodes the specified SSpeedUpTreatureBox message, length delimited. Does not implicitly {@link game.SSpeedUpTreatureBox.verify|verify} messages.
+         * Encodes the specified SSpeedUpTreasureBox message, length delimited. Does not implicitly {@link game.SSpeedUpTreasureBox.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof game.SSpeedUpTreatureBox
+         * @memberof game.SSpeedUpTreasureBox
          * @static
-         * @param {game.ISSpeedUpTreatureBox} message SSpeedUpTreatureBox message or plain object to encode
+         * @param {game.ISSpeedUpTreasureBox} message SSpeedUpTreasureBox message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        SSpeedUpTreatureBox.encodeDelimited = function encodeDelimited(message, writer) {
+        SSpeedUpTreasureBox.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a SSpeedUpTreatureBox message from the specified reader or buffer.
+         * Decodes a SSpeedUpTreasureBox message from the specified reader or buffer.
          * @function decode
-         * @memberof game.SSpeedUpTreatureBox
+         * @memberof game.SSpeedUpTreasureBox
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {game.SSpeedUpTreatureBox} SSpeedUpTreatureBox
+         * @returns {game.SSpeedUpTreasureBox} SSpeedUpTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        SSpeedUpTreatureBox.decode = function decode(reader, length, error) {
+        SSpeedUpTreasureBox.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.SSpeedUpTreatureBox();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game.SSpeedUpTreasureBox();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -40398,30 +40398,30 @@ $root.game = (function() {
         };
 
         /**
-         * Decodes a SSpeedUpTreatureBox message from the specified reader or buffer, length delimited.
+         * Decodes a SSpeedUpTreasureBox message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof game.SSpeedUpTreatureBox
+         * @memberof game.SSpeedUpTreasureBox
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {game.SSpeedUpTreatureBox} SSpeedUpTreatureBox
+         * @returns {game.SSpeedUpTreasureBox} SSpeedUpTreasureBox
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        SSpeedUpTreatureBox.decodeDelimited = function decodeDelimited(reader) {
+        SSpeedUpTreasureBox.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a SSpeedUpTreatureBox message.
+         * Verifies a SSpeedUpTreasureBox message.
          * @function verify
-         * @memberof game.SSpeedUpTreatureBox
+         * @memberof game.SSpeedUpTreasureBox
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        SSpeedUpTreatureBox.verify = function verify(message) {
+        SSpeedUpTreasureBox.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.boxId != null && message.hasOwnProperty("boxId"))
@@ -40434,17 +40434,17 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a SSpeedUpTreatureBox message from a plain object. Also converts values to their respective internal types.
+         * Creates a SSpeedUpTreasureBox message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof game.SSpeedUpTreatureBox
+         * @memberof game.SSpeedUpTreasureBox
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {game.SSpeedUpTreatureBox} SSpeedUpTreatureBox
+         * @returns {game.SSpeedUpTreasureBox} SSpeedUpTreasureBox
          */
-        SSpeedUpTreatureBox.fromObject = function fromObject(object) {
-            if (object instanceof $root.game.SSpeedUpTreatureBox)
+        SSpeedUpTreasureBox.fromObject = function fromObject(object) {
+            if (object instanceof $root.game.SSpeedUpTreasureBox)
                 return object;
-            var message = new $root.game.SSpeedUpTreatureBox();
+            var message = new $root.game.SSpeedUpTreasureBox();
             if (object.boxId != null)
                 message.boxId = object.boxId | 0;
             if (object.time != null)
@@ -40460,15 +40460,15 @@ $root.game = (function() {
         };
 
         /**
-         * Creates a plain object from a SSpeedUpTreatureBox message. Also converts values to other types if specified.
+         * Creates a plain object from a SSpeedUpTreasureBox message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof game.SSpeedUpTreatureBox
+         * @memberof game.SSpeedUpTreasureBox
          * @static
-         * @param {game.SSpeedUpTreatureBox} message SSpeedUpTreatureBox
+         * @param {game.SSpeedUpTreasureBox} message SSpeedUpTreasureBox
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        SSpeedUpTreatureBox.toObject = function toObject(message, options) {
+        SSpeedUpTreasureBox.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
@@ -40491,32 +40491,32 @@ $root.game = (function() {
         };
 
         /**
-         * Converts this SSpeedUpTreatureBox to JSON.
+         * Converts this SSpeedUpTreasureBox to JSON.
          * @function toJSON
-         * @memberof game.SSpeedUpTreatureBox
+         * @memberof game.SSpeedUpTreasureBox
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        SSpeedUpTreatureBox.prototype.toJSON = function toJSON() {
+        SSpeedUpTreasureBox.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for SSpeedUpTreatureBox
+         * Gets the default type url for SSpeedUpTreasureBox
          * @function getTypeUrl
-         * @memberof game.SSpeedUpTreatureBox
+         * @memberof game.SSpeedUpTreasureBox
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        SSpeedUpTreatureBox.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        SSpeedUpTreasureBox.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/game.SSpeedUpTreatureBox";
+            return typeUrlPrefix + "/game.SSpeedUpTreasureBox";
         };
 
-        return SSpeedUpTreatureBox;
+        return SSpeedUpTreasureBox;
     })();
 
     return game;
@@ -54889,27 +54889,27 @@ $root.common = (function() {
      * GuildEventType enum.
      * @name common.GuildEventType
      * @enum {number}
-     * @property {number} GUILD_EVVENT_UNKNOWN=0 GUILD_EVVENT_UNKNOWN value
-     * @property {number} GUILD_EVVENT_CREATE=1 GUILD_EVVENT_CREATE value
-     * @property {number} GUILD_EVVENT_JOIN=2 GUILD_EVVENT_JOIN value
-     * @property {number} GUILD_EVVENT_LEAVE=3 GUILD_EVVENT_LEAVE value
-     * @property {number} GUILD_EVVENT_KICK=4 GUILD_EVVENT_KICK value
-     * @property {number} GUILD_EVVENT_MODIFY_NOTICE=5 GUILD_EVVENT_MODIFY_NOTICE value
-     * @property {number} GUILD_EVVENT_MODIFY_FLAG=6 GUILD_EVVENT_MODIFY_FLAG value
-     * @property {number} GUILD_EVVENT_MODIFY_NAME=7 GUILD_EVVENT_MODIFY_NAME value
-     * @property {number} GUILD_EVVENT_TRANSFER=8 GUILD_EVVENT_TRANSFER value
+     * @property {number} GUILD_EVENT_UNKNOWN=0 GUILD_EVENT_UNKNOWN value
+     * @property {number} GUILD_EVENT_CREATE=1 GUILD_EVENT_CREATE value
+     * @property {number} GUILD_EVENT_JOIN=2 GUILD_EVENT_JOIN value
+     * @property {number} GUILD_EVENT_LEAVE=3 GUILD_EVENT_LEAVE value
+     * @property {number} GUILD_EVENT_KICK=4 GUILD_EVENT_KICK value
+     * @property {number} GUILD_EVENT_MODIFY_NOTICE=5 GUILD_EVENT_MODIFY_NOTICE value
+     * @property {number} GUILD_EVENT_MODIFY_FLAG=6 GUILD_EVENT_MODIFY_FLAG value
+     * @property {number} GUILD_EVENT_MODIFY_NAME=7 GUILD_EVENT_MODIFY_NAME value
+     * @property {number} GUILD_EVENT_TRANSFER=8 GUILD_EVENT_TRANSFER value
      */
     common.GuildEventType = (function() {
         var valuesById = {}, values = Object.create(valuesById);
-        values[valuesById[0] = "GUILD_EVVENT_UNKNOWN"] = 0;
-        values[valuesById[1] = "GUILD_EVVENT_CREATE"] = 1;
-        values[valuesById[2] = "GUILD_EVVENT_JOIN"] = 2;
-        values[valuesById[3] = "GUILD_EVVENT_LEAVE"] = 3;
-        values[valuesById[4] = "GUILD_EVVENT_KICK"] = 4;
-        values[valuesById[5] = "GUILD_EVVENT_MODIFY_NOTICE"] = 5;
-        values[valuesById[6] = "GUILD_EVVENT_MODIFY_FLAG"] = 6;
-        values[valuesById[7] = "GUILD_EVVENT_MODIFY_NAME"] = 7;
-        values[valuesById[8] = "GUILD_EVVENT_TRANSFER"] = 8;
+        values[valuesById[0] = "GUILD_EVENT_UNKNOWN"] = 0;
+        values[valuesById[1] = "GUILD_EVENT_CREATE"] = 1;
+        values[valuesById[2] = "GUILD_EVENT_JOIN"] = 2;
+        values[valuesById[3] = "GUILD_EVENT_LEAVE"] = 3;
+        values[valuesById[4] = "GUILD_EVENT_KICK"] = 4;
+        values[valuesById[5] = "GUILD_EVENT_MODIFY_NOTICE"] = 5;
+        values[valuesById[6] = "GUILD_EVENT_MODIFY_FLAG"] = 6;
+        values[valuesById[7] = "GUILD_EVENT_MODIFY_NAME"] = 7;
+        values[valuesById[8] = "GUILD_EVENT_TRANSFER"] = 8;
         return values;
     })();
 
@@ -57333,8 +57333,8 @@ $root.common = (function() {
      * @property {number} EFFECT_TYPE_UNKNOWN=0 EFFECT_TYPE_UNKNOWN value
      * @property {number} BAN_MOVE=1 BAN_MOVE value
      * @property {number} BAN_ATTACK=2 BAN_ATTACK value
-     * @property {number} IMMNUE_CONTROL=3 IMMNUE_CONTROL value
-     * @property {number} IMMNUE_DAMAGE=4 IMMNUE_DAMAGE value
+     * @property {number} IMMUNE_CONTROL=3 IMMUNE_CONTROL value
+     * @property {number} IMMUNE_DAMAGE=4 IMMUNE_DAMAGE value
      * @property {number} INVINCIBLE=5 INVINCIBLE value
      */
     common.BuffEffectType = (function() {
@@ -57342,8 +57342,8 @@ $root.common = (function() {
         values[valuesById[0] = "EFFECT_TYPE_UNKNOWN"] = 0;
         values[valuesById[1] = "BAN_MOVE"] = 1;
         values[valuesById[2] = "BAN_ATTACK"] = 2;
-        values[valuesById[3] = "IMMNUE_CONTROL"] = 3;
-        values[valuesById[4] = "IMMNUE_DAMAGE"] = 4;
+        values[valuesById[3] = "IMMUNE_CONTROL"] = 3;
+        values[valuesById[4] = "IMMUNE_DAMAGE"] = 4;
         values[valuesById[5] = "INVINCIBLE"] = 5;
         return values;
     })();
@@ -57369,7 +57369,7 @@ $root.common = (function() {
      * @property {number} CritPer=2 CritPer value
      * @property {number} BlockPer=3 BlockPer value
      * @property {number} DodgePer=4 DodgePer value
-     * @property {number} CrtiDmgPer=5 CrtiDmgPer value
+     * @property {number} CritDmgPer=5 CritDmgPer value
      * @property {number} SuckBloodPer=6 SuckBloodPer value
      */
     common.DamageAttrIndex = (function() {
@@ -57379,7 +57379,7 @@ $root.common = (function() {
         values[valuesById[2] = "CritPer"] = 2;
         values[valuesById[3] = "BlockPer"] = 3;
         values[valuesById[4] = "DodgePer"] = 4;
-        values[valuesById[5] = "CrtiDmgPer"] = 5;
+        values[valuesById[5] = "CritDmgPer"] = 5;
         values[valuesById[6] = "SuckBloodPer"] = 6;
         return values;
     })();
@@ -58237,24 +58237,24 @@ $root.common = (function() {
         return Command;
     })();
 
-    common.RemoveCardCommond = (function() {
+    common.RemoveCardCommand = (function() {
 
         /**
-         * Properties of a RemoveCardCommond.
+         * Properties of a RemoveCardCommand.
          * @memberof common
-         * @interface IRemoveCardCommond
-         * @property {number|null} [instId] RemoveCardCommond instId
+         * @interface IRemoveCardCommand
+         * @property {number|null} [instId] RemoveCardCommand instId
          */
 
         /**
-         * Constructs a new RemoveCardCommond.
+         * Constructs a new RemoveCardCommand.
          * @memberof common
-         * @classdesc Represents a RemoveCardCommond.
-         * @implements IRemoveCardCommond
+         * @classdesc Represents a RemoveCardCommand.
+         * @implements IRemoveCardCommand
          * @constructor
-         * @param {common.IRemoveCardCommond=} [properties] Properties to set
+         * @param {common.IRemoveCardCommand=} [properties] Properties to set
          */
-        function RemoveCardCommond(properties) {
+        function RemoveCardCommand(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -58262,35 +58262,35 @@ $root.common = (function() {
         }
 
         /**
-         * RemoveCardCommond instId.
+         * RemoveCardCommand instId.
          * @member {number} instId
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @instance
          */
-        RemoveCardCommond.prototype.instId = 0;
+        RemoveCardCommand.prototype.instId = 0;
 
         /**
-         * Creates a new RemoveCardCommond instance using the specified properties.
+         * Creates a new RemoveCardCommand instance using the specified properties.
          * @function create
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
-         * @param {common.IRemoveCardCommond=} [properties] Properties to set
-         * @returns {common.RemoveCardCommond} RemoveCardCommond instance
+         * @param {common.IRemoveCardCommand=} [properties] Properties to set
+         * @returns {common.RemoveCardCommand} RemoveCardCommand instance
          */
-        RemoveCardCommond.create = function create(properties) {
-            return new RemoveCardCommond(properties);
+        RemoveCardCommand.create = function create(properties) {
+            return new RemoveCardCommand(properties);
         };
 
         /**
-         * Encodes the specified RemoveCardCommond message. Does not implicitly {@link common.RemoveCardCommond.verify|verify} messages.
+         * Encodes the specified RemoveCardCommand message. Does not implicitly {@link common.RemoveCardCommand.verify|verify} messages.
          * @function encode
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
-         * @param {common.IRemoveCardCommond} message RemoveCardCommond message or plain object to encode
+         * @param {common.IRemoveCardCommand} message RemoveCardCommand message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        RemoveCardCommond.encode = function encode(message, writer) {
+        RemoveCardCommand.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.instId != null && Object.hasOwnProperty.call(message, "instId"))
@@ -58299,33 +58299,33 @@ $root.common = (function() {
         };
 
         /**
-         * Encodes the specified RemoveCardCommond message, length delimited. Does not implicitly {@link common.RemoveCardCommond.verify|verify} messages.
+         * Encodes the specified RemoveCardCommand message, length delimited. Does not implicitly {@link common.RemoveCardCommand.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
-         * @param {common.IRemoveCardCommond} message RemoveCardCommond message or plain object to encode
+         * @param {common.IRemoveCardCommand} message RemoveCardCommand message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        RemoveCardCommond.encodeDelimited = function encodeDelimited(message, writer) {
+        RemoveCardCommand.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a RemoveCardCommond message from the specified reader or buffer.
+         * Decodes a RemoveCardCommand message from the specified reader or buffer.
          * @function decode
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {common.RemoveCardCommond} RemoveCardCommond
+         * @returns {common.RemoveCardCommand} RemoveCardCommand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        RemoveCardCommond.decode = function decode(reader, length, error) {
+        RemoveCardCommand.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.common.RemoveCardCommond();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.common.RemoveCardCommand();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -58344,30 +58344,30 @@ $root.common = (function() {
         };
 
         /**
-         * Decodes a RemoveCardCommond message from the specified reader or buffer, length delimited.
+         * Decodes a RemoveCardCommand message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {common.RemoveCardCommond} RemoveCardCommond
+         * @returns {common.RemoveCardCommand} RemoveCardCommand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        RemoveCardCommond.decodeDelimited = function decodeDelimited(reader) {
+        RemoveCardCommand.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a RemoveCardCommond message.
+         * Verifies a RemoveCardCommand message.
          * @function verify
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        RemoveCardCommond.verify = function verify(message) {
+        RemoveCardCommand.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.instId != null && message.hasOwnProperty("instId"))
@@ -58377,32 +58377,32 @@ $root.common = (function() {
         };
 
         /**
-         * Creates a RemoveCardCommond message from a plain object. Also converts values to their respective internal types.
+         * Creates a RemoveCardCommand message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {common.RemoveCardCommond} RemoveCardCommond
+         * @returns {common.RemoveCardCommand} RemoveCardCommand
          */
-        RemoveCardCommond.fromObject = function fromObject(object) {
-            if (object instanceof $root.common.RemoveCardCommond)
+        RemoveCardCommand.fromObject = function fromObject(object) {
+            if (object instanceof $root.common.RemoveCardCommand)
                 return object;
-            var message = new $root.common.RemoveCardCommond();
+            var message = new $root.common.RemoveCardCommand();
             if (object.instId != null)
                 message.instId = object.instId | 0;
             return message;
         };
 
         /**
-         * Creates a plain object from a RemoveCardCommond message. Also converts values to other types if specified.
+         * Creates a plain object from a RemoveCardCommand message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
-         * @param {common.RemoveCardCommond} message RemoveCardCommond
+         * @param {common.RemoveCardCommand} message RemoveCardCommand
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        RemoveCardCommond.toObject = function toObject(message, options) {
+        RemoveCardCommand.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
@@ -58414,32 +58414,32 @@ $root.common = (function() {
         };
 
         /**
-         * Converts this RemoveCardCommond to JSON.
+         * Converts this RemoveCardCommand to JSON.
          * @function toJSON
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        RemoveCardCommond.prototype.toJSON = function toJSON() {
+        RemoveCardCommand.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for RemoveCardCommond
+         * Gets the default type url for RemoveCardCommand
          * @function getTypeUrl
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        RemoveCardCommond.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        RemoveCardCommand.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/common.RemoveCardCommond";
+            return typeUrlPrefix + "/common.RemoveCardCommand";
         };
 
-        return RemoveCardCommond;
+        return RemoveCardCommand;
     })();
 
     common.Equip = (function() {
@@ -63986,7 +63986,7 @@ $root.common = (function() {
          * @property {number|Long|null} [createAt] SaleItemInfo createAt
          * @property {number|null} [price] SaleItemInfo price
          * @property {number|null} [markCount] SaleItemInfo markCount
-         * @property {string|null} [salerId] SaleItemInfo salerId
+         * @property {string|null} [sellerId] SaleItemInfo sellerId
          * @property {number|null} [publicityTime] SaleItemInfo publicityTime
          */
 
@@ -64078,12 +64078,12 @@ $root.common = (function() {
         SaleItemInfo.prototype.markCount = 0;
 
         /**
-         * SaleItemInfo salerId.
-         * @member {string} salerId
+         * SaleItemInfo sellerId.
+         * @member {string} sellerId
          * @memberof common.SaleItemInfo
          * @instance
          */
-        SaleItemInfo.prototype.salerId = "";
+        SaleItemInfo.prototype.sellerId = "";
 
         /**
          * SaleItemInfo publicityTime.
@@ -64135,8 +64135,8 @@ $root.common = (function() {
                 writer.uint32(/* id 8, wireType 0 =*/64).int32(message.price);
             if (message.markCount != null && Object.hasOwnProperty.call(message, "markCount"))
                 writer.uint32(/* id 9, wireType 0 =*/72).int32(message.markCount);
-            if (message.salerId != null && Object.hasOwnProperty.call(message, "salerId"))
-                writer.uint32(/* id 10, wireType 2 =*/82).string(message.salerId);
+            if (message.sellerId != null && Object.hasOwnProperty.call(message, "sellerId"))
+                writer.uint32(/* id 10, wireType 2 =*/82).string(message.sellerId);
             if (message.publicityTime != null && Object.hasOwnProperty.call(message, "publicityTime"))
                 writer.uint32(/* id 11, wireType 0 =*/88).int32(message.publicityTime);
             return writer;
@@ -64212,7 +64212,7 @@ $root.common = (function() {
                         break;
                     }
                 case 10: {
-                        message.salerId = reader.string();
+                        message.sellerId = reader.string();
                         break;
                     }
                 case 11: {
@@ -64281,9 +64281,9 @@ $root.common = (function() {
             if (message.markCount != null && message.hasOwnProperty("markCount"))
                 if (!$util.isInteger(message.markCount))
                     return "markCount: integer expected";
-            if (message.salerId != null && message.hasOwnProperty("salerId"))
-                if (!$util.isString(message.salerId))
-                    return "salerId: string expected";
+            if (message.sellerId != null && message.hasOwnProperty("sellerId"))
+                if (!$util.isString(message.sellerId))
+                    return "sellerId: string expected";
             if (message.publicityTime != null && message.hasOwnProperty("publicityTime"))
                 if (!$util.isInteger(message.publicityTime))
                     return "publicityTime: integer expected";
@@ -64334,8 +64334,8 @@ $root.common = (function() {
                 message.price = object.price | 0;
             if (object.markCount != null)
                 message.markCount = object.markCount | 0;
-            if (object.salerId != null)
-                message.salerId = String(object.salerId);
+            if (object.sellerId != null)
+                message.sellerId = String(object.sellerId);
             if (object.publicityTime != null)
                 message.publicityTime = object.publicityTime | 0;
             return message;
@@ -64372,7 +64372,7 @@ $root.common = (function() {
                     object.createAt = options.longs === String ? "0" : 0;
                 object.price = 0;
                 object.markCount = 0;
-                object.salerId = "";
+                object.sellerId = "";
                 object.publicityTime = 0;
             }
             if (message.saleId != null && message.hasOwnProperty("saleId"))
@@ -64399,8 +64399,8 @@ $root.common = (function() {
                 object.price = message.price;
             if (message.markCount != null && message.hasOwnProperty("markCount"))
                 object.markCount = message.markCount;
-            if (message.salerId != null && message.hasOwnProperty("salerId"))
-                object.salerId = message.salerId;
+            if (message.sellerId != null && message.hasOwnProperty("sellerId"))
+                object.sellerId = message.sellerId;
             if (message.publicityTime != null && message.hasOwnProperty("publicityTime"))
                 object.publicityTime = message.publicityTime;
             return object;

@@ -15,7 +15,7 @@ export interface PBPackage {
 }
 
 export interface WebsocketMessage {
-  /** 客户端上行传递值,由jsonmap指定 */
+  /** 客户端上行传递值,由json map指定 */
   uri: string;
   /** 方法，GET POST */
   method: string;
@@ -26,7 +26,7 @@ export interface WebsocketMessage {
   /** 唯一id */
   uuid: string;
   /** 错误码 */
-  errno: number;
+  errCode: number;
   /** 错误内容 */
-  errmsg: string;
+  errMsg: string;
 }

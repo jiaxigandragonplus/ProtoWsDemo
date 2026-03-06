@@ -4,7 +4,7 @@ package common;
 enum MailStatus {
     MAIL_STATUS_INVALID = 0;
     MAIL_STATUS_NEW = 1;        // 新邮件
-    MAIL_STATUS_READED = 2;     // 已读
+    MAIL_STATUS_READ = 2;       // 已读
     MAIL_STATUS_CLAIMED = 3;    // 已领取
     MAIL_STATUS_DELETED = 4;    // 已删除
 }

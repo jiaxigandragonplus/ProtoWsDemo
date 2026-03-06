@@ -2235,7 +2235,7 @@ $root.common = (function() {
      * @enum {number}
      * @property {number} MAIL_STATUS_INVALID=0 MAIL_STATUS_INVALID value
      * @property {number} MAIL_STATUS_NEW=1 MAIL_STATUS_NEW value
-     * @property {number} MAIL_STATUS_READED=2 MAIL_STATUS_READED value
+     * @property {number} MAIL_STATUS_READ=2 MAIL_STATUS_READ value
      * @property {number} MAIL_STATUS_CLAIMED=3 MAIL_STATUS_CLAIMED value
      * @property {number} MAIL_STATUS_DELETED=4 MAIL_STATUS_DELETED value
      */
@@ -2243,7 +2243,7 @@ $root.common = (function() {
         var valuesById = {}, values = Object.create(valuesById);
         values[valuesById[0] = "MAIL_STATUS_INVALID"] = 0;
         values[valuesById[1] = "MAIL_STATUS_NEW"] = 1;
-        values[valuesById[2] = "MAIL_STATUS_READED"] = 2;
+        values[valuesById[2] = "MAIL_STATUS_READ"] = 2;
         values[valuesById[3] = "MAIL_STATUS_CLAIMED"] = 3;
         values[valuesById[4] = "MAIL_STATUS_DELETED"] = 4;
         return values;
@@ -2629,7 +2629,7 @@ $root.common = (function() {
             case 1:
                 message.status = 1;
                 break;
-            case "MAIL_STATUS_READED":
+            case "MAIL_STATUS_READ":
             case 2:
                 message.status = 2;
                 break;

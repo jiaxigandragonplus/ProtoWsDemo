@@ -157,8 +157,8 @@ $root.common = (function() {
      * @property {number} EFFECT_TYPE_UNKNOWN=0 EFFECT_TYPE_UNKNOWN value
      * @property {number} BAN_MOVE=1 BAN_MOVE value
      * @property {number} BAN_ATTACK=2 BAN_ATTACK value
-     * @property {number} IMMNUE_CONTROL=3 IMMNUE_CONTROL value
-     * @property {number} IMMNUE_DAMAGE=4 IMMNUE_DAMAGE value
+     * @property {number} IMMUNE_CONTROL=3 IMMUNE_CONTROL value
+     * @property {number} IMMUNE_DAMAGE=4 IMMUNE_DAMAGE value
      * @property {number} INVINCIBLE=5 INVINCIBLE value
      */
     common.BuffEffectType = (function() {
@@ -166,8 +166,8 @@ $root.common = (function() {
         values[valuesById[0] = "EFFECT_TYPE_UNKNOWN"] = 0;
         values[valuesById[1] = "BAN_MOVE"] = 1;
         values[valuesById[2] = "BAN_ATTACK"] = 2;
-        values[valuesById[3] = "IMMNUE_CONTROL"] = 3;
-        values[valuesById[4] = "IMMNUE_DAMAGE"] = 4;
+        values[valuesById[3] = "IMMUNE_CONTROL"] = 3;
+        values[valuesById[4] = "IMMUNE_DAMAGE"] = 4;
         values[valuesById[5] = "INVINCIBLE"] = 5;
         return values;
     })();
@@ -193,7 +193,7 @@ $root.common = (function() {
      * @property {number} CritPer=2 CritPer value
      * @property {number} BlockPer=3 BlockPer value
      * @property {number} DodgePer=4 DodgePer value
-     * @property {number} CrtiDmgPer=5 CrtiDmgPer value
+     * @property {number} CritDmgPer=5 CritDmgPer value
      * @property {number} SuckBloodPer=6 SuckBloodPer value
      */
     common.DamageAttrIndex = (function() {
@@ -203,7 +203,7 @@ $root.common = (function() {
         values[valuesById[2] = "CritPer"] = 2;
         values[valuesById[3] = "BlockPer"] = 3;
         values[valuesById[4] = "DodgePer"] = 4;
-        values[valuesById[5] = "CrtiDmgPer"] = 5;
+        values[valuesById[5] = "CritDmgPer"] = 5;
         values[valuesById[6] = "SuckBloodPer"] = 6;
         return values;
     })();
@@ -1061,24 +1061,24 @@ $root.common = (function() {
         return Command;
     })();
 
-    common.RemoveCardCommond = (function() {
+    common.RemoveCardCommand = (function() {
 
         /**
-         * Properties of a RemoveCardCommond.
+         * Properties of a RemoveCardCommand.
          * @memberof common
-         * @interface IRemoveCardCommond
-         * @property {number|null} [instId] RemoveCardCommond instId
+         * @interface IRemoveCardCommand
+         * @property {number|null} [instId] RemoveCardCommand instId
          */
 
         /**
-         * Constructs a new RemoveCardCommond.
+         * Constructs a new RemoveCardCommand.
          * @memberof common
-         * @classdesc Represents a RemoveCardCommond.
-         * @implements IRemoveCardCommond
+         * @classdesc Represents a RemoveCardCommand.
+         * @implements IRemoveCardCommand
          * @constructor
-         * @param {common.IRemoveCardCommond=} [properties] Properties to set
+         * @param {common.IRemoveCardCommand=} [properties] Properties to set
          */
-        function RemoveCardCommond(properties) {
+        function RemoveCardCommand(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -1086,35 +1086,35 @@ $root.common = (function() {
         }
 
         /**
-         * RemoveCardCommond instId.
+         * RemoveCardCommand instId.
          * @member {number} instId
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @instance
          */
-        RemoveCardCommond.prototype.instId = 0;
+        RemoveCardCommand.prototype.instId = 0;
 
         /**
-         * Creates a new RemoveCardCommond instance using the specified properties.
+         * Creates a new RemoveCardCommand instance using the specified properties.
          * @function create
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
-         * @param {common.IRemoveCardCommond=} [properties] Properties to set
-         * @returns {common.RemoveCardCommond} RemoveCardCommond instance
+         * @param {common.IRemoveCardCommand=} [properties] Properties to set
+         * @returns {common.RemoveCardCommand} RemoveCardCommand instance
          */
-        RemoveCardCommond.create = function create(properties) {
-            return new RemoveCardCommond(properties);
+        RemoveCardCommand.create = function create(properties) {
+            return new RemoveCardCommand(properties);
         };
 
         /**
-         * Encodes the specified RemoveCardCommond message. Does not implicitly {@link common.RemoveCardCommond.verify|verify} messages.
+         * Encodes the specified RemoveCardCommand message. Does not implicitly {@link common.RemoveCardCommand.verify|verify} messages.
          * @function encode
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
-         * @param {common.IRemoveCardCommond} message RemoveCardCommond message or plain object to encode
+         * @param {common.IRemoveCardCommand} message RemoveCardCommand message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        RemoveCardCommond.encode = function encode(message, writer) {
+        RemoveCardCommand.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.instId != null && Object.hasOwnProperty.call(message, "instId"))
@@ -1123,33 +1123,33 @@ $root.common = (function() {
         };
 
         /**
-         * Encodes the specified RemoveCardCommond message, length delimited. Does not implicitly {@link common.RemoveCardCommond.verify|verify} messages.
+         * Encodes the specified RemoveCardCommand message, length delimited. Does not implicitly {@link common.RemoveCardCommand.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
-         * @param {common.IRemoveCardCommond} message RemoveCardCommond message or plain object to encode
+         * @param {common.IRemoveCardCommand} message RemoveCardCommand message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        RemoveCardCommond.encodeDelimited = function encodeDelimited(message, writer) {
+        RemoveCardCommand.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a RemoveCardCommond message from the specified reader or buffer.
+         * Decodes a RemoveCardCommand message from the specified reader or buffer.
          * @function decode
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {common.RemoveCardCommond} RemoveCardCommond
+         * @returns {common.RemoveCardCommand} RemoveCardCommand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        RemoveCardCommond.decode = function decode(reader, length, error) {
+        RemoveCardCommand.decode = function decode(reader, length, error) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.common.RemoveCardCommond();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.common.RemoveCardCommand();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 if (tag === error)
@@ -1168,30 +1168,30 @@ $root.common = (function() {
         };
 
         /**
-         * Decodes a RemoveCardCommond message from the specified reader or buffer, length delimited.
+         * Decodes a RemoveCardCommand message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {common.RemoveCardCommond} RemoveCardCommond
+         * @returns {common.RemoveCardCommand} RemoveCardCommand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        RemoveCardCommond.decodeDelimited = function decodeDelimited(reader) {
+        RemoveCardCommand.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a RemoveCardCommond message.
+         * Verifies a RemoveCardCommand message.
          * @function verify
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        RemoveCardCommond.verify = function verify(message) {
+        RemoveCardCommand.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.instId != null && message.hasOwnProperty("instId"))
@@ -1201,32 +1201,32 @@ $root.common = (function() {
         };
 
         /**
-         * Creates a RemoveCardCommond message from a plain object. Also converts values to their respective internal types.
+         * Creates a RemoveCardCommand message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {common.RemoveCardCommond} RemoveCardCommond
+         * @returns {common.RemoveCardCommand} RemoveCardCommand
          */
-        RemoveCardCommond.fromObject = function fromObject(object) {
-            if (object instanceof $root.common.RemoveCardCommond)
+        RemoveCardCommand.fromObject = function fromObject(object) {
+            if (object instanceof $root.common.RemoveCardCommand)
                 return object;
-            var message = new $root.common.RemoveCardCommond();
+            var message = new $root.common.RemoveCardCommand();
             if (object.instId != null)
                 message.instId = object.instId | 0;
             return message;
         };
 
         /**
-         * Creates a plain object from a RemoveCardCommond message. Also converts values to other types if specified.
+         * Creates a plain object from a RemoveCardCommand message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
-         * @param {common.RemoveCardCommond} message RemoveCardCommond
+         * @param {common.RemoveCardCommand} message RemoveCardCommand
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        RemoveCardCommond.toObject = function toObject(message, options) {
+        RemoveCardCommand.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
@@ -1238,32 +1238,32 @@ $root.common = (function() {
         };
 
         /**
-         * Converts this RemoveCardCommond to JSON.
+         * Converts this RemoveCardCommand to JSON.
          * @function toJSON
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        RemoveCardCommond.prototype.toJSON = function toJSON() {
+        RemoveCardCommand.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for RemoveCardCommond
+         * Gets the default type url for RemoveCardCommand
          * @function getTypeUrl
-         * @memberof common.RemoveCardCommond
+         * @memberof common.RemoveCardCommand
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        RemoveCardCommond.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        RemoveCardCommand.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/common.RemoveCardCommond";
+            return typeUrlPrefix + "/common.RemoveCardCommand";
         };
 
-        return RemoveCardCommond;
+        return RemoveCardCommand;
     })();
 
     common.Equip = (function() {
@@ -6476,7 +6476,7 @@ $root.common = (function() {
      * @property {number} CONTENT_IMAGE=2 CONTENT_IMAGE value
      * @property {number} CONTENT_CARD=3 CONTENT_CARD value
      * @property {number} CONTENT_AUDIO=4 CONTENT_AUDIO value
-     * @property {number} CONTENT_VEDIO=5 CONTENT_VEDIO value
+     * @property {number} CONTENT_VIDEO=5 CONTENT_VIDEO value
      * @property {number} CONTENT_EMOJI=6 CONTENT_EMOJI value
      */
     common.ContentType = (function() {
@@ -6486,7 +6486,7 @@ $root.common = (function() {
         values[valuesById[2] = "CONTENT_IMAGE"] = 2;
         values[valuesById[3] = "CONTENT_CARD"] = 3;
         values[valuesById[4] = "CONTENT_AUDIO"] = 4;
-        values[valuesById[5] = "CONTENT_VEDIO"] = 5;
+        values[valuesById[5] = "CONTENT_VIDEO"] = 5;
         values[valuesById[6] = "CONTENT_EMOJI"] = 6;
         return values;
     })();
@@ -6509,14 +6509,14 @@ $root.common = (function() {
      * ChatType enum.
      * @name common.ChatType
      * @enum {number}
-     * @property {number} CHAT_TYPE_UNKONOWN=0 CHAT_TYPE_UNKONOWN value
+     * @property {number} CHAT_TYPE_UNKNOWN=0 CHAT_TYPE_UNKNOWN value
      * @property {number} CHAT_TYPE_USER_MESSAGE=1 CHAT_TYPE_USER_MESSAGE value
      * @property {number} CHAT_TYPE_SYSTEM_MESSAGE=2 CHAT_TYPE_SYSTEM_MESSAGE value
      * @property {number} CHAT_TYPE_GUILD_NOTICE=3 CHAT_TYPE_GUILD_NOTICE value
      */
     common.ChatType = (function() {
         var valuesById = {}, values = Object.create(valuesById);
-        values[valuesById[0] = "CHAT_TYPE_UNKONOWN"] = 0;
+        values[valuesById[0] = "CHAT_TYPE_UNKNOWN"] = 0;
         values[valuesById[1] = "CHAT_TYPE_USER_MESSAGE"] = 1;
         values[valuesById[2] = "CHAT_TYPE_SYSTEM_MESSAGE"] = 2;
         values[valuesById[3] = "CHAT_TYPE_GUILD_NOTICE"] = 3;
@@ -6566,7 +6566,7 @@ $root.common = (function() {
          * @memberof common
          * @interface IGetChatTipsParam
          * @property {string|null} [channelId] GetChatTipsParam channelId
-         * @property {number|null} [maxReadedMessageId] GetChatTipsParam maxReadedMessageId
+         * @property {number|null} [maxReadMessageId] GetChatTipsParam maxReadMessageId
          */
 
         /**
@@ -6593,12 +6593,12 @@ $root.common = (function() {
         GetChatTipsParam.prototype.channelId = "";
 
         /**
-         * GetChatTipsParam maxReadedMessageId.
-         * @member {number} maxReadedMessageId
+         * GetChatTipsParam maxReadMessageId.
+         * @member {number} maxReadMessageId
          * @memberof common.GetChatTipsParam
          * @instance
          */
-        GetChatTipsParam.prototype.maxReadedMessageId = 0;
+        GetChatTipsParam.prototype.maxReadMessageId = 0;
 
         /**
          * Creates a new GetChatTipsParam instance using the specified properties.
@@ -6626,8 +6626,8 @@ $root.common = (function() {
                 writer = $Writer.create();
             if (message.channelId != null && Object.hasOwnProperty.call(message, "channelId"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.channelId);
-            if (message.maxReadedMessageId != null && Object.hasOwnProperty.call(message, "maxReadedMessageId"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.maxReadedMessageId);
+            if (message.maxReadMessageId != null && Object.hasOwnProperty.call(message, "maxReadMessageId"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.maxReadMessageId);
             return writer;
         };
 
@@ -6669,7 +6669,7 @@ $root.common = (function() {
                         break;
                     }
                 case 2: {
-                        message.maxReadedMessageId = reader.int32();
+                        message.maxReadMessageId = reader.int32();
                         break;
                     }
                 default:
@@ -6710,9 +6710,9 @@ $root.common = (function() {
             if (message.channelId != null && message.hasOwnProperty("channelId"))
                 if (!$util.isString(message.channelId))
                     return "channelId: string expected";
-            if (message.maxReadedMessageId != null && message.hasOwnProperty("maxReadedMessageId"))
-                if (!$util.isInteger(message.maxReadedMessageId))
-                    return "maxReadedMessageId: integer expected";
+            if (message.maxReadMessageId != null && message.hasOwnProperty("maxReadMessageId"))
+                if (!$util.isInteger(message.maxReadMessageId))
+                    return "maxReadMessageId: integer expected";
             return null;
         };
 
@@ -6730,8 +6730,8 @@ $root.common = (function() {
             var message = new $root.common.GetChatTipsParam();
             if (object.channelId != null)
                 message.channelId = String(object.channelId);
-            if (object.maxReadedMessageId != null)
-                message.maxReadedMessageId = object.maxReadedMessageId | 0;
+            if (object.maxReadMessageId != null)
+                message.maxReadMessageId = object.maxReadMessageId | 0;
             return message;
         };
 
@@ -6750,12 +6750,12 @@ $root.common = (function() {
             var object = {};
             if (options.defaults) {
                 object.channelId = "";
-                object.maxReadedMessageId = 0;
+                object.maxReadMessageId = 0;
             }
             if (message.channelId != null && message.hasOwnProperty("channelId"))
                 object.channelId = message.channelId;
-            if (message.maxReadedMessageId != null && message.hasOwnProperty("maxReadedMessageId"))
-                object.maxReadedMessageId = message.maxReadedMessageId;
+            if (message.maxReadMessageId != null && message.hasOwnProperty("maxReadMessageId"))
+                object.maxReadMessageId = message.maxReadMessageId;
             return object;
         };
 
@@ -7498,7 +7498,7 @@ $root.common = (function() {
             case 4:
                 message.type = 4;
                 break;
-            case "CONTENT_VEDIO":
+            case "CONTENT_VIDEO":
             case 5:
                 message.type = 5;
                 break;
@@ -7838,7 +7838,7 @@ $root.common = (function() {
                     break;
                 }
                 break;
-            case "CHAT_TYPE_UNKONOWN":
+            case "CHAT_TYPE_UNKNOWN":
             case 0:
                 message.chatType = 0;
                 break;
@@ -7878,7 +7878,7 @@ $root.common = (function() {
                 object.sender = null;
                 object.content = null;
                 object.timestamp = 0;
-                object.chatType = options.enums === String ? "CHAT_TYPE_UNKONOWN" : 0;
+                object.chatType = options.enums === String ? "CHAT_TYPE_UNKNOWN" : 0;
                 object.channelId = "";
             }
             if (message.messageId != null && message.hasOwnProperty("messageId"))
@@ -8174,8 +8174,8 @@ $root.common = (function() {
          * @property {string|null} [messageType] WebsocketMessage messageType
          * @property {Uint8Array|null} [messagePayload] WebsocketMessage messagePayload
          * @property {string|null} [uuid] WebsocketMessage uuid
-         * @property {number|null} [errno] WebsocketMessage errno
-         * @property {string|null} [errmsg] WebsocketMessage errmsg
+         * @property {number|null} [errCode] WebsocketMessage errCode
+         * @property {string|null} [errMsg] WebsocketMessage errMsg
          */
 
         /**
@@ -8234,20 +8234,20 @@ $root.common = (function() {
         WebsocketMessage.prototype.uuid = "";
 
         /**
-         * WebsocketMessage errno.
-         * @member {number} errno
+         * WebsocketMessage errCode.
+         * @member {number} errCode
          * @memberof common.WebsocketMessage
          * @instance
          */
-        WebsocketMessage.prototype.errno = 0;
+        WebsocketMessage.prototype.errCode = 0;
 
         /**
-         * WebsocketMessage errmsg.
-         * @member {string} errmsg
+         * WebsocketMessage errMsg.
+         * @member {string} errMsg
          * @memberof common.WebsocketMessage
          * @instance
          */
-        WebsocketMessage.prototype.errmsg = "";
+        WebsocketMessage.prototype.errMsg = "";
 
         /**
          * Creates a new WebsocketMessage instance using the specified properties.
@@ -8283,10 +8283,10 @@ $root.common = (function() {
                 writer.uint32(/* id 4, wireType 2 =*/34).bytes(message.messagePayload);
             if (message.uuid != null && Object.hasOwnProperty.call(message, "uuid"))
                 writer.uint32(/* id 5, wireType 2 =*/42).string(message.uuid);
-            if (message.errno != null && Object.hasOwnProperty.call(message, "errno"))
-                writer.uint32(/* id 6, wireType 0 =*/48).uint32(message.errno);
-            if (message.errmsg != null && Object.hasOwnProperty.call(message, "errmsg"))
-                writer.uint32(/* id 7, wireType 2 =*/58).string(message.errmsg);
+            if (message.errCode != null && Object.hasOwnProperty.call(message, "errCode"))
+                writer.uint32(/* id 6, wireType 0 =*/48).uint32(message.errCode);
+            if (message.errMsg != null && Object.hasOwnProperty.call(message, "errMsg"))
+                writer.uint32(/* id 7, wireType 2 =*/58).string(message.errMsg);
             return writer;
         };
 
@@ -8344,11 +8344,11 @@ $root.common = (function() {
                         break;
                     }
                 case 6: {
-                        message.errno = reader.uint32();
+                        message.errCode = reader.uint32();
                         break;
                     }
                 case 7: {
-                        message.errmsg = reader.string();
+                        message.errMsg = reader.string();
                         break;
                     }
                 default:
@@ -8401,12 +8401,12 @@ $root.common = (function() {
             if (message.uuid != null && message.hasOwnProperty("uuid"))
                 if (!$util.isString(message.uuid))
                     return "uuid: string expected";
-            if (message.errno != null && message.hasOwnProperty("errno"))
-                if (!$util.isInteger(message.errno))
-                    return "errno: integer expected";
-            if (message.errmsg != null && message.hasOwnProperty("errmsg"))
-                if (!$util.isString(message.errmsg))
-                    return "errmsg: string expected";
+            if (message.errCode != null && message.hasOwnProperty("errCode"))
+                if (!$util.isInteger(message.errCode))
+                    return "errCode: integer expected";
+            if (message.errMsg != null && message.hasOwnProperty("errMsg"))
+                if (!$util.isString(message.errMsg))
+                    return "errMsg: string expected";
             return null;
         };
 
@@ -8435,10 +8435,10 @@ $root.common = (function() {
                     message.messagePayload = object.messagePayload;
             if (object.uuid != null)
                 message.uuid = String(object.uuid);
-            if (object.errno != null)
-                message.errno = object.errno >>> 0;
-            if (object.errmsg != null)
-                message.errmsg = String(object.errmsg);
+            if (object.errCode != null)
+                message.errCode = object.errCode >>> 0;
+            if (object.errMsg != null)
+                message.errMsg = String(object.errMsg);
             return message;
         };
 
@@ -8467,8 +8467,8 @@ $root.common = (function() {
                         object.messagePayload = $util.newBuffer(object.messagePayload);
                 }
                 object.uuid = "";
-                object.errno = 0;
-                object.errmsg = "";
+                object.errCode = 0;
+                object.errMsg = "";
             }
             if (message.uri != null && message.hasOwnProperty("uri"))
                 object.uri = message.uri;
@@ -8480,10 +8480,10 @@ $root.common = (function() {
                 object.messagePayload = options.bytes === String ? $util.base64.encode(message.messagePayload, 0, message.messagePayload.length) : options.bytes === Array ? Array.prototype.slice.call(message.messagePayload) : message.messagePayload;
             if (message.uuid != null && message.hasOwnProperty("uuid"))
                 object.uuid = message.uuid;
-            if (message.errno != null && message.hasOwnProperty("errno"))
-                object.errno = message.errno;
-            if (message.errmsg != null && message.hasOwnProperty("errmsg"))
-                object.errmsg = message.errmsg;
+            if (message.errCode != null && message.hasOwnProperty("errCode"))
+                object.errCode = message.errCode;
+            if (message.errMsg != null && message.hasOwnProperty("errMsg"))
+                object.errMsg = message.errMsg;
             return object;
         };
 
@@ -9554,27 +9554,27 @@ $root.common = (function() {
      * GuildEventType enum.
      * @name common.GuildEventType
      * @enum {number}
-     * @property {number} GUILD_EVVENT_UNKNOWN=0 GUILD_EVVENT_UNKNOWN value
-     * @property {number} GUILD_EVVENT_CREATE=1 GUILD_EVVENT_CREATE value
-     * @property {number} GUILD_EVVENT_JOIN=2 GUILD_EVVENT_JOIN value
-     * @property {number} GUILD_EVVENT_LEAVE=3 GUILD_EVVENT_LEAVE value
-     * @property {number} GUILD_EVVENT_KICK=4 GUILD_EVVENT_KICK value
-     * @property {number} GUILD_EVVENT_MODIFY_NOTICE=5 GUILD_EVVENT_MODIFY_NOTICE value
-     * @property {number} GUILD_EVVENT_MODIFY_FLAG=6 GUILD_EVVENT_MODIFY_FLAG value
-     * @property {number} GUILD_EVVENT_MODIFY_NAME=7 GUILD_EVVENT_MODIFY_NAME value
-     * @property {number} GUILD_EVVENT_TRANSFER=8 GUILD_EVVENT_TRANSFER value
+     * @property {number} GUILD_EVENT_UNKNOWN=0 GUILD_EVENT_UNKNOWN value
+     * @property {number} GUILD_EVENT_CREATE=1 GUILD_EVENT_CREATE value
+     * @property {number} GUILD_EVENT_JOIN=2 GUILD_EVENT_JOIN value
+     * @property {number} GUILD_EVENT_LEAVE=3 GUILD_EVENT_LEAVE value
+     * @property {number} GUILD_EVENT_KICK=4 GUILD_EVENT_KICK value
+     * @property {number} GUILD_EVENT_MODIFY_NOTICE=5 GUILD_EVENT_MODIFY_NOTICE value
+     * @property {number} GUILD_EVENT_MODIFY_FLAG=6 GUILD_EVENT_MODIFY_FLAG value
+     * @property {number} GUILD_EVENT_MODIFY_NAME=7 GUILD_EVENT_MODIFY_NAME value
+     * @property {number} GUILD_EVENT_TRANSFER=8 GUILD_EVENT_TRANSFER value
      */
     common.GuildEventType = (function() {
         var valuesById = {}, values = Object.create(valuesById);
-        values[valuesById[0] = "GUILD_EVVENT_UNKNOWN"] = 0;
-        values[valuesById[1] = "GUILD_EVVENT_CREATE"] = 1;
-        values[valuesById[2] = "GUILD_EVVENT_JOIN"] = 2;
-        values[valuesById[3] = "GUILD_EVVENT_LEAVE"] = 3;
-        values[valuesById[4] = "GUILD_EVVENT_KICK"] = 4;
-        values[valuesById[5] = "GUILD_EVVENT_MODIFY_NOTICE"] = 5;
-        values[valuesById[6] = "GUILD_EVVENT_MODIFY_FLAG"] = 6;
-        values[valuesById[7] = "GUILD_EVVENT_MODIFY_NAME"] = 7;
-        values[valuesById[8] = "GUILD_EVVENT_TRANSFER"] = 8;
+        values[valuesById[0] = "GUILD_EVENT_UNKNOWN"] = 0;
+        values[valuesById[1] = "GUILD_EVENT_CREATE"] = 1;
+        values[valuesById[2] = "GUILD_EVENT_JOIN"] = 2;
+        values[valuesById[3] = "GUILD_EVENT_LEAVE"] = 3;
+        values[valuesById[4] = "GUILD_EVENT_KICK"] = 4;
+        values[valuesById[5] = "GUILD_EVENT_MODIFY_NOTICE"] = 5;
+        values[valuesById[6] = "GUILD_EVENT_MODIFY_FLAG"] = 6;
+        values[valuesById[7] = "GUILD_EVENT_MODIFY_NAME"] = 7;
+        values[valuesById[8] = "GUILD_EVENT_TRANSFER"] = 8;
         return values;
     })();
 
@@ -12200,7 +12200,7 @@ $root.common = (function() {
      * @enum {number}
      * @property {number} MAIL_STATUS_INVALID=0 MAIL_STATUS_INVALID value
      * @property {number} MAIL_STATUS_NEW=1 MAIL_STATUS_NEW value
-     * @property {number} MAIL_STATUS_READED=2 MAIL_STATUS_READED value
+     * @property {number} MAIL_STATUS_READ=2 MAIL_STATUS_READ value
      * @property {number} MAIL_STATUS_CLAIMED=3 MAIL_STATUS_CLAIMED value
      * @property {number} MAIL_STATUS_DELETED=4 MAIL_STATUS_DELETED value
      */
@@ -12208,7 +12208,7 @@ $root.common = (function() {
         var valuesById = {}, values = Object.create(valuesById);
         values[valuesById[0] = "MAIL_STATUS_INVALID"] = 0;
         values[valuesById[1] = "MAIL_STATUS_NEW"] = 1;
-        values[valuesById[2] = "MAIL_STATUS_READED"] = 2;
+        values[valuesById[2] = "MAIL_STATUS_READ"] = 2;
         values[valuesById[3] = "MAIL_STATUS_CLAIMED"] = 3;
         values[valuesById[4] = "MAIL_STATUS_DELETED"] = 4;
         return values;
@@ -12594,7 +12594,7 @@ $root.common = (function() {
             case 1:
                 message.status = 1;
                 break;
-            case "MAIL_STATUS_READED":
+            case "MAIL_STATUS_READ":
             case 2:
                 message.status = 2;
                 break;
@@ -26413,7 +26413,7 @@ $root.common = (function() {
          * @property {number|Long|null} [createAt] SaleItemInfo createAt
          * @property {number|null} [price] SaleItemInfo price
          * @property {number|null} [markCount] SaleItemInfo markCount
-         * @property {string|null} [salerId] SaleItemInfo salerId
+         * @property {string|null} [sellerId] SaleItemInfo sellerId
          * @property {number|null} [publicityTime] SaleItemInfo publicityTime
          */
 
@@ -26505,12 +26505,12 @@ $root.common = (function() {
         SaleItemInfo.prototype.markCount = 0;
 
         /**
-         * SaleItemInfo salerId.
-         * @member {string} salerId
+         * SaleItemInfo sellerId.
+         * @member {string} sellerId
          * @memberof common.SaleItemInfo
          * @instance
          */
-        SaleItemInfo.prototype.salerId = "";
+        SaleItemInfo.prototype.sellerId = "";
 
         /**
          * SaleItemInfo publicityTime.
@@ -26562,8 +26562,8 @@ $root.common = (function() {
                 writer.uint32(/* id 8, wireType 0 =*/64).int32(message.price);
             if (message.markCount != null && Object.hasOwnProperty.call(message, "markCount"))
                 writer.uint32(/* id 9, wireType 0 =*/72).int32(message.markCount);
-            if (message.salerId != null && Object.hasOwnProperty.call(message, "salerId"))
-                writer.uint32(/* id 10, wireType 2 =*/82).string(message.salerId);
+            if (message.sellerId != null && Object.hasOwnProperty.call(message, "sellerId"))
+                writer.uint32(/* id 10, wireType 2 =*/82).string(message.sellerId);
             if (message.publicityTime != null && Object.hasOwnProperty.call(message, "publicityTime"))
                 writer.uint32(/* id 11, wireType 0 =*/88).int32(message.publicityTime);
             return writer;
@@ -26639,7 +26639,7 @@ $root.common = (function() {
                         break;
                     }
                 case 10: {
-                        message.salerId = reader.string();
+                        message.sellerId = reader.string();
                         break;
                     }
                 case 11: {
@@ -26708,9 +26708,9 @@ $root.common = (function() {
             if (message.markCount != null && message.hasOwnProperty("markCount"))
                 if (!$util.isInteger(message.markCount))
                     return "markCount: integer expected";
-            if (message.salerId != null && message.hasOwnProperty("salerId"))
-                if (!$util.isString(message.salerId))
-                    return "salerId: string expected";
+            if (message.sellerId != null && message.hasOwnProperty("sellerId"))
+                if (!$util.isString(message.sellerId))
+                    return "sellerId: string expected";
             if (message.publicityTime != null && message.hasOwnProperty("publicityTime"))
                 if (!$util.isInteger(message.publicityTime))
                     return "publicityTime: integer expected";
@@ -26761,8 +26761,8 @@ $root.common = (function() {
                 message.price = object.price | 0;
             if (object.markCount != null)
                 message.markCount = object.markCount | 0;
-            if (object.salerId != null)
-                message.salerId = String(object.salerId);
+            if (object.sellerId != null)
+                message.sellerId = String(object.sellerId);
             if (object.publicityTime != null)
                 message.publicityTime = object.publicityTime | 0;
             return message;
@@ -26799,7 +26799,7 @@ $root.common = (function() {
                     object.createAt = options.longs === String ? "0" : 0;
                 object.price = 0;
                 object.markCount = 0;
-                object.salerId = "";
+                object.sellerId = "";
                 object.publicityTime = 0;
             }
             if (message.saleId != null && message.hasOwnProperty("saleId"))
@@ -26826,8 +26826,8 @@ $root.common = (function() {
                 object.price = message.price;
             if (message.markCount != null && message.hasOwnProperty("markCount"))
                 object.markCount = message.markCount;
-            if (message.salerId != null && message.hasOwnProperty("salerId"))
-                object.salerId = message.salerId;
+            if (message.sellerId != null && message.hasOwnProperty("sellerId"))
+                object.sellerId = message.sellerId;
             if (message.publicityTime != null && message.hasOwnProperty("publicityTime"))
                 object.publicityTime = message.publicityTime;
             return object;

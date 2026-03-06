@@ -35,7 +35,7 @@ message SaleItemInfo {
     int64 create_at = 7;    // 上架时间
     int32 price = 8;        // 价格
     int32 mark_count = 9;   // 收藏数
-    string saler_id = 10;   // 卖家id
+    string seller_id = 10;   // 卖家id
     int32 publicity_time = 11;  // 公示时间
 }
 

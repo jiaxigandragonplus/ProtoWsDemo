@@ -34,8 +34,8 @@ export enum ContentType {
   CONTENT_CARD = 3,
   /** CONTENT_AUDIO - 音频 */
   CONTENT_AUDIO = 4,
-  /** CONTENT_VEDIO - 视频 */
-  CONTENT_VEDIO = 5,
+  /** CONTENT_VIDEO - 视频 */
+  CONTENT_VIDEO = 5,
   /** CONTENT_EMOJI - 表情 */
   CONTENT_EMOJI = 6,
   UNRECOGNIZED = -1,
@@ -52,8 +52,8 @@ export enum MessageLoadType {
 
 /** 聊天消息类型 */
 export enum ChatType {
-  /** CHAT_TYPE_UNKONOWN - 未知类型 */
-  CHAT_TYPE_UNKONOWN = 0,
+  /** CHAT_TYPE_UNKNOWN - 未知类型 */
+  CHAT_TYPE_UNKNOWN = 0,
   /** CHAT_TYPE_USER_MESSAGE - 用户消息 */
   CHAT_TYPE_USER_MESSAGE = 1,
   /** CHAT_TYPE_SYSTEM_MESSAGE - 系统消息，如时间提示 */
@@ -91,7 +91,7 @@ export interface GetChatTipsParam {
   /** 频道id */
   channelId: string;
   /** 已读消息的最大id */
-  maxReadedMessageId: number;
+  maxReadMessageId: number;
 }
 
 export interface ChatTipsInfo {
@@ -117,7 +117,7 @@ export interface ChatSenderInfo {
 export interface ChatContentInfo {
   /** 消息类型 */
   type: ContentType;
-  /** 消息本身,当 ContentType 为 TEXT: 文本字符串， PICTURE/AUDIO/VIDIO: 媒体文件url，CARD/CUSTOM: 序列化json字符串 */
+  /** 消息本身,当 ContentType 为 TEXT: 文本字符串， PICTURE/AUDIO/VIDEO: 媒体文件url，CARD/CUSTOM: 序列化json字符串 */
   content: string;
 }
 

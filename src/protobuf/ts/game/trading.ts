@@ -151,10 +151,10 @@ export interface SGetMyMarkedGoods {
 }
 
 /** 获取商品推荐价格 */
-export interface CGetRecommandPrice {
+export interface CGetRecommendPrice {
   itemId: number;
 }
 
-export interface SGetRecommandPrice {
+export interface SGetRecommendPrice {
   price: number;
 }

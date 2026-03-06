@@ -388,27 +388,27 @@ $root.common = (function() {
      * GuildEventType enum.
      * @name common.GuildEventType
      * @enum {number}
-     * @property {number} GUILD_EVVENT_UNKNOWN=0 GUILD_EVVENT_UNKNOWN value
-     * @property {number} GUILD_EVVENT_CREATE=1 GUILD_EVVENT_CREATE value
-     * @property {number} GUILD_EVVENT_JOIN=2 GUILD_EVVENT_JOIN value
-     * @property {number} GUILD_EVVENT_LEAVE=3 GUILD_EVVENT_LEAVE value
-     * @property {number} GUILD_EVVENT_KICK=4 GUILD_EVVENT_KICK value
-     * @property {number} GUILD_EVVENT_MODIFY_NOTICE=5 GUILD_EVVENT_MODIFY_NOTICE value
-     * @property {number} GUILD_EVVENT_MODIFY_FLAG=6 GUILD_EVVENT_MODIFY_FLAG value
-     * @property {number} GUILD_EVVENT_MODIFY_NAME=7 GUILD_EVVENT_MODIFY_NAME value
-     * @property {number} GUILD_EVVENT_TRANSFER=8 GUILD_EVVENT_TRANSFER value
+     * @property {number} GUILD_EVENT_UNKNOWN=0 GUILD_EVENT_UNKNOWN value
+     * @property {number} GUILD_EVENT_CREATE=1 GUILD_EVENT_CREATE value
+     * @property {number} GUILD_EVENT_JOIN=2 GUILD_EVENT_JOIN value
+     * @property {number} GUILD_EVENT_LEAVE=3 GUILD_EVENT_LEAVE value
+     * @property {number} GUILD_EVENT_KICK=4 GUILD_EVENT_KICK value
+     * @property {number} GUILD_EVENT_MODIFY_NOTICE=5 GUILD_EVENT_MODIFY_NOTICE value
+     * @property {number} GUILD_EVENT_MODIFY_FLAG=6 GUILD_EVENT_MODIFY_FLAG value
+     * @property {number} GUILD_EVENT_MODIFY_NAME=7 GUILD_EVENT_MODIFY_NAME value
+     * @property {number} GUILD_EVENT_TRANSFER=8 GUILD_EVENT_TRANSFER value
      */
     common.GuildEventType = (function() {
         var valuesById = {}, values = Object.create(valuesById);
-        values[valuesById[0] = "GUILD_EVVENT_UNKNOWN"] = 0;
-        values[valuesById[1] = "GUILD_EVVENT_CREATE"] = 1;
-        values[valuesById[2] = "GUILD_EVVENT_JOIN"] = 2;
-        values[valuesById[3] = "GUILD_EVVENT_LEAVE"] = 3;
-        values[valuesById[4] = "GUILD_EVVENT_KICK"] = 4;
-        values[valuesById[5] = "GUILD_EVVENT_MODIFY_NOTICE"] = 5;
-        values[valuesById[6] = "GUILD_EVVENT_MODIFY_FLAG"] = 6;
-        values[valuesById[7] = "GUILD_EVVENT_MODIFY_NAME"] = 7;
-        values[valuesById[8] = "GUILD_EVVENT_TRANSFER"] = 8;
+        values[valuesById[0] = "GUILD_EVENT_UNKNOWN"] = 0;
+        values[valuesById[1] = "GUILD_EVENT_CREATE"] = 1;
+        values[valuesById[2] = "GUILD_EVENT_JOIN"] = 2;
+        values[valuesById[3] = "GUILD_EVENT_LEAVE"] = 3;
+        values[valuesById[4] = "GUILD_EVENT_KICK"] = 4;
+        values[valuesById[5] = "GUILD_EVENT_MODIFY_NOTICE"] = 5;
+        values[valuesById[6] = "GUILD_EVENT_MODIFY_FLAG"] = 6;
+        values[valuesById[7] = "GUILD_EVENT_MODIFY_NAME"] = 7;
+        values[valuesById[8] = "GUILD_EVENT_TRANSFER"] = 8;
         return values;
     })();
 

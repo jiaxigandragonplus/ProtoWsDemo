@@ -63,8 +63,8 @@ enum BuffEffectType {
     EFFECT_TYPE_UNKNOWN = 0;
     BAN_MOVE = 1;   // 禁止移动
     BAN_ATTACK = 2; // 禁止攻击
-    IMMNUE_CONTROL = 3; // 免疫控制
-    IMMNUE_DAMAGE = 4;  // 免疫伤害
+    IMMUNE_CONTROL = 3; // 免疫控制
+    IMMUNE_DAMAGE = 4;  // 免疫伤害
     INVINCIBLE = 5; // 无敌
 }
 
@@ -81,7 +81,7 @@ enum DamageAttrIndex {
     CritPer = 2;
     BlockPer = 3;
     DodgePer = 4;
-    CrtiDmgPer = 5;
+    CritDmgPer = 5;
     SuckBloodPer = 6;
 }
 
@@ -122,7 +122,7 @@ message Command {
 }
 
 // 弃牌参数
-message RemoveCardCommond {
+message RemoveCardCommand {
     int32 instId = 1; // 卡牌实例id
 }
 

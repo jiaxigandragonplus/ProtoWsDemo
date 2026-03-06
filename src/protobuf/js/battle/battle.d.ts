@@ -203,91 +203,91 @@ export namespace battle {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a CResLoadCommpelte. */
-    interface ICResLoadCommpelte {
+    /** Properties of a CResLoadComplete. */
+    interface ICResLoadComplete {
     }
 
-    /** Represents a CResLoadCommpelte. */
-    class CResLoadCommpelte implements ICResLoadCommpelte {
+    /** Represents a CResLoadComplete. */
+    class CResLoadComplete implements ICResLoadComplete {
 
         /**
-         * Constructs a new CResLoadCommpelte.
+         * Constructs a new CResLoadComplete.
          * @param [properties] Properties to set
          */
-        constructor(properties?: battle.ICResLoadCommpelte);
+        constructor(properties?: battle.ICResLoadComplete);
 
         /**
-         * Creates a new CResLoadCommpelte instance using the specified properties.
+         * Creates a new CResLoadComplete instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns CResLoadCommpelte instance
+         * @returns CResLoadComplete instance
          */
-        public static create(properties?: battle.ICResLoadCommpelte): battle.CResLoadCommpelte;
+        public static create(properties?: battle.ICResLoadComplete): battle.CResLoadComplete;
 
         /**
-         * Encodes the specified CResLoadCommpelte message. Does not implicitly {@link battle.CResLoadCommpelte.verify|verify} messages.
-         * @param message CResLoadCommpelte message or plain object to encode
+         * Encodes the specified CResLoadComplete message. Does not implicitly {@link battle.CResLoadComplete.verify|verify} messages.
+         * @param message CResLoadComplete message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: battle.ICResLoadCommpelte, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: battle.ICResLoadComplete, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified CResLoadCommpelte message, length delimited. Does not implicitly {@link battle.CResLoadCommpelte.verify|verify} messages.
-         * @param message CResLoadCommpelte message or plain object to encode
+         * Encodes the specified CResLoadComplete message, length delimited. Does not implicitly {@link battle.CResLoadComplete.verify|verify} messages.
+         * @param message CResLoadComplete message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: battle.ICResLoadCommpelte, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: battle.ICResLoadComplete, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a CResLoadCommpelte message from the specified reader or buffer.
+         * Decodes a CResLoadComplete message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns CResLoadCommpelte
+         * @returns CResLoadComplete
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): battle.CResLoadCommpelte;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): battle.CResLoadComplete;
 
         /**
-         * Decodes a CResLoadCommpelte message from the specified reader or buffer, length delimited.
+         * Decodes a CResLoadComplete message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns CResLoadCommpelte
+         * @returns CResLoadComplete
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): battle.CResLoadCommpelte;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): battle.CResLoadComplete;
 
         /**
-         * Verifies a CResLoadCommpelte message.
+         * Verifies a CResLoadComplete message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a CResLoadCommpelte message from a plain object. Also converts values to their respective internal types.
+         * Creates a CResLoadComplete message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns CResLoadCommpelte
+         * @returns CResLoadComplete
          */
-        public static fromObject(object: { [k: string]: any }): battle.CResLoadCommpelte;
+        public static fromObject(object: { [k: string]: any }): battle.CResLoadComplete;
 
         /**
-         * Creates a plain object from a CResLoadCommpelte message. Also converts values to other types if specified.
-         * @param message CResLoadCommpelte
+         * Creates a plain object from a CResLoadComplete message. Also converts values to other types if specified.
+         * @param message CResLoadComplete
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: battle.CResLoadCommpelte, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: battle.CResLoadComplete, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this CResLoadCommpelte to JSON.
+         * Converts this CResLoadComplete to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for CResLoadCommpelte
+         * Gets the default type url for CResLoadComplete
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */
@@ -2254,8 +2254,8 @@ export namespace common {
         EFFECT_TYPE_UNKNOWN = 0,
         BAN_MOVE = 1,
         BAN_ATTACK = 2,
-        IMMNUE_CONTROL = 3,
-        IMMNUE_DAMAGE = 4,
+        IMMUNE_CONTROL = 3,
+        IMMUNE_DAMAGE = 4,
         INVINCIBLE = 5
     }
 
@@ -2271,7 +2271,7 @@ export namespace common {
         CritPer = 2,
         BlockPer = 3,
         DodgePer = 4,
-        CrtiDmgPer = 5,
+        CritDmgPer = 5,
         SuckBloodPer = 6
     }
 
@@ -2625,97 +2625,97 @@ export namespace common {
         public static getTypeUrl(typeUrlPrefix?: string): string;
     }
 
-    /** Properties of a RemoveCardCommond. */
-    interface IRemoveCardCommond {
+    /** Properties of a RemoveCardCommand. */
+    interface IRemoveCardCommand {
 
-        /** RemoveCardCommond instId */
+        /** RemoveCardCommand instId */
         instId?: (number|null);
     }
 
-    /** Represents a RemoveCardCommond. */
-    class RemoveCardCommond implements IRemoveCardCommond {
+    /** Represents a RemoveCardCommand. */
+    class RemoveCardCommand implements IRemoveCardCommand {
 
         /**
-         * Constructs a new RemoveCardCommond.
+         * Constructs a new RemoveCardCommand.
          * @param [properties] Properties to set
          */
-        constructor(properties?: common.IRemoveCardCommond);
+        constructor(properties?: common.IRemoveCardCommand);
 
-        /** RemoveCardCommond instId. */
+        /** RemoveCardCommand instId. */
         public instId: number;
 
         /**
-         * Creates a new RemoveCardCommond instance using the specified properties.
+         * Creates a new RemoveCardCommand instance using the specified properties.
          * @param [properties] Properties to set
-         * @returns RemoveCardCommond instance
+         * @returns RemoveCardCommand instance
          */
-        public static create(properties?: common.IRemoveCardCommond): common.RemoveCardCommond;
+        public static create(properties?: common.IRemoveCardCommand): common.RemoveCardCommand;
 
         /**
-         * Encodes the specified RemoveCardCommond message. Does not implicitly {@link common.RemoveCardCommond.verify|verify} messages.
-         * @param message RemoveCardCommond message or plain object to encode
+         * Encodes the specified RemoveCardCommand message. Does not implicitly {@link common.RemoveCardCommand.verify|verify} messages.
+         * @param message RemoveCardCommand message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: common.IRemoveCardCommond, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: common.IRemoveCardCommand, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified RemoveCardCommond message, length delimited. Does not implicitly {@link common.RemoveCardCommond.verify|verify} messages.
-         * @param message RemoveCardCommond message or plain object to encode
+         * Encodes the specified RemoveCardCommand message, length delimited. Does not implicitly {@link common.RemoveCardCommand.verify|verify} messages.
+         * @param message RemoveCardCommand message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: common.IRemoveCardCommond, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: common.IRemoveCardCommand, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Decodes a RemoveCardCommond message from the specified reader or buffer.
+         * Decodes a RemoveCardCommand message from the specified reader or buffer.
          * @param reader Reader or buffer to decode from
          * @param [length] Message length if known beforehand
-         * @returns RemoveCardCommond
+         * @returns RemoveCardCommand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): common.RemoveCardCommond;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): common.RemoveCardCommand;
 
         /**
-         * Decodes a RemoveCardCommond message from the specified reader or buffer, length delimited.
+         * Decodes a RemoveCardCommand message from the specified reader or buffer, length delimited.
          * @param reader Reader or buffer to decode from
-         * @returns RemoveCardCommond
+         * @returns RemoveCardCommand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): common.RemoveCardCommond;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): common.RemoveCardCommand;
 
         /**
-         * Verifies a RemoveCardCommond message.
+         * Verifies a RemoveCardCommand message.
          * @param message Plain object to verify
          * @returns `null` if valid, otherwise the reason why it is not
          */
         public static verify(message: { [k: string]: any }): (string|null);
 
         /**
-         * Creates a RemoveCardCommond message from a plain object. Also converts values to their respective internal types.
+         * Creates a RemoveCardCommand message from a plain object. Also converts values to their respective internal types.
          * @param object Plain object
-         * @returns RemoveCardCommond
+         * @returns RemoveCardCommand
          */
-        public static fromObject(object: { [k: string]: any }): common.RemoveCardCommond;
+        public static fromObject(object: { [k: string]: any }): common.RemoveCardCommand;
 
         /**
-         * Creates a plain object from a RemoveCardCommond message. Also converts values to other types if specified.
-         * @param message RemoveCardCommond
+         * Creates a plain object from a RemoveCardCommand message. Also converts values to other types if specified.
+         * @param message RemoveCardCommand
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: common.RemoveCardCommond, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: common.RemoveCardCommand, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this RemoveCardCommond to JSON.
+         * Converts this RemoveCardCommand to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
 
         /**
-         * Gets the default type url for RemoveCardCommond
+         * Gets the default type url for RemoveCardCommand
          * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns The default type url
          */

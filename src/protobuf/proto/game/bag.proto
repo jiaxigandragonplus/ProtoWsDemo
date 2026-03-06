@@ -33,7 +33,7 @@ message SExtendEquipBag {
 
 // 分解装备
 message CDecomposeEquip {
-    repeated int64 eids = 1;
+    repeated int64 equipIds = 1;
     int32 quality = 2;
 }
 message SDecomposeEquip {

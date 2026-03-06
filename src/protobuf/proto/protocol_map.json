@@ -3,9 +3,9 @@
         "method": "POST",
         "uri": "/battle/battle/send_command"
     },
-    "CResLoadCommpelte": {
+    "CResLoadComplete": {
         "method": "POST",
-        "uri": "/battle/battle/res_load_commpelte"
+        "uri": "/battle/battle/res_load_complete"
     },
     "CRemoveCard": {
         "method": "POST",
@@ -403,21 +403,21 @@
         "method": "POST",
         "uri": "/game/trading/get_my_marked_goods"
     },
-    "CGetRecommandPrice": {
+    "CGetRecommendPrice": {
         "method": "POST",
-        "uri": "/game/trading/get_recommand_price"
+        "uri": "/game/trading/get_recommend_price"
     },
-    "CUnlockTreatureBox": {
+    "CUnlockTreasureBox": {
         "method": "POST",
-        "uri": "/game/treasure/unlock_treature_box"
+        "uri": "/game/treasure/unlock_treasure_box"
     },
-    "COpenTreatureBox": {
+    "COpenTreasureBox": {
         "method": "POST",
-        "uri": "/game/treasure/open_treature_box"
+        "uri": "/game/treasure/open_treasure_box"
     },
-    "CSpeedUpTreatureBox": {
+    "CSpeedUpTreasureBox": {
         "method": "POST",
-        "uri": "/game/treasure/speed_up_treature_box"
+        "uri": "/game/treasure/speed_up_treasure_box"
     },
     "CKickPlayer": {
         "method": "POST",

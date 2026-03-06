@@ -112,9 +112,9 @@ message SGetMyMarkedGoods {
 }
 
 // 获取商品推荐价格
-message CGetRecommandPrice {
+message CGetRecommendPrice {
     int32 item_id = 1;
 }
-message SGetRecommandPrice {
+message SGetRecommendPrice {
     int32 price = 1;
 }

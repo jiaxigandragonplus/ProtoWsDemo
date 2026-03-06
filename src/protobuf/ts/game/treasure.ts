@@ -9,12 +9,12 @@ import type { Reward } from "../common/item_data";
 
 
 /** 解锁宝箱 */
-export interface CUnlockTreatureBox {
+export interface CUnlockTreasureBox {
   bid: number;
   useCash: boolean;
 }
 
-export interface SUnlockTreatureBox {
+export interface SUnlockTreasureBox {
   /** 开始时间 */
   time: number;
   awards: Reward[];
@@ -22,23 +22,23 @@ export interface SUnlockTreatureBox {
 }
 
 /** 开启宝箱 */
-export interface COpenTreatureBox {
+export interface COpenTreasureBox {
   bid: number;
   useCash: boolean;
 }
 
-export interface SOpenTreatureBox {
+export interface SOpenTreasureBox {
   awards: Reward[];
   costs: Reward[];
 }
 
 /** 宝箱加速 */
-export interface CSpeedUpTreatureBox {
+export interface CSpeedUpTreasureBox {
   /** 宝箱实例id */
   bid: number;
 }
 
-export interface SSpeedUpTreatureBox {
+export interface SSpeedUpTreasureBox {
   boxId: number;
   time: number;
 }

@@ -65,7 +65,7 @@ export interface SaleItemInfo {
   /** 收藏数 */
   markCount: number;
   /** 卖家id */
-  salerId: string;
+  sellerId: string;
   /** 公示时间 */
   publicityTime: number;
 }

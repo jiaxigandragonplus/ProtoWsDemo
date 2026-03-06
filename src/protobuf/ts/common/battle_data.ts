@@ -100,10 +100,10 @@ export enum BuffEffectType {
   BAN_MOVE = 1,
   /** BAN_ATTACK - 禁止攻击 */
   BAN_ATTACK = 2,
-  /** IMMNUE_CONTROL - 免疫控制 */
-  IMMNUE_CONTROL = 3,
-  /** IMMNUE_DAMAGE - 免疫伤害 */
-  IMMNUE_DAMAGE = 4,
+  /** IMMUNE_CONTROL - 免疫控制 */
+  IMMUNE_CONTROL = 3,
+  /** IMMUNE_DAMAGE - 免疫伤害 */
+  IMMUNE_DAMAGE = 4,
   /** INVINCIBLE - 无敌 */
   INVINCIBLE = 5,
   UNRECOGNIZED = -1,
@@ -126,7 +126,7 @@ export enum DamageAttrIndex {
   CritPer = 2,
   BlockPer = 3,
   DodgePer = 4,
-  CrtiDmgPer = 5,
+  CritDmgPer = 5,
   SuckBloodPer = 6,
   UNRECOGNIZED = -1,
 }
@@ -181,7 +181,7 @@ export interface Command {
 }
 
 /** 弃牌参数 */
-export interface RemoveCardCommond {
+export interface RemoveCardCommand {
   /** 卡牌实例id */
   instId: number;
 }

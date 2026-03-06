@@ -40,7 +40,7 @@ export interface SExtendEquipBag {
 
 /** 分解装备 */
 export interface CDecomposeEquip {
-  eids: number[];
+  equipIds: number[];
   quality: number;
 }
 
