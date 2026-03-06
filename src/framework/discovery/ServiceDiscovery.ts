@@ -53,6 +53,7 @@ export class ServiceDiscovery {
   private discoveryTimer: NodeJS.Timeout | null = null;
   private isRunning: boolean = false;
   private currentInstances: ServiceInstance[] = [];
+  private instanceMap: Map<string, ServiceInstance> = new Map();
 
   // Redis key 前缀
   private static readonly SERVICE_KEY_PREFIX = 'services';
@@ -246,7 +247,18 @@ export class ServiceDiscovery {
         `服务列表更新：${this.config.serviceName}, 实例数：${validInstances.length}`,
         'ServiceDiscovery'
       );
+
+      this.instanceMap.clear();
+      for (const instance of validInstances) {
+        const instanceKey = instance.name + instance.id;
+        this.instanceMap.set(instanceKey, instance);
+      }
     }
+  }
+
+  getService(name: string, id: number) : ServiceInstance | null {
+    const instanceKey = name + id;
+    return this.instanceMap.get(instanceKey) || null;
   }
 
   /**

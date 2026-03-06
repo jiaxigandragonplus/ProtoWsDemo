@@ -230,6 +230,33 @@ export class Framework {
     this.isInitialized = false;
     this.logger.info('框架已关闭', 'Framework');
   }
+
+  // 发送消息
+  public async sendMessage(serverType: string, id: number, message: any): Promise<void> {
+    let client = this.networkManager.getClient(serverType, id);
+    
+    // 客户端不存在或连接已断开
+    if (!client || !client.isSocketConnected()) {
+      // 创建连接
+      const serviceInfo = this.serviceDiscovery.getService(serverType, id);
+      if (!serviceInfo) {
+        this.logger.warn(`服务器实例 ${serverType} : ${id} 不存在`, 'Framework');
+        return;
+      }
+
+      client = await this.networkManager.createClient(serverType, id, {
+        url: `ws://${serviceInfo.host}:${serviceInfo.port}`,
+      });
+    }
+
+    // 将消息对象序列化为 JSON 字符串
+    const messageStr = typeof message === 'string' ? message : JSON.stringify(message);
+    const success = client.send(messageStr);
+    
+    if (!success) {
+      this.logger.warn(`发送消息失败：${serverType}:${id}`, 'Framework');
+    }
+  }
 }
 
 /**
