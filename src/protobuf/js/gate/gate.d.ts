@@ -797,4 +797,12 @@ export namespace common {
         GMKick = 3,
         Banned = 4
     }
+
+    /** ServerType enum. */
+    enum ServerType {
+        ServerTypeUnknown = 0,
+        ServerTypeGate = 1,
+        ServerTypeGame = 2,
+        ServerTypeGuild = 3
+    }
 }

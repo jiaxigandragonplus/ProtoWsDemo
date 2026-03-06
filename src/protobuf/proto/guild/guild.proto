@@ -8,5 +8,5 @@ message CGetGuildList {
 
 }
 message SGuildList {
-    repeated common.GuildData guilds = 1;
+    
 }

@@ -16,7 +16,7 @@ message CLoginGame {
 
 }
 message SLoginGame {
-    UserProfile user_profile = 1;
+    common.UserProfile user_profile = 1;
 }
 
 // 登出
@@ -105,7 +105,7 @@ message CSwitchHeroTeam {
 }
 message SSwitchHeroTeam {
     int32 cur_hero_team = 1;
-    map<int32, HeroTeam> hero_teams = 2;
+    map<int32, common.HeroTeam> hero_teams = 2;
 }
 
 // 更新引导

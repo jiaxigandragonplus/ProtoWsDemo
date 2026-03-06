@@ -21,3 +21,12 @@ export enum KickPlayerReason {
   Banned = 4,
   UNRECOGNIZED = -1,
 }
+
+/** 服务器类型 */
+export enum ServerType {
+  ServerTypeUnknown = 0,
+  ServerTypeGate = 1,
+  ServerTypeGame = 2,
+  ServerTypeGuild = 3,
+  UNRECOGNIZED = -1,
+}

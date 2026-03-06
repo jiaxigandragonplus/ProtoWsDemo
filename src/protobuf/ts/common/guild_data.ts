@@ -7,7 +7,165 @@
 /* eslint-disable */
 
 
-export interface GuildData {
-  id: number;
+export enum GuildEventType {
+  GUILD_EVVENT_UNKNOWN = 0,
+  GUILD_EVVENT_CREATE = 1,
+  GUILD_EVVENT_JOIN = 2,
+  GUILD_EVVENT_LEAVE = 3,
+  GUILD_EVVENT_KICK = 4,
+  GUILD_EVVENT_MODIFY_NOTICE = 5,
+  GUILD_EVVENT_MODIFY_FLAG = 6,
+  GUILD_EVVENT_MODIFY_NAME = 7,
+  GUILD_EVVENT_TRANSFER = 8,
+  UNRECOGNIZED = -1,
+}
+
+/** 成员类型 */
+export enum GuildMemberType {
+  /** GUILD_ROLE_NORMAL - 普通成员 */
+  GUILD_ROLE_NORMAL = 0,
+  /** GUILD_ROLE_ELITE - 精英成员 */
+  GUILD_ROLE_ELITE = 1,
+  /** GUILD_ROLE_DEPUTY - 副会长 */
+  GUILD_ROLE_DEPUTY = 2,
+  /** GUILD_ROLE_LEADER - 会长 */
+  GUILD_ROLE_LEADER = 3,
+  UNRECOGNIZED = -1,
+}
+
+/** 权限类型 */
+export enum GuildPermissionType {
+  GUILD_PERMISSION_UNKNOWN = 0,
+  /** GUILD_PERMISSION_HANDLE_APPLY - 处理申请 */
+  GUILD_PERMISSION_HANDLE_APPLY = 1,
+  /** GUILD_PERMISSION_LEAVE - 离开公会 */
+  GUILD_PERMISSION_LEAVE = 2,
+  /** GUILD_PERMISSION_OPEN_SETTING - 打开设置界面 */
+  GUILD_PERMISSION_OPEN_SETTING = 3,
+  /** GUILD_PERMISSION_MODIFY_NAME - 更改名称 */
+  GUILD_PERMISSION_MODIFY_NAME = 4,
+  /** GUILD_PERMISSION_MODIFY_FLAG - 更改旗帜 */
+  GUILD_PERMISSION_MODIFY_FLAG = 5,
+  /** GUILD_PERMISSION_MODIFY_NOTICE - 更改公告 */
+  GUILD_PERMISSION_MODIFY_NOTICE = 6,
+  /** GUILD_PERMISSION_SET_DUTY - 职务任免 */
+  GUILD_PERMISSION_SET_DUTY = 7,
+  /** GUILD_PERMISSION_TRANSFER_LEADER - 转让会长 */
+  GUILD_PERMISSION_TRANSFER_LEADER = 8,
+  UNRECOGNIZED = -1,
+}
+
+/** 创建者信息 */
+export interface GuildUserInfo {
+  /** 玩家id */
+  uid: string;
+  /** 玩家名字 */
   name: string;
+  /** 头像 */
+  avatar: number;
+  /** 国家 */
+  country: string;
+  /** 等级 */
+  level: number;
+  /** 杯数 */
+  cups: number;
+}
+
+export interface GuildMemberInfo {
+  /** 玩家id */
+  uid: string;
+  /** 名字 */
+  name: string;
+  /** 头像 */
+  avatar: string;
+  /** 等级 */
+  level: number;
+  /** 国家 */
+  country: string;
+  /** 杯数 */
+  cups: number;
+  /** 成员职位 */
+  role: GuildMemberType;
+  /** 加入时间 */
+  joinTime: number;
+  /** 下线时间，0表示在线，非0表示下线时间点 */
+  offlineTime: number;
+  /** 每周贡献 */
+  weekContribute: number;
+  /** 扩展数据 */
+  extra: string;
+}
+
+export interface GuildApplyInfo {
+  /** 玩家id */
+  uid: string;
+  /** 名字 */
+  name: string;
+  /** 头像 */
+  avatar: number;
+  /** 等级 */
+  level: number;
+  /** 国家 */
+  country: string;
+  /** 申请信息 */
+  msg: string;
+  /** 申请时间 */
+  applyTime: number;
+  /** 杯数 */
+  cups: number;
+}
+
+/** 公会基础数据 */
+export interface GuildSimpleInfo {
+  /** 公会id */
+  gid: string;
+  /** 公会名字 */
+  name: string;
+  /** 公会旗帜 */
+  flag: number;
+  /** 位置 */
+  location: string;
+  /** 加入类型：可直接加入，需要审批，不可加入等 */
+  joinType: number;
+  /** 加入限制 */
+  requireCups: number;
+}
+
+/** 公会信息 */
+export interface GuildInfo {
+  /** 公会id */
+  gid: string;
+  /** 公会名字 */
+  name: string;
+  /** 公会旗帜 */
+  flag: number;
+  /** 位置 */
+  location: string;
+  /** 加入类型：可直接加入，需要审批，不可加入等 */
+  joinType: number;
+  /** 加入限制 */
+  requireCups: number;
+  /** 公告 */
+  notice: string;
+  /** 每周贡献 */
+  weekContribute: number;
+  /** 所有成员加起来的杯数 */
+  totalCups: number;
+  /** 离线时间 */
+  offlineTimestamp: number;
+  /** 会长id */
+  leaderId: string;
+  /** 成员列表 */
+  members: { [key: string]: GuildMemberInfo };
+}
+
+export interface GuildInfo_MembersEntry {
+  key: string;
+  value: GuildMemberInfo | undefined;
+}
+
+/** 公会日志信息 */
+export interface GuildLogInfo {
+  event: number;
+  params: string[];
 }

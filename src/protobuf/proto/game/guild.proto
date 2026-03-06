@@ -10,7 +10,7 @@ message CGetGuild {
 }
 
 message SGetGuild {
-    GuildInfo info = 1;
+    common.GuildInfo info = 1;
 }
 
 // 获取公会列表
@@ -20,7 +20,7 @@ message CGetGuildList {
 }
 
 message SGetGuildList {
-    repeated GuildSimpleInfo list = 1;
+    repeated common.GuildSimpleInfo list = 1;
 }
 
 // 创建公会
@@ -33,7 +33,7 @@ message CCreateGuild {
 }
 
 message SCreateGuild {
-    GuildInfo info = 1;
+    common.GuildInfo info = 1;
 }
 
 // 离开公会
@@ -48,7 +48,7 @@ message SLeaveGuild {
 // 申请加入
 message CApplyJoin {
     string gid = 1;
-    GuildApplyInfo apply = 2;
+    common.GuildApplyInfo apply = 2;
 }
 
 message SApplyJoin {
@@ -61,7 +61,7 @@ message CGetGuildApplyList {
 }
 
 message SGetGuildApplyList {
-    repeated GuildApplyInfo list = 1;
+    repeated common.GuildApplyInfo list = 1;
 }
 
 // 回复申请

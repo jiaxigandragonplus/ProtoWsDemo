@@ -8,25 +8,6 @@
 import type { KickPlayerReason } from "../common/enum";
 
 
-/** 登录协议 */
-export interface CLogin {
-  name: string;
-  password: string;
-}
-
-export interface SLogin {
-  playerId: number;
-}
-
-/** 回显协议 */
-export interface CEcho {
-  msg: string;
-}
-
-export interface SEcho {
-  msg: string;
-}
-
 /** 踢出指定玩家 */
 export interface CKickPlayers {
   playerIds: number[];

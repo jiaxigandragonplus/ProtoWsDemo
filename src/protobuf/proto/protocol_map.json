@@ -1,11 +1,203 @@
 {
-    "CLogin": {
+    "CSendCommand": {
         "method": "POST",
-        "uri": "/game/game/login"
+        "uri": "/battle/battle/send_command"
+    },
+    "CResLoadCommpelte": {
+        "method": "POST",
+        "uri": "/battle/battle/res_load_commpelte"
+    },
+    "CRemoveCard": {
+        "method": "POST",
+        "uri": "/battle/battle/remove_card"
+    },
+    "CBattleOver": {
+        "method": "POST",
+        "uri": "/battle/battle/battle_over"
+    },
+    "CDrawCard": {
+        "method": "POST",
+        "uri": "/battle/battle/draw_card"
+    },
+    "CGetLocalWinAwards": {
+        "method": "POST",
+        "uri": "/battle/battle/get_local_win_awards"
+    },
+    "CCheckIsInBattle": {
+        "method": "POST",
+        "uri": "/battle/battle/check_is_in_battle"
+    },
+    "CRequestFrameData": {
+        "method": "POST",
+        "uri": "/battle/battle/request_frame_data"
+    },
+    "CSendMessage": {
+        "method": "POST",
+        "uri": "/chat/chat/send_message"
+    },
+    "CGetChatLog": {
+        "method": "POST",
+        "uri": "/chat/chat/get_chat_log"
+    },
+    "CGetChatTips": {
+        "method": "POST",
+        "uri": "/chat/chat/get_chat_tips"
+    },
+    "CStartExplore": {
+        "method": "POST",
+        "uri": "/game/adventure/start_explore"
+    },
+    "CStopExplore": {
+        "method": "POST",
+        "uri": "/game/adventure/stop_explore"
+    },
+    "CGotoArea": {
+        "method": "POST",
+        "uri": "/game/adventure/goto_area"
+    },
+    "CTriggerEvent": {
+        "method": "POST",
+        "uri": "/game/adventure/trigger_event"
+    },
+    "CSendHero": {
+        "method": "POST",
+        "uri": "/game/adventure/send_hero"
+    },
+    "CSetTools": {
+        "method": "POST",
+        "uri": "/game/adventure/set_tools"
+    },
+    "CClaimOnceAward": {
+        "method": "POST",
+        "uri": "/game/adventure/claim_once_award"
+    },
+    "CSwitchTeam": {
+        "method": "POST",
+        "uri": "/game/adventure/switch_team"
+    },
+    "CBuyTools": {
+        "method": "POST",
+        "uri": "/game/adventure/buy_tools"
+    },
+    "CUpgradeArea": {
+        "method": "POST",
+        "uri": "/game/adventure/upgrade_area"
+    },
+    "CClaimAreaUpgradeAward": {
+        "method": "POST",
+        "uri": "/game/adventure/claim_area_upgrade_award"
+    },
+    "CUseBagItem": {
+        "method": "POST",
+        "uri": "/game/bag/use_bag_item"
+    },
+    "CSellBagItem": {
+        "method": "POST",
+        "uri": "/game/bag/sell_bag_item"
+    },
+    "CExtendEquipBag": {
+        "method": "POST",
+        "uri": "/game/bag/extend_equip_bag"
+    },
+    "CDecomposeEquip": {
+        "method": "POST",
+        "uri": "/game/bag/decompose_equip"
     },
     "CEcho": {
         "method": "POST",
-        "uri": "/game/game/echo"
+        "uri": "/game/debug/echo"
+    },
+    "CDebugAddEquip": {
+        "method": "POST",
+        "uri": "/game/debug/debug_add_equip"
+    },
+    "CDebugAddItem": {
+        "method": "POST",
+        "uri": "/game/debug/debug_add_item"
+    },
+    "CDebugAddCard": {
+        "method": "POST",
+        "uri": "/game/debug/debug_add_card"
+    },
+    "CDebugAddCups": {
+        "method": "POST",
+        "uri": "/game/debug/debug_add_cups"
+    },
+    "CDebugAddExp": {
+        "method": "POST",
+        "uri": "/game/debug/debug_add_exp"
+    },
+    "CDebugAddCash": {
+        "method": "POST",
+        "uri": "/game/debug/debug_add_cash"
+    },
+    "CDebugAddBox": {
+        "method": "POST",
+        "uri": "/game/debug/debug_add_box"
+    },
+    "CDebugAddPages": {
+        "method": "POST",
+        "uri": "/game/debug/debug_add_pages"
+    },
+    "CDebugAddCandy": {
+        "method": "POST",
+        "uri": "/game/debug/debug_add_candy"
+    },
+    "CDebugTriggerEvent": {
+        "method": "POST",
+        "uri": "/game/debug/debug_trigger_event"
+    },
+    "CDebugSetTradingBalance": {
+        "method": "POST",
+        "uri": "/game/debug/debug_set_trading_balance"
+    },
+    "CDebugAddDriftBottle": {
+        "method": "POST",
+        "uri": "/game/debug/debug_add_drift_bottle"
+    },
+    "CDebugAddPuzzlePiece": {
+        "method": "POST",
+        "uri": "/game/debug/debug_add_puzzle_piece"
+    },
+    "CDebugAddCollection": {
+        "method": "POST",
+        "uri": "/game/debug/debug_add_collection"
+    },
+    "CDebugAddAdventureProgress": {
+        "method": "POST",
+        "uri": "/game/debug/debug_add_adventure_progress"
+    },
+    "CClaimFairyThemeReward": {
+        "method": "POST",
+        "uri": "/game/fairy_theme/claim_fairy_theme_reward"
+    },
+    "COpenSpecialFairyTheme": {
+        "method": "POST",
+        "uri": "/game/fairy_theme/open_special_fairy_theme"
+    },
+    "CBuyPages": {
+        "method": "POST",
+        "uri": "/game/fairy_theme/buy_pages"
+    },
+    "CGetFriendList": {
+        "method": "POST",
+        "uri": "/game/friend/get_friend_list"
+    },
+    "CGetApplyList": {
+        "method": "POST",
+        "uri": "/game/friend/get_apply_list"
+    },
+    "CAddFriend": {
+        "method": "POST",
+        "uri": "/game/friend/add_friend"
+    },
+    "CRemoveFriend": {
+        "method": "POST",
+        "uri": "/game/friend/remove_friend"
+    },
+    "CReplyAdd": {
+        "method": "POST",
+        "uri": "/game/friend/reply_add"
     },
     "CKickPlayers": {
         "method": "POST",
@@ -14,6 +206,218 @@
     "CKickAllPlayers": {
         "method": "POST",
         "uri": "/game/game/kick_all_players"
+    },
+    "CGetGuild": {
+        "method": "POST",
+        "uri": "/game/guild/get_guild"
+    },
+    "CGetGuildList": {
+        "method": "POST",
+        "uri": "/game/guild/get_guild_list"
+    },
+    "CCreateGuild": {
+        "method": "POST",
+        "uri": "/game/guild/create_guild"
+    },
+    "CLeaveGuild": {
+        "method": "POST",
+        "uri": "/game/guild/leave_guild"
+    },
+    "CApplyJoin": {
+        "method": "POST",
+        "uri": "/game/guild/apply_join"
+    },
+    "CGetGuildApplyList": {
+        "method": "POST",
+        "uri": "/game/guild/get_guild_apply_list"
+    },
+    "CReplyJoin": {
+        "method": "POST",
+        "uri": "/game/guild/reply_join"
+    },
+    "CKickMember": {
+        "method": "POST",
+        "uri": "/game/guild/kick_member"
+    },
+    "CModifyGuildName": {
+        "method": "POST",
+        "uri": "/game/guild/modify_guild_name"
+    },
+    "CModifyNotice": {
+        "method": "POST",
+        "uri": "/game/guild/modify_notice"
+    },
+    "CModifyFlag": {
+        "method": "POST",
+        "uri": "/game/guild/modify_flag"
+    },
+    "CModifyGuild": {
+        "method": "POST",
+        "uri": "/game/guild/modify_guild"
+    },
+    "CSetMemberType": {
+        "method": "POST",
+        "uri": "/game/guild/set_member_type"
+    },
+    "CTransferLeader": {
+        "method": "POST",
+        "uri": "/game/guild/transfer_leader"
+    },
+    "CClaimLeagueReward": {
+        "method": "POST",
+        "uri": "/game/league/claim_league_reward"
+    },
+    "CHeartBeat": {
+        "method": "POST",
+        "uri": "/game/player/heart_beat"
+    },
+    "CLoginGame": {
+        "method": "POST",
+        "uri": "/game/player/login_game"
+    },
+    "CLogoutGame": {
+        "method": "POST",
+        "uri": "/game/player/logout_game"
+    },
+    "CViewUserInfo": {
+        "method": "POST",
+        "uri": "/game/player/view_user_info"
+    },
+    "CModifyName": {
+        "method": "POST",
+        "uri": "/game/player/modify_name"
+    },
+    "CModifyAvatar": {
+        "method": "POST",
+        "uri": "/game/player/modify_avatar"
+    },
+    "CBindAccount": {
+        "method": "POST",
+        "uri": "/game/player/bind_account"
+    },
+    "CSetFightHero": {
+        "method": "POST",
+        "uri": "/game/player/set_fight_hero"
+    },
+    "CUnsetFightHero": {
+        "method": "POST",
+        "uri": "/game/player/unset_fight_hero"
+    },
+    "CUpgradeHero": {
+        "method": "POST",
+        "uri": "/game/player/upgrade_hero"
+    },
+    "CChangeHeroSkin": {
+        "method": "POST",
+        "uri": "/game/player/change_hero_skin"
+    },
+    "CSwitchHeroTeam": {
+        "method": "POST",
+        "uri": "/game/player/switch_hero_team"
+    },
+    "CUpdateGuide": {
+        "method": "POST",
+        "uri": "/game/player/update_guide"
+    },
+    "CEquipDiyFlag": {
+        "method": "POST",
+        "uri": "/game/player/equip_diy_flag"
+    },
+    "CSetUserData": {
+        "method": "POST",
+        "uri": "/game/player/set_user_data"
+    },
+    "CGetLastWinData": {
+        "method": "POST",
+        "uri": "/game/replay/get_last_win_data"
+    },
+    "CGetReplayList": {
+        "method": "POST",
+        "uri": "/game/replay/get_replay_list"
+    },
+    "CGetReplay": {
+        "method": "POST",
+        "uri": "/game/replay/get_replay"
+    },
+    "COpenTaskBox": {
+        "method": "POST",
+        "uri": "/game/task/open_task_box"
+    },
+    "CClaimTaskFreeAward": {
+        "method": "POST",
+        "uri": "/game/task/claim_task_free_award"
+    },
+    "CFinishTask": {
+        "method": "POST",
+        "uri": "/game/task/finish_task"
+    },
+    "CRefreshTask": {
+        "method": "POST",
+        "uri": "/game/task/refresh_task"
+    },
+    "CPutOnSale": {
+        "method": "POST",
+        "uri": "/game/trading/put_on_sale"
+    },
+    "CTakeSaleOff": {
+        "method": "POST",
+        "uri": "/game/trading/take_sale_off"
+    },
+    "CGetMyStorage": {
+        "method": "POST",
+        "uri": "/game/trading/get_my_storage"
+    },
+    "CQuerySales": {
+        "method": "POST",
+        "uri": "/game/trading/query_sales"
+    },
+    "CQueryGoods": {
+        "method": "POST",
+        "uri": "/game/trading/query_goods"
+    },
+    "CGetMySales": {
+        "method": "POST",
+        "uri": "/game/trading/get_my_sales"
+    },
+    "CPurchaseItem": {
+        "method": "POST",
+        "uri": "/game/trading/purchase_item"
+    },
+    "CGetRecords": {
+        "method": "POST",
+        "uri": "/game/trading/get_records"
+    },
+    "CMarkSale": {
+        "method": "POST",
+        "uri": "/game/trading/mark_sale"
+    },
+    "CGetMyMarkedSales": {
+        "method": "POST",
+        "uri": "/game/trading/get_my_marked_sales"
+    },
+    "CMarkGoods": {
+        "method": "POST",
+        "uri": "/game/trading/mark_goods"
+    },
+    "CGetMyMarkedGoods": {
+        "method": "POST",
+        "uri": "/game/trading/get_my_marked_goods"
+    },
+    "CGetRecommandPrice": {
+        "method": "POST",
+        "uri": "/game/trading/get_recommand_price"
+    },
+    "CUnlockTreatureBox": {
+        "method": "POST",
+        "uri": "/game/treasure/unlock_treature_box"
+    },
+    "COpenTreatureBox": {
+        "method": "POST",
+        "uri": "/game/treasure/open_treature_box"
+    },
+    "CSpeedUpTreatureBox": {
+        "method": "POST",
+        "uri": "/game/treasure/speed_up_treature_box"
     },
     "CKickPlayer": {
         "method": "POST",
@@ -34,5 +438,25 @@
     "CGetGuildList": {
         "method": "POST",
         "uri": "/guild/guild/get_guild_list"
+    },
+    "CGetMailList": {
+        "method": "POST",
+        "uri": "/mail/mail/get_mail_list"
+    },
+    "CReadMail": {
+        "method": "POST",
+        "uri": "/mail/mail/read_mail"
+    },
+    "CDeleteMail": {
+        "method": "POST",
+        "uri": "/mail/mail/delete_mail"
+    },
+    "CClaimMail": {
+        "method": "POST",
+        "uri": "/mail/mail/claim_mail"
+    },
+    "CClaimAllMail": {
+        "method": "POST",
+        "uri": "/mail/mail/claim_all_mail"
     }
 }

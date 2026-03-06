@@ -8,7 +8,7 @@ message CGetFriendList {
 
 }
 message SGetFriendList {
-    repeated FriendUserInfo list = 1;
+    repeated common.FriendUserInfo list = 1;
 }
 
 // 获取好友申请列表
@@ -16,13 +16,13 @@ message CGetApplyList {
     
 }
 message SGetApplyList {
-    repeated ApplyInfo list = 1;
+    repeated common.ApplyInfo list = 1;
 }
 
 // 添加好友
 message CAddFriend {
     string target = 1;
-    FriendUserInfo user = 2;    // 申请者的信息
+    common.FriendUserInfo user = 2;    // 申请者的信息
     string extra = 3;           // 扩展信息
 }
 message SAddFriend {
@@ -41,7 +41,7 @@ message SRemoveFriend {
 message CReplyAdd {
     string target = 1;
     uint32 result = 2;  // 1 同意， 2 拒绝
-    FriendUserInfo user = 3;
+    common.FriendUserInfo user = 3;
 }
 message SReplyAdd {
 

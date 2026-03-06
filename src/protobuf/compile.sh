@@ -3,7 +3,7 @@ set -e
 set -x
 
 # Add node_modules/.bin to PATH so protoc can find protoc-gen-ts_proto
-export PATH="$PWD/../node_modules/.bin:$PATH"
+export PATH="$PWD/../../node_modules/.bin:$PATH"
 
 PROTOC="protoc"
 PROTOC_VERSION=$(protoc --version | awk '{print $2}')
@@ -72,10 +72,10 @@ generate_js() {
 
     # Use protobufjs-cli to generate static module
     # -p specifies the include path for resolving imports
-    ../node_modules/.bin/pbjs -t static-module -w commonjs -p proto -o $OUTPUT_DIR/$MODULE.js $INPUT_DIR/*.proto
+    ../../node_modules/.bin/pbjs -t static-module -w commonjs -p proto -o $OUTPUT_DIR/$MODULE.js $INPUT_DIR/*.proto
 
     # Generate TypeScript definitions
-    ../node_modules/.bin/pbts -o $OUTPUT_DIR/$MODULE.d.ts $OUTPUT_DIR/$MODULE.js
+    ../../node_modules/.bin/pbts -o $OUTPUT_DIR/$MODULE.d.ts $OUTPUT_DIR/$MODULE.js
 
     # Flatten directory structure: move files from nested package directories to OUTPUT_DIR
     for nested_dir in $(find "$OUTPUT_DIR" -mindepth 1 -maxdepth 1 -type d); do

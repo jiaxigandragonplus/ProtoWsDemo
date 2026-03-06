@@ -2,14 +2,7 @@
 // versions:
 //   protoc-gen-ts_proto  v2.11.4
 //   protoc               v6.33.0
-// source: guild/guild.proto
+// source: common/account_data.proto
 
 /* eslint-disable */
 
-
-/** 获取公会列表 */
-export interface CGetGuildList {
-}
-
-export interface SGuildList {
-}

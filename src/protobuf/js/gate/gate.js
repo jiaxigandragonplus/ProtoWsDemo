@@ -1797,6 +1797,24 @@ $root.common = (function() {
         return values;
     })();
 
+    /**
+     * ServerType enum.
+     * @name common.ServerType
+     * @enum {number}
+     * @property {number} ServerTypeUnknown=0 ServerTypeUnknown value
+     * @property {number} ServerTypeGate=1 ServerTypeGate value
+     * @property {number} ServerTypeGame=2 ServerTypeGame value
+     * @property {number} ServerTypeGuild=3 ServerTypeGuild value
+     */
+    common.ServerType = (function() {
+        var valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[0] = "ServerTypeUnknown"] = 0;
+        values[valuesById[1] = "ServerTypeGate"] = 1;
+        values[valuesById[2] = "ServerTypeGame"] = 2;
+        values[valuesById[3] = "ServerTypeGuild"] = 3;
+        return values;
+    })();
+
     return common;
 })();
 
