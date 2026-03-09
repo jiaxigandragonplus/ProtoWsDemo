@@ -1,35 +1,40 @@
 import WebSocket from 'ws';
+import { Session, SessionType, SessionConfig } from '../framework/network/Session';
+
+/**
+ * Gate 客户端会话配置接口
+ */
+export interface GateClientSessionConfig extends Omit<SessionConfig, 'type'> {
+    /** Gate 会话 ID */
+    gateSessionId?: number;
+}
 
 /**
  * 客户端会话类
- * 负责管理单个客户端的连接状态和玩家信息
+ * 继承自 Framework 的 Session，负责管理单个客户端的连接状态和玩家信息
  */
-export class ClientSession {
-    private ws: WebSocket;
-    private playerId: number = 0;
-    private isLoggedIn: boolean = false;
-    private name: string = '';
-    private connectTime: number;
-    private gateSessionId: number;
+export class ClientSession extends Session {
+    protected playerId: number = 0;
+    protected isLoggedIn: boolean = false;
+    protected name: string = '';
+    protected gateSessionId: number;
 
-    constructor(ws: WebSocket) {
-        this.ws = ws;
-        this.connectTime = Date.now();
+    constructor(ws: WebSocket, config?: GateClientSessionConfig) {
+        super(ws, {
+            type: SessionType.CLIENT,
+            id: config?.gateSessionId,
+            serverType: 'gate',
+            serverId: config?.serverId,
+        });
+        
         // 生成唯一的 Gate 会话 ID
-        this.gateSessionId = this.generateSessionId();
-    }
-
-    /**
-     * 生成唯一的会话 ID
-     */
-    private generateSessionId(): number {
-        return Math.floor(Date.now() + Math.random() * 1000000);
+        this.gateSessionId = config?.gateSessionId ?? this.getSessionId() as number;
     }
 
     /**
      * 设置登录状态
      */
-    setLogin(playerId: number, name: string): void {
+    public setLogin(playerId: number, name: string): void {
         this.playerId = playerId;
         this.name = name;
         this.isLoggedIn = true;
@@ -38,58 +43,52 @@ export class ClientSession {
     /**
      * 获取玩家 ID
      */
-    getPlayerId(): number {
+    public getPlayerId(): number {
         return this.playerId;
     }
 
     /**
      * 获取 Gate 会话 ID
      */
-    getGateSessionId(): number {
+    public getGateSessionId(): number {
         return this.gateSessionId;
     }
 
     /**
      * 获取玩家名称
      */
-    getName(): string {
+    public getName(): string {
         return this.name;
     }
 
     /**
      * 检查是否已登录
      */
-    isLogin(): boolean {
+    public isLogin(): boolean {
         return this.isLoggedIn;
     }
 
     /**
      * 获取连接时长（毫秒）
      */
-    getConnectDuration(): number {
-        return Date.now() - this.connectTime;
+    public getConnectDuration(): number {
+        return Date.now() - this.getConnectTime();
     }
 
     /**
-     * 发送消息给客户端
+     * 登出
      */
-    send(data: Uint8Array): void {
-        if (this.ws.readyState === WebSocket.OPEN) {
-            this.ws.send(data);
-        }
+    public logout(): void {
+        this.playerId = 0;
+        this.name = '';
+        this.isLoggedIn = false;
     }
 
     /**
-     * 关闭连接
+     * 获取会话信息（用于日志或调试）
      */
-    close(): void {
-        this.ws.close();
-    }
-
-    /**
-     * 获取 WebSocket 实例
-     */
-    getWebSocket(): WebSocket {
-        return this.ws;
+    public getInfo(): string {
+        const status = this.isLoggedIn ? `Player(${this.playerId}:${this.name})` : 'Guest';
+        return `ClientSession[id=${this.gateSessionId}, ${status}]`;
     }
 }

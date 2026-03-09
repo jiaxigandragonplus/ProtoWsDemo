@@ -161,10 +161,10 @@ export class GameMessageHandler {
             return;
         }
 
-        // 获取第一个连接的 Gate 客户端
-        const clients = wsServer.getClients();
-        const gateClient = clients.values().next().value;
-        if (!gateClient || gateClient.readyState !== WebSocket.OPEN) {
+        // 获取第一个连接的 Session
+        const sessions = wsServer.getSessions();
+        const session = sessions.values().next().value;
+        if (!session || !session.isConnected()) {
             console.error('[GameMessageHandler] Gate 连接不可用');
             return;
         }
@@ -213,7 +213,7 @@ export class GameMessageHandler {
             });
             const outerEncoded = pbPackageType.encode(outerPbPackage).finish();
 
-            gateClient.send(outerEncoded);
+            session.send(outerEncoded);
         } catch (error) {
             console.error('[GameMessageHandler] 发送消息到 Gate 时出错:', error);
         }

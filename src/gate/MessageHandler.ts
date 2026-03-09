@@ -36,35 +36,6 @@ export class MessageHandler {
     }
 
     /**
-     * 处理客户端消息
-     * 使用 WebsocketMessage 格式，先按 PBPackage 解压，然后根据 message_type 找处理函数
-     * 根据 uri 前缀判断消息发往哪个服务器
-     */
-    static handleMessage(session: ClientSession, data: Uint8Array): void {
-        try {
-            // 使用 PBPackage 解压
-            const pbPackageType = ProtoLoader.PBPackage;
-            const pbPackage = pbPackageType.decode(data) as any;
-            
-            const messageType = pbPackage.message_type as string;
-            const messagePayload = new Uint8Array(pbPackage.message_payload as ArrayBuffer);
-            
-            console.log(`[MessageHandler] 收到消息 - messageType: ${messageType}, payloadSize: ${messagePayload.length}`);
-            
-            // 根据 message_type 查找处理函数
-            const handlerInfo = MessageRegistry.getHandlerByTypeName(messageType);
-            if (handlerInfo) {
-                const { handler, protoType } = handlerInfo;
-                handler(session, messagePayload, protoType);
-            } else {
-                console.warn(`[MessageHandler] 未找到消息类型处理器：${messageType}`);
-            }
-        } catch (error) {
-            console.error('[MessageHandler] 处理消息时出错:', error);
-        }
-    }
-
-    /**
      * 处理 WebsocketMessage 格式的消息
      * 根据 uri 前缀判断消息发往哪个服务器
      */

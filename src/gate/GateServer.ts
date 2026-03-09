@@ -1,11 +1,12 @@
 import WebSocket from 'ws';
-import { ClientSession } from './ClientSession';
+import { ClientSession as GateClientSession } from './ClientSession';
 import { MessageHandler } from './MessageHandler';
 import { ProtoLoader } from './ProtoLoader';
 import { ClientManager } from './ClientManager';
 import { Framework, getFramework } from '../framework/Framework';
 import { WsClient } from '../framework/network/WsClient';
 import { ServiceInstance } from '../framework/discovery/ServiceDiscovery';
+import { Session } from '../framework/network/Session';
 
 /**
  * Gate 服务器配置
@@ -83,12 +84,12 @@ export class GateServer {
         const wsServer = networkManager.getServer();
         
         if (wsServer) {
-            wsServer.on('connection', (conn) => {
-                this.handleConnection(conn.socket);
+            wsServer.on('connection', (event) => {
+                this.handleConnection(event.socket, event.session);
             });
 
             wsServer.on('close', (event) => {
-                this.handleClose(event.socket);
+                this.handleClose(event.socket, event.session);
             });
         }
 
@@ -228,14 +229,18 @@ export class GateServer {
 
     /**
      * 处理新连接
+     * @param ws - WebSocket 实例
+     * @param session - Framework Session 实例
      */
-    private handleConnection(ws: WebSocket): void {
+    private handleConnection(ws: WebSocket, session: Session): void {
         const logger = this.framework.getLogger();
-        logger.debug('新客户端连接', 'GateServer');
+        logger.debug(`新客户端连接，sessionId=${session.getSessionId()}`, 'GateServer');
         
-        // 创建玩家会话
-        const session = new ClientSession(ws);
-        ClientManager.registerSession(ws, session);
+        // 创建玩家会话（使用扩展的 ClientSession）
+        const clientSession = new GateClientSession(ws, {
+            gateSessionId: session.getSessionId() as number,
+        });
+        ClientManager.registerSession(ws, clientSession);
     }
 
     /**
@@ -253,7 +258,7 @@ export class GateServer {
             
             // 使用 MessageHandler 处理 WebsocketMessage
             MessageHandler.handleWebsocketMessage(session, uint8Data, async (wsMessage) => {
-                await this.forwardToGame(session, wsMessage);
+                await this.forwardToServer(session, wsMessage);
             });
         } catch (error) {
             this.framework.getLogger().error('处理消息时出错', error as Error, 'GateServer');
@@ -326,83 +331,29 @@ export class GateServer {
     }
 
     /**
-     * 转发 WebsocketMessage 到游戏服务器
-     * 按需建立连接
+     * 转发 WebsocketMessage 到其他服务器
      */
-    private async forwardToGame(session: ClientSession, wsMessage: any): Promise<void> {
-        try {
-            const sessionId = session.getGateSessionId();
-            
-            // 获取或创建游戏服务器连接
-            const client = await this.getOrCreateGameConnection();
-            if (!client || !client.isSocketConnected()) {
-                this.framework.getLogger().warn(
-                    '[GateServer] 游戏服务器连接不可用，无法转发消息', 
-                    'GateServer'
-                );
-                return;
-            }
-
-            // 使用 PBPackage 包装 WebsocketMessage
-            const pbPackageType = ProtoLoader.PBPackage;
-            const wsMessageType = ProtoLoader.WebsocketMessage;
-            
-            // 先编码 WebsocketMessage
-            const wsEncoded = wsMessageType.encode(wsMessage).finish();
-            
-            // 用 PBPackage 包装
-            const pbPackage = pbPackageType.create({
-                message_type: wsMessage.message_type,
-                message_payload: wsEncoded
-            });
-            const pbEncoded = pbPackageType.encode(pbPackage).finish();
-
-            // 构建 GateToGame 消息
-            const gateToGameType = ProtoLoader.GateToGame;
-            const gateToGame = gateToGameType.create({
-                sessionId: sessionId,
-                messageId: 0,
-                payload: pbEncoded,
-                message_type: wsMessage.message_type
-            });
-            const encoded = gateToGameType.encode(gateToGame).finish();
-
-            // 使用 PBPackage 包装 GateToGame 消息
-            const outerPbPackage = pbPackageType.create({
-                message_type: 'GateToGame',
-                message_payload: encoded
-            });
-            const outerEncoded = pbPackageType.encode(outerPbPackage).finish();
-
-            client.send(Buffer.from(outerEncoded));
-            this.framework.getLogger().debug(
-                `[GateServer] 消息已转发到游戏服务器 - messageType: ${wsMessage.message_type}`, 
-                'GateServer'
-            );
-        } catch (error) {
-            this.framework.getLogger().error(
-                '[GateServer] 转发消息到游戏服务器失败', 
-                error as Error, 
-                'GateServer'
-            );
-        }
+    private async forwardToServer(session: GateClientSession, wsMessage: any): Promise<void> {
+        // todo
     }
 
     /**
      * 处理连接关闭
+     * @param ws - WebSocket 实例
+     * @param session - Framework Session 实例
      */
-    private handleClose(ws: WebSocket): void {
-        const session = ClientManager.getSession(ws);
-        if (session) {
-            const sessionId = session.getGateSessionId();
+    private handleClose(ws: WebSocket, session: Session): void {
+        const clientSession = ClientManager.getSession(ws);
+        if (clientSession) {
+            const sessionId = clientSession.getGateSessionId();
             // 清理会话路由
             this.sessionRoutes.delete(sessionId);
             
             ClientManager.removeSession(ws);
             
-            if (session.isLogin()) {
+            if (clientSession.isLogin()) {
                 this.framework.getLogger().info(
-                    `玩家断开连接 - ID: ${session.getPlayerId()}, 名称：${session.getName()}`, 
+                    `玩家断开连接 - ID: ${clientSession.getPlayerId()}, 名称：${clientSession.getName()}`,
                     'GateServer'
                 );
             } else {
@@ -421,7 +372,7 @@ export class GateServer {
     /**
      * 获取所有会话
      */
-    getSessions(): Map<WebSocket, ClientSession> {
+    getSessions(): Map<WebSocket, GateClientSession> {
         return ClientManager.getAllSessions();
     }
 

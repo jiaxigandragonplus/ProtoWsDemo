@@ -5,6 +5,7 @@
 import WebSocket, { WebSocketServer } from 'ws';
 import { IncomingMessage } from 'http';
 import { Logger } from '../logger/Logger';
+import { Session, SessionType, SessionConfig } from './Session';
 
 /**
  * WebSocket 服务器配置
@@ -24,6 +25,7 @@ export interface WsServerConfig {
 export interface ConnectionEvent {
   socket: WebSocket;
   request: IncomingMessage;
+  session: Session;
 }
 
 /**
@@ -32,6 +34,7 @@ export interface ConnectionEvent {
 export interface MessageEvent {
   socket: WebSocket;
   data: Buffer;
+  session: Session;
 }
 
 /**
@@ -40,6 +43,17 @@ export interface MessageEvent {
 export interface ErrorEvent {
   socket?: WebSocket;
   error: Error;
+  session?: Session;
+}
+
+/**
+ * 关闭事件数据
+ */
+export interface CloseEvent {
+  socket: WebSocket;
+  code: number;
+  reason: Buffer;
+  session: Session;
 }
 
 /**
@@ -49,7 +63,8 @@ export class WsServer {
   private server: WebSocketServer | null = null;
   private config: WsServerConfig;
   private logger: Logger;
-  private clients: Set<WebSocket> = new Set();
+  // 使用 Session 管理连接，key 为 sessionId
+  private sessions: Map<number | string, Session> = new Map();
   private pingInterval: NodeJS.Timeout | null = null;
   private isRunning: boolean = false;
 
@@ -96,10 +111,19 @@ export class WsServer {
 
   /**
    * 处理新连接
+   * @param socket - WebSocket 实例
+   * @param request - HTTP 请求对象
+   * @param sessionConfig - 可选的会话配置，如果不传则创建基础 Session
    */
-  private handleConnection(socket: WebSocket, request: IncomingMessage): void {
-    this.clients.add(socket);
-    this.logger.debug(`新连接：${this.getSocketId(socket)}`, 'WsServer');
+  private handleConnection(socket: WebSocket, request: IncomingMessage, sessionConfig?: SessionConfig): void {
+    // 创建 Session 实例
+    const config: SessionConfig = sessionConfig ?? {
+      type: SessionType.SERVER,
+    };
+    const session = new Session(socket, config, this.logger);
+    
+    this.sessions.set(session.getSessionId(), session);
+    this.logger.debug(`新连接：${this.getSocketId(socket)}, sessionId=${session.getSessionId()}`, 'WsServer');
 
     socket.on('pong', () => {
       // 收到 pong，标记为活跃
@@ -107,21 +131,22 @@ export class WsServer {
     });
 
     socket.on('message', (data: Buffer) => {
-      this.emit('message', { socket, data });
+      this.emit('message', { socket, data, session });
     });
 
     socket.on('close', (code: number, reason: Buffer) => {
-      this.clients.delete(socket);
-      this.logger.debug(`连接关闭：${this.getSocketId(socket)}, code=${code}`, 'WsServer');
-      this.emit('close', { socket, code, reason });
+      this.logger.debug(`连接关闭：${this.getSocketId(socket)}, code=${code}, sessionId=${session.getSessionId()}`, 'WsServer');
+      // 从 sessions 中删除
+      this.sessions.delete(session.getSessionId());
+      this.emit('close', { socket, code, reason, session });
     });
 
     socket.on('error', (error: Error) => {
-      this.logger.error(`连接错误：${this.getSocketId(socket)}`, error, 'WsServer');
-      this.emit('error', { socket, error });
+      this.logger.error(`连接错误：${this.getSocketId(socket)}, sessionId=${session.getSessionId()}`, error, 'WsServer');
+      this.emit('error', { socket, error, session });
     });
 
-    this.emit('connection', { socket, request });
+    this.emit('connection', { socket, request, session });
   }
 
   /**
@@ -134,7 +159,8 @@ export class WsServer {
     this.pingInterval = setInterval(() => {
       if (!this.server) return;
 
-      this.clients.forEach((socket) => {
+      this.sessions.forEach((session) => {
+        const socket = session.getWebSocket();
         if ((socket as any).isAlive === false) {
           // 超时未响应，关闭连接
           this.logger.debug('心跳超时，关闭连接', 'WsServer');
@@ -167,7 +193,14 @@ export class WsServer {
   }
 
   /**
-   * 发送消息给指定客户端
+   * 发送消息给指定 Session
+   */
+  public sendToSession(session: Session, data: Buffer | string): boolean {
+    return session.send(data);
+  }
+
+  /**
+   * 发送消息给指定 WebSocket（兼容旧接口）
    */
   public sendTo(socket: WebSocket, data: Buffer | string): boolean {
     if (socket.readyState === WebSocket.OPEN) {
@@ -178,36 +211,75 @@ export class WsServer {
   }
 
   /**
-   * 广播消息给所有客户端
+   * 广播消息给所有 Session
    */
-  public broadcast(data: Buffer | string, exclude?: WebSocket): void {
-    this.clients.forEach((client) => {
-      if (client !== exclude && client.readyState === WebSocket.OPEN) {
-        client.send(data);
+  public broadcast(data: Buffer | string, exclude?: Session | WebSocket): void {
+    this.sessions.forEach((session) => {
+      if (exclude instanceof Session) {
+        if (session !== exclude && session.isConnected()) {
+          session.send(data);
+        }
+      } else if (exclude instanceof WebSocket) {
+        if (session.getWebSocket() !== exclude && session.isConnected()) {
+          session.send(data);
+        }
+      } else {
+        if (session.isConnected()) {
+          session.send(data);
+        }
       }
     });
   }
 
   /**
-   * 获取客户端数量
+   * 获取 Session 数量
    */
-  public getClientCount(): number {
-    return this.clients.size;
+  public getSessionCount(): number {
+    return this.sessions.size;
   }
 
   /**
-   * 获取所有客户端
+   * 获取所有 Session
    */
-  public getClients(): Set<WebSocket> {
-    return new Set(this.clients);
+  public getSessions(): Map<number | string, Session> {
+    return new Map(this.sessions);
   }
 
   /**
-   * 关闭指定客户端
+   * 根据 sessionId 获取 Session
+   */
+  public getSessionById(sessionId: number | string): Session | undefined {
+    return this.sessions.get(sessionId);
+  }
+
+  /**
+   * 根据 WebSocket 获取 Session
+   */
+  public getSessionBySocket(socket: WebSocket): Session | undefined {
+    for (const session of this.sessions.values()) {
+      if (session.getWebSocket() === socket) {
+        return session;
+      }
+    }
+    return undefined;
+  }
+
+  /**
+   * 关闭指定 Session
+   */
+  public closeSession(session: Session, code?: number, reason?: string): void {
+    session.close(code, reason);
+    this.sessions.delete(session.getSessionId());
+  }
+
+  /**
+   * 关闭指定客户端（兼容旧接口）
    */
   public closeClient(socket: WebSocket, code?: number, reason?: string): void {
-    socket.close(code, reason);
-    this.clients.delete(socket);
+    const session = this.getSessionBySocket(socket);
+    if (session) {
+      this.closeSession(session, code, reason);
+    }
   }
 
   /**
@@ -220,7 +292,7 @@ export class WsServer {
    */
   public on(event: 'connection', handler: (data: ConnectionEvent) => void): void;
   public on(event: 'message', handler: (data: MessageEvent) => void): void;
-  public on(event: 'close', handler: (data: { socket: WebSocket; code: number; reason: Buffer }) => void): void;
+  public on(event: 'close', handler: (data: CloseEvent) => void): void;
   public on(event: 'error', handler: (data: ErrorEvent) => void): void;
   public on(event: string, handler: Function): void {
     if (!this.eventHandlers.has(event)) {
@@ -265,10 +337,10 @@ export class WsServer {
       this.isRunning = false;
 
       // 关闭所有客户端连接
-      this.clients.forEach((client) => {
-        client.close(1001, 'Server shutting down');
+      this.sessions.forEach((session) => {
+        session.close(1001, 'Server shutting down');
       });
-      this.clients.clear();
+      this.sessions.clear();
 
       if (this.server) {
         this.server.close(() => {

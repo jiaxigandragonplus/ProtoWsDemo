@@ -148,8 +148,8 @@ export class Framework {
     // 注册服务器端消息处理
     const wsServer = this.networkManager.getServer();
     if (wsServer) {
-      wsServer.on('message', (event: { socket: WebSocket; data: Buffer }) => {
-        this.handleWebsocketMessage(event.data, 'local', this.serverId);
+      wsServer.on('message', (event) => {
+        this.handleWebsocketMessage(event.data, this.configManager.getServerConfig().name, this.serverId);
       });
     }
 
@@ -270,10 +270,6 @@ export class Framework {
 
       client = await this.networkManager.createClient(serverType, id, {
         url: `ws://${serviceInfo.host}:${serviceInfo.port}`,
-      });
-
-      client.on('message', (data: Buffer) => {
-        this.handleWebsocketMessage(data, serverType, id);
       });
     }
 
