@@ -91,6 +91,10 @@ export class GateServer {
             wsServer.on('close', (event) => {
                 this.handleClose(event.socket, event.session);
             });
+
+            wsServer.on('message', (event) => { 
+                this.handleMessage(event.socket, event.data); 
+            });
         }
 
         this.isRunning = true;

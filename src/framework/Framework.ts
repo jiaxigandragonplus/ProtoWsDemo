@@ -145,14 +145,6 @@ export class Framework {
       port: serverConfig.port + this.serverId
     });
 
-    // 注册服务器端消息处理
-    const wsServer = this.networkManager.getServer();
-    if (wsServer) {
-      wsServer.on('message', (event) => {
-        this.handleWebsocketMessage(event.data, this.configManager.getServerConfig().name, this.serverId);
-      });
-    }
-
     this.isInitialized = true;
     this.logger.info('框架初始化完成', 'Framework');
   }
@@ -279,24 +271,6 @@ export class Framework {
     
     if (!success) {
       this.logger.warn(`发送消息失败：${serverType}:${id}`, 'Framework');
-    }
-  }
-
-  /**
-   * 处理 WebSocket 消息
-   * @param data - 接收到的消息数据
-   * @param serverType - 服务器类型
-   * @param id - 服务器实例 ID
-   */
-  private handleWebsocketMessage(data: Buffer, serverType: string, id: number): void {
-    if (this.handleMessageCallback) {
-      try {
-        this.handleMessageCallback(data, serverType, id);
-      } catch (error) {
-        this.logger.error('WebSocket 消息处理异常', error as Error, 'Framework');
-      }
-    } else {
-      this.logger.warn('未注册 WebSocket 消息处理器', 'Framework');
     }
   }
 }
