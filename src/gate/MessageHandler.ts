@@ -1,5 +1,5 @@
 import { ClientSession } from './ClientSession';
-import { ProtoLoader } from './ProtoLoader';
+import { ProtoLoader } from '../framework/network/ProtoLoader';
 import { MessageRegistry } from './MessageRegistry';
 import * as protobuf from 'protobufjs';
 import { ClientManager } from './ClientManager';

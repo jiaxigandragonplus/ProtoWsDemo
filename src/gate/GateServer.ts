@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 import { ClientSession as GateClientSession } from './ClientSession';
 import { MessageHandler } from './MessageHandler';
-import { ProtoLoader } from './ProtoLoader';
+import { ProtoLoader } from '../framework/network/ProtoLoader';
 import { ClientManager } from './ClientManager';
 import { Framework, getFramework } from '../framework/Framework';
 import { WsClient } from '../framework/network/WsClient';

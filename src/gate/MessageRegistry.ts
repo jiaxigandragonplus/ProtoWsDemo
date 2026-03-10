@@ -78,7 +78,7 @@ export class MessageRegistry {
      * @param handlerClass MessageHandler 类
      */
     static autoRegisterFromProto(
-        protoLoader: typeof import('./ProtoLoader').ProtoLoader,
+        protoLoader: typeof import('../framework/network/ProtoLoader').ProtoLoader,
         handlerClass: typeof import('./MessageHandler').MessageHandler
     ): void {
         // 获取所有消息类型名称

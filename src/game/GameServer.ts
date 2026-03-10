@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import { GameMessageHandler } from './MessageHandler';
-import { ProtoLoader } from './ProtoLoader';
+import { ProtoLoader } from '../framework/network/ProtoLoader';
 import { Framework, getFramework } from '../framework/Framework';
 import { Session } from '../framework/network/Session';
 import { SessionManager } from '../framework/network/SessionManager';

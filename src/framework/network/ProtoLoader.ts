@@ -1,8 +1,3 @@
-/**
- * Proto 加载器
- * 在 Node.js 环境中使用 protobufjs 动态加载 proto 文件
- */
-
 import * as protobuf from 'protobufjs';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -16,7 +11,8 @@ export interface ProtocolMapEntry {
 }
 
 /**
- * Proto 加载器类
+ * Proto 加载器
+ * 负责加载和管理 protobuf 协议文件
  */
 export class ProtoLoader {
     private static root: protobuf.Root | null = null;
@@ -32,13 +28,14 @@ export class ProtoLoader {
      */
     private static getProtoPaths(): { game: string, common: string, protocolMap: string } {
         if (!this.gameProtoPath) {
-            this.gameProtoPath = path.join(__dirname, '../protobuf/proto/game/game.proto');
+            // __dirname 在编译后是 dist/src/framework/network，需要向上三层到项目根目录
+            this.gameProtoPath = path.join(__dirname, '../../../protobuf/proto/game/game.proto');
         }
         if (!this.commonProtoPath) {
-            this.commonProtoPath = path.join(__dirname, '../protobuf/proto/common/common.proto');
+            this.commonProtoPath = path.join(__dirname, '../../../protobuf/proto/common/common.proto');
         }
         if (!this.protocolMapPath) {
-            this.protocolMapPath = path.join(__dirname, '../protobuf/proto/protocol_map.json');
+            this.protocolMapPath = path.join(__dirname, '../../../protobuf/proto/protocol_map.json');
         }
         return { 
             game: this.gameProtoPath, 
@@ -53,7 +50,7 @@ export class ProtoLoader {
     private static setupResolvePath(root: protobuf.Root): void {
         // 获取 proto 根目录（protobuf/proto）
         if (!this.protoRootDir) {
-            this.protoRootDir = path.join(__dirname, '../protobuf/proto');
+            this.protoRootDir = path.join(__dirname, '../../../protobuf/proto');
         }
         root.resolvePath = (origin, target) => {
             if (path.isAbsolute(target)) return target;
@@ -194,6 +191,20 @@ export class ProtoLoader {
      */
     static get SEcho(): protobuf.Type {
         return this.getType('SEcho');
+    }
+
+    /**
+     * 获取 GateToGame 类型
+     */
+    static get GateToGame(): protobuf.Type {
+        return this.getType('GateToGame');
+    }
+
+    /**
+     * 获取 GameToGate 类型
+     */
+    static get GameToGate(): protobuf.Type {
+        return this.getType('GameToGate');
     }
 
     /**

@@ -6,7 +6,7 @@
  */
 
 import { WsClient, WsClientConfig } from '../framework/network/WsClient';
-import { ProtoLoader } from '../gate/ProtoLoader';
+import { ProtoLoader } from '../framework/network/ProtoLoader';
 import { generateUUID } from '../framework/utils/uuid';
 
 class TestClient {

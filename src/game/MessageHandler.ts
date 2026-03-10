@@ -1,6 +1,6 @@
 import * as protobuf from 'protobufjs';
 import { SessionManager } from './SessionManager';
-import { ProtoLoader } from './ProtoLoader';
+import { ProtoLoader } from '../framework/network/ProtoLoader';
 import WebSocket from 'ws';
 import { NetworkManager } from '../framework/network/NetworkManager';
 
