@@ -138,8 +138,16 @@ export class ProtoLoader {
             const paths = this.getProtoPaths();
             this.root = new protobuf.Root();
             this.setupResolvePath(this.root);
-            await this.root.load(paths.common);
-            await this.root.load(paths.game);
+
+            // 遍历proto目录，加载所有proto文件
+            const protoDir = path.join(__dirname, '../../../protobuf/proto');
+            const files = fs.readdirSync(protoDir);
+            for (const file of files) {
+                if (file.endsWith('.proto')) {
+                    const protoPath = path.join(protoDir, file);
+                    await this.root.load(protoPath);
+                }
+            }
         }
         this.loadProtocolMap();
     }
