@@ -50,7 +50,7 @@ export class ProtoLoader {
     private static setupResolvePath(root: protobuf.Root): void {
         // 获取 proto 根目录（protobuf/proto）
         if (!this.protoRootDir) {
-            this.protoRootDir = path.join(__dirname, '../../../protobuf/proto');
+            this.protoRootDir = path.join(__dirname, '../../protobuf/proto');
         }
         root.resolvePath = (origin, target) => {
             if (path.isAbsolute(target)) return target;
@@ -69,11 +69,7 @@ export class ProtoLoader {
      */
     static getRoot(): protobuf.Root {
         if (!this.root) {
-            const paths = this.getProtoPaths();
-            this.root = new protobuf.Root();
-            this.setupResolvePath(this.root);
-            this.root.loadSync(paths.common);
-            this.root.loadSync(paths.game);
+            ProtoLoader.loadProtoSync();
         }
         return this.root;
     }
@@ -109,11 +105,10 @@ export class ProtoLoader {
      * @param uri URI 路径
      * @returns 服务器类型：'gate' 或 'game'
      */
-    static getTargetServer(uri: string): 'gate' | 'game' {
-        if (uri.startsWith('/gate/')) {
-            return 'gate';
-        }
-        return 'game';
+    static getTargetServer(uri: string): string {
+        const parts = uri.split('/');
+        // 取第二个元素（索引为1）
+        return parts[1] || ""; 
     }
 
     /**
@@ -160,8 +155,6 @@ export class ProtoLoader {
             const paths = this.getProtoPaths();
             this.root = new protobuf.Root();
             this.setupResolvePath(this.root);
-            //this.root.loadSync(paths.common);
-            //this.root.loadSync(paths.game);
 
             // 递归遍历proto目录，加载所有proto文件
             const protoDir = path.join(__dirname, '../../protobuf/proto');
