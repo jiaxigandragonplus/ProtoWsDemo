@@ -126,33 +126,10 @@ export class ProtoLoader {
     }
 
     /**
-     * 异步加载 proto 文件
-     */
-    static async loadProto(): Promise<void> {
-        if (!this.root) {
-            const paths = this.getProtoPaths();
-            this.root = new protobuf.Root();
-            this.setupResolvePath(this.root);
-
-            // 遍历proto目录，加载所有proto文件
-            const protoDir = path.join(__dirname, '../../../protobuf/proto');
-            const files = fs.readdirSync(protoDir);
-            for (const file of files) {
-                if (file.endsWith('.proto')) {
-                    const protoPath = path.join(protoDir, file);
-                    await this.root.load(protoPath);
-                }
-            }
-        }
-        this.loadProtocolMap();
-    }
-
-    /**
      * 同步加载 proto 文件
      */
     static loadProtoSync(): void {
         if (!this.root) {
-            const paths = this.getProtoPaths();
             this.root = new protobuf.Root();
             this.setupResolvePath(this.root);
 
@@ -185,48 +162,6 @@ export class ProtoLoader {
      */
     static getType(typeName: string): protobuf.Type {
         return this.getRoot().lookupType(typeName);
-    }
-
-    /**
-     * 获取 CLogin 类型
-     */
-    static get CLogin(): protobuf.Type {
-        return this.getType('CLogin');
-    }
-
-    /**
-     * 获取 SLogin 类型
-     */
-    static get SLogin(): protobuf.Type {
-        return this.getType('SLogin');
-    }
-
-    /**
-     * 获取 CEcho 类型
-     */
-    static get CEcho(): protobuf.Type {
-        return this.getType('CEcho');
-    }
-
-    /**
-     * 获取 SEcho 类型
-     */
-    static get SEcho(): protobuf.Type {
-        return this.getType('SEcho');
-    }
-
-    /**
-     * 获取 GateToGame 类型
-     */
-    static get GateToGame(): protobuf.Type {
-        return this.getType('GateToGame');
-    }
-
-    /**
-     * 获取 GameToGate 类型
-     */
-    static get GameToGate(): protobuf.Type {
-        return this.getType('GameToGate');
     }
 
     /**
