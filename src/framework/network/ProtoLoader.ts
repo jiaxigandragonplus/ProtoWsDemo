@@ -160,8 +160,29 @@ export class ProtoLoader {
             const paths = this.getProtoPaths();
             this.root = new protobuf.Root();
             this.setupResolvePath(this.root);
-            this.root.loadSync(paths.common);
-            this.root.loadSync(paths.game);
+            //this.root.loadSync(paths.common);
+            //this.root.loadSync(paths.game);
+
+            // 递归遍历proto目录，加载所有proto文件
+            const protoDir = path.join(__dirname, '../../protobuf/proto');
+            const entries  = fs.readdirSync(protoDir, { withFileTypes: true });
+            for (const entry of entries) {
+                if (entry.isDirectory()) {
+                    const subDir = path.join(protoDir, entry.name);
+                    const subEntries = fs.readdirSync(subDir, { withFileTypes: true });
+                    for (const subEntry of subEntries) {
+                        if (subEntry.isFile() && subEntry.name.endsWith('.proto')) {
+                            const protoPath = path.join(subDir, subEntry.name);
+                            this.root.loadSync(protoPath);
+                        }
+                    }
+                } else {
+                    if (entry.name.endsWith('.proto')) {
+                        const protoPath = path.join(protoDir, entry.name);
+                        this.root.loadSync(protoPath);
+                    }
+                }
+            }
         }
         this.loadProtocolMap();
     }

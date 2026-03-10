@@ -10,7 +10,8 @@
     "start:game": "node dist/game/GameServer.js",
     "dev": "tsc && node dist/gate/GateServer.js",
     "proto": "node protobuf/AutoExport.js",
-    "test-client": "node dist/test/TestClient.js"
+    "test-client": "node dist/test/TestClient.js",
+    "build-only": "tsc"
   },
   "repository": {
     "type": "git",
