@@ -1,6 +1,8 @@
 /**
  * 网络管理器
  * 统一管理 WebSocket 服务器和客户端
+ * - serverWsServer: 用于服务器之间的连接
+ * - clientWsServer: 用于客户端的连接
  */
 
 import { WsServer, WsServerConfig } from './WsServer';
@@ -12,8 +14,9 @@ import { Logger } from '../logger/Logger';
  */
 export class NetworkManager {
   private static instance: NetworkManager;
-  private wsServer: WsServer | null = null;
-  // WebSocket 客户端分类型存，再按服务器id存
+  private serverWsServer: WsServer | null = null; // 用于服务器之间的连接
+  private clientWsServer: WsServer | null = null; // 用于客户端的连接
+  // WebSocket 客户端分类型存，再按服务器 id 存
   private wsClients: Map<string, Map<number, WsClient>> = new Map();
   private logger: Logger;
 
@@ -40,22 +43,33 @@ export class NetworkManager {
 
   /**
    * 创建并启动 WebSocket 服务器
+   * @param config - 服务器间连接的配置
+   * @param clientConfig - 可选的客户端连接配置
    */
-  public async createServer(config: WsServerConfig): Promise<WsServer> {
-    if (this.wsServer) {
-      this.logger.warn('已存在 WebSocket 服务器，将复用', 'NetworkManager');
-    }
+  public async createServer(config: WsServerConfig, clientConfig?: WsServerConfig): Promise<void> {
+    // 创建服务器间连接的 WsServer
+    this.serverWsServer = new WsServer(config, this.logger);
+    await this.serverWsServer.start();
 
-    this.wsServer = new WsServer(config, this.logger);
-    await this.wsServer.start();
-    return this.wsServer;
+    // 创建客户端连接的 WsServer（可选）
+    if (clientConfig) {
+      this.clientWsServer = new WsServer(clientConfig, this.logger);
+      await this.clientWsServer.start();
+    }
   }
 
   /**
-   * 获取 WebSocket 服务器
+   * 获取服务器间连接的 WebSocket 服务器
    */
-  public getServer(): WsServer | null {
-    return this.wsServer;
+  public getServerWsServer(): WsServer | null {
+    return this.serverWsServer;
+  }
+
+  /**
+   * 获取客户端连接的 WebSocket 服务器
+   */
+  public getClientWsServer(): WsServer | null {
+    return this.clientWsServer;
   }
 
   /**
@@ -81,7 +95,7 @@ export class NetworkManager {
   }
 
   /**
-   * 获取 WebSocket 客户端, serverType为gate/game等，id为服务器id
+   * 获取 WebSocket 客户端，serverType 为 gate/game 等，id 为服务器 id
    */
   public getClient(serverType: string, id: number): WsClient | null {
     const typeMap = this.wsClients.get(serverType);
@@ -131,10 +145,16 @@ export class NetworkManager {
   public async close(): Promise<void> {
     const promises: Promise<void>[] = [];
 
-    // 关闭服务器
-    if (this.wsServer) {
-      promises.push(this.wsServer.stop());
-      this.wsServer = null;
+    // 关闭服务器间连接的服务器
+    if (this.serverWsServer) {
+      promises.push(this.serverWsServer.stop());
+      this.serverWsServer = null;
+    }
+
+    // 关闭客户端连接的服务器
+    if (this.clientWsServer) {
+      promises.push(this.clientWsServer.stop());
+      this.clientWsServer = null;
     }
 
     // 关闭所有客户端

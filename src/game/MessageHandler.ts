@@ -154,15 +154,15 @@ export class GameMessageHandler {
         data: Record<string, any>, 
         networkManager: NetworkManager
     ): void {
-        // 获取 WebSocket 服务器
-        const wsServer = networkManager.getServer();
-        if (!wsServer) {
+        // 获取服务器间连接的 WebSocket 服务器
+        const serverWsServer = networkManager.getServerWsServer();
+        if (!serverWsServer) {
             console.error('[GameMessageHandler] WebSocket 服务器不可用');
             return;
         }
 
         // 获取第一个连接的 Session
-        const sessions = wsServer.getSessions();
+        const sessions = serverWsServer.getSessions();
         const session = sessions.values().next().value;
         if (!session || !session.isConnected()) {
             console.error('[GameMessageHandler] Gate 连接不可用');

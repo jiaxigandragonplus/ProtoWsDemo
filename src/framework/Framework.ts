@@ -9,6 +9,7 @@ import { DatabaseManager } from './db/DatabaseManager';
 import { NetworkManager } from './network/NetworkManager';
 import { ServiceDiscovery, DiscoveryConfig } from './discovery/ServiceDiscovery';
 import { RedisClient } from './db/RedisClient';
+import { WsServerConfig } from './network/WsServer';
 import WebSocket from 'ws';
 
 /**
@@ -25,7 +26,10 @@ export type WebsocketMessageHandler = (data: Buffer, serverType: string, id: num
 export interface FrameworkConfig {
   configPath?: string;
   config?: AppConfig;
-  handleMessage?: WebsocketMessageHandler;
+  /** 是否启用客户端连接服务器（Gate 服务器需要） */
+  enableClientServer?: boolean;
+  /** 客户端服务器配置，不传则使用默认配置（port + 1000） */
+  clientServerConfig?: WsServerConfig;
 }
 
 /**
@@ -41,7 +45,6 @@ export class Framework {
   private isInitialized: boolean = false;
   private isRunning: boolean = false;
   protected serverId: number = 0;
-  private handleMessageCallback: WebsocketMessageHandler | null = null;
 
   private constructor() {
     this.configManager = ConfigManager.getInstance();
@@ -106,11 +109,6 @@ export class Framework {
 
     this.serverId = serverId;
 
-    // 保存消息处理回调
-    if (config.handleMessage) {
-      this.handleMessageCallback = config.handleMessage;
-    }
-
     // 加载配置
     if (config.configPath) {
       this.configManager.load(config.configPath);
@@ -140,10 +138,21 @@ export class Framework {
 
     // 创建 WebSocket 服务器
     const serverConfig = this.configManager.getServerConfig();
-    await this.networkManager.createServer({
+    const serverWsConfig: WsServerConfig = {
       host: serverConfig.host,
       port: serverConfig.port + this.serverId
-    });
+    };
+
+    // 如果需要启用客户端连接服务器（Gate 服务器）
+    let clientWsConfig: WsServerConfig | undefined;
+    if (config.enableClientServer) {
+      clientWsConfig = config.clientServerConfig ?? {
+        host: serverConfig.host,
+        port: serverConfig.port + this.serverId + 1000 // 默认使用 port + 1000
+      };
+    }
+
+    await this.networkManager.createServer(serverWsConfig, clientWsConfig);
 
     this.isInitialized = true;
     this.logger.info('框架初始化完成', 'Framework');

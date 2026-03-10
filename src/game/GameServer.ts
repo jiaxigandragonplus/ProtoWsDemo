@@ -2,6 +2,8 @@ import WebSocket from 'ws';
 import { GameMessageHandler } from './MessageHandler';
 import { ProtoLoader } from './ProtoLoader';
 import { Framework, getFramework } from '../framework/Framework';
+import { Session } from '../framework/network/Session';
+import { SessionManager } from '../framework/network/SessionManager';
 
 /**
  * Game 服务器配置
@@ -42,8 +44,8 @@ export class GameServer {
         const logger = this.framework.getLogger();
         logger.info('Game 服务器启动中...', 'GameServer');
 
-        // 初始化框架
-        await this.framework.init(this.serverId,{
+        // 初始化框架（Game 服务器只需要服务器间连接）
+        await this.framework.init(this.serverId, {
             configPath: `config/${process.env.NODE_ENV || 'local'}/game.json`
         });
 
@@ -51,24 +53,25 @@ export class GameServer {
         await this.framework.start();
 
         // 设置 WebSocket 服务器事件处理
+        // Game 服务器只使用 serverWsServer（服务器间连接）
         const networkManager = this.framework.getNetworkManager();
-        const wsServer = networkManager.getServer();
+        const serverWsServer = networkManager.getServerWsServer();
         
-        if (wsServer) {
-            wsServer.on('connection', (conn) => {
-                logger.info('[GameServer] Gate 服务器已连接', 'GameServer');
-                
-                conn.socket.on('message', (data: Buffer) => {
-                    this.handleMessage(data);
-                });
+        if (serverWsServer) {
+            serverWsServer.on('connection', (event) => {
+                this.handleServerConnection(event.socket, event.session);
+            });
 
-                conn.socket.on('close', () => {
-                    logger.info('[GameServer] Gate 服务器连接已关闭', 'GameServer');
-                });
+            serverWsServer.on('message', (event) => {
+                this.handleServerMessage(event.socket, event.data);
+            });
 
-                conn.socket.on('error', (error: Error) => {
-                    logger.error('[GameServer] Gate 连接错误', error, 'GameServer');
-                });
+            serverWsServer.on('close', (event) => {
+                this.handleServerClose(event.socket, event.session);
+            });
+
+            serverWsServer.on('error', (event) => {
+                logger.error('[GameServer] 服务器间连接错误', event.error, 'GameServer');
             });
         }
 
@@ -77,15 +80,44 @@ export class GameServer {
     }
 
     /**
+     * 处理服务器间连接（来自 Gate 服务器的连接）
+     * @param ws - WebSocket 实例
+     * @param session - Framework Session 实例
+     */
+    private handleServerConnection(ws: WebSocket, session: Session): void {
+        const logger = this.framework.getLogger();
+        logger.info(`新服务器连接，sessionId=${session.getSessionId()}`, 'GameServer');
+        
+        // 使用 SessionManager 管理服务器间会话
+        const sessionManager = SessionManager.getInstance();
+        // 注册 Gate 服务器会话
+        sessionManager.registerSession('gate', this.serverId, session);
+    }
+
+    /**
      * 处理来自 Gate 的消息
      */
-    private handleMessage(data: Buffer): void {
+    private handleServerMessage(ws: WebSocket, data: Buffer): void {
         try {
             const uint8Data = new Uint8Array(data);
             GameMessageHandler.handleMessage(uint8Data, this.framework.getNetworkManager());
         } catch (error) {
             this.framework.getLogger().error('[GameServer] 处理消息时出错', error as Error, 'GameServer');
         }
+    }
+
+    /**
+     * 处理服务器间连接关闭
+     * @param ws - WebSocket 实例
+     * @param session - Framework Session 实例
+     */
+    private handleServerClose(ws: WebSocket, session: Session): void {
+        const logger = this.framework.getLogger();
+        logger.info('服务器连接关闭', 'GameServer');
+        
+        // 从 SessionManager 中移除会话
+        const sessionManager = SessionManager.getInstance();
+        sessionManager.removeSessionBySession(session);
     }
 
     /**

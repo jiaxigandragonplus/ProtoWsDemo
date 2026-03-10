@@ -5,8 +5,10 @@ import { ProtoLoader } from './ProtoLoader';
 import { ClientManager } from './ClientManager';
 import { Framework, getFramework } from '../framework/Framework';
 import { WsClient } from '../framework/network/WsClient';
+import { WsServer } from '../framework/network/WsServer';
 import { ServiceInstance } from '../framework/discovery/ServiceDiscovery';
 import { Session } from '../framework/network/Session';
+import { SessionManager } from '../framework/network/SessionManager';
 
 /**
  * Gate 服务器配置
@@ -66,11 +68,10 @@ export class GateServer {
         logger.info('Gate 服务器启动中...', 'GateServer');
 
         // 初始化框架，传入消息处理函数
+        // Gate 服务器需要启用客户端连接服务器
         await this.framework.init(this.serverId, {
             configPath: `config/${process.env.NODE_ENV || 'local'}/gate.json`,
-            handleMessage: (data: Buffer, serverType: string, id: number) => {
-                this.handleFrameworkMessage(data, serverType, id);
-            }
+            enableClientServer: true,
         });
 
         // 启动框架（包括服务发现）
@@ -81,25 +82,42 @@ export class GateServer {
 
         // 设置 WebSocket 服务器事件处理
         const networkManager = this.framework.getNetworkManager();
-        const wsServer = networkManager.getServer();
         
-        if (wsServer) {
-            wsServer.on('connection', (event) => {
-                this.handleConnection(event.socket, event.session);
+        // 获取服务器间连接的 WsServer（用于与其他服务器通信）
+        const serverWsServer = networkManager.getServerWsServer();
+        if (serverWsServer) {
+            serverWsServer.on('connection', (event) => {
+                this.handleServerConnection(event.socket, event.session);
             });
 
-            wsServer.on('close', (event) => {
-                this.handleClose(event.socket, event.session);
+            serverWsServer.on('close', (event) => {
+                this.handleServerClose(event.socket, event.session);
             });
 
-            wsServer.on('message', (event) => { 
-                this.handleMessage(event.socket, event.data); 
+            serverWsServer.on('message', (event) => {
+                this.handleServerMessage(event.socket, event.data);
+            });
+        }
+
+        // 获取客户端连接的 WsServer（用于与客户端通信）
+        const clientWsServer = networkManager.getClientWsServer();
+        if (clientWsServer) {
+            clientWsServer.on('connection', (event) => {
+                this.handleClientConnection(event.socket, event.session);
+            });
+
+            clientWsServer.on('close', (event) => {
+                this.handleClientClose(event.socket, event.session);
+            });
+
+            clientWsServer.on('message', (event) => {
+                this.handleClientMessage(event.socket, event.data);
             });
         }
 
         this.isRunning = true;
 
-        logger.info(`Gate 服务器已启动 - 监听 ${this.config.host}:${this.config.port + this.serverId}`, 'GateServer');
+        logger.info(`Gate 服务器已启动 - 服务器间连接：${this.config.host}:${this.config.port + this.serverId}, 客户端连接：${this.config.host}:${this.config.port + this.serverId + 1000}`, 'GateServer');
     }
 
     /**
@@ -232,11 +250,54 @@ export class GateServer {
     }
 
     /**
-     * 处理新连接
+     * 处理服务器间连接（来自其他服务器的连接）
      * @param ws - WebSocket 实例
      * @param session - Framework Session 实例
      */
-    private handleConnection(ws: WebSocket, session: Session): void {
+    private handleServerConnection(ws: WebSocket, session: Session): void {
+        const logger = this.framework.getLogger();
+        logger.info(`新服务器连接，sessionId=${session.getSessionId()}`, 'GateServer');
+        
+        // 使用 SessionManager 管理服务器间会话
+        const sessionManager = SessionManager.getInstance();
+        // 这里需要根据实际情况设置 serverType 和 serverId
+        // 暂时先注册到 SessionManager
+        sessionManager.registerSession('gate', this.serverId, session);
+    }
+
+    /**
+     * 处理服务器间消息
+     */
+    private handleServerMessage(ws: WebSocket, data: Buffer): void {
+        try {
+            const logger = this.framework.getLogger();
+            logger.debug(`收到服务器间消息`, 'GateServer');
+            
+            // 处理来自其他服务器的消息
+            // 这里可以根据具体协议进行解析和处理
+        } catch (error) {
+            this.framework.getLogger().error('处理服务器间消息时出错', error as Error, 'GateServer');
+        }
+    }
+
+    /**
+     * 处理服务器间连接关闭
+     */
+    private handleServerClose(ws: WebSocket, session: Session): void {
+        const logger = this.framework.getLogger();
+        logger.info('服务器连接关闭', 'GateServer');
+        
+        // 从 SessionManager 中移除会话
+        const sessionManager = SessionManager.getInstance();
+        sessionManager.removeSessionBySession(session);
+    }
+
+    /**
+     * 处理客户端连接
+     * @param ws - WebSocket 实例
+     * @param session - Framework Session 实例
+     */
+    private handleClientConnection(ws: WebSocket, session: Session): void {
         const logger = this.framework.getLogger();
         logger.debug(`新客户端连接，sessionId=${session.getSessionId()}`, 'GateServer');
         
@@ -250,7 +311,7 @@ export class GateServer {
     /**
      * 处理客户端消息
      */
-    private handleMessage(ws: WebSocket, data: Buffer): void {
+    private handleClientMessage(ws: WebSocket, data: Buffer): void {
         try {
             const session = ClientManager.getSession(ws);
             if (!session) {
@@ -342,11 +403,11 @@ export class GateServer {
     }
 
     /**
-     * 处理连接关闭
+     * 处理客户端连接关闭
      * @param ws - WebSocket 实例
      * @param session - Framework Session 实例
      */
-    private handleClose(ws: WebSocket, session: Session): void {
+    private handleClientClose(ws: WebSocket, session: Session): void {
         const clientSession = ClientManager.getSession(ws);
         if (clientSession) {
             const sessionId = clientSession.getGateSessionId();
