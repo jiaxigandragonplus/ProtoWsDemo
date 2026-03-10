@@ -197,20 +197,6 @@ export class ProtoLoader {
     }
 
     /**
-     * 获取 GateToGame 类型
-     */
-    static get GateToGame(): protobuf.Type {
-        return this.getType('GateToGame');
-    }
-
-    /**
-     * 获取 GameToGate 类型
-     */
-    static get GameToGate(): protobuf.Type {
-        return this.getType('GameToGate');
-    }
-
-    /**
      * 获取 WebsocketMessage 类型
      */
     static get WebsocketMessage(): protobuf.Type {

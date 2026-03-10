@@ -4,7 +4,7 @@
   "description": "proto+websocket+ts demo",
   "main": "dist/gate/GateServer.js",
   "scripts": {
-    "build": "tsc && cp -r src/protobuf/proto dist/protobuf/proto && cp -r src/config dist/config",
+    "build": "tsc && mkdir -p dist/protobuf/proto dist/config && cp -r src/protobuf/proto/* dist/protobuf/proto/ && cp -r src/config/* dist/config/",
     "start": "node dist/gate/GateServer.js",
     "start:gate": "node dist/gate/GateServer.js",
     "start:game": "node dist/game/GameServer.js",

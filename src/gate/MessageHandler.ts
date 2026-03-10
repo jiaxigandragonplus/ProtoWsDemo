@@ -3,6 +3,7 @@ import { ProtoLoader } from './ProtoLoader';
 import { MessageRegistry } from './MessageRegistry';
 import * as protobuf from 'protobufjs';
 import { ClientManager } from './ClientManager';
+import WebSocket from 'ws';
 
 /**
  * 消息 ID 定义（保留用于向后兼容）
@@ -70,6 +71,23 @@ export class MessageHandler {
             }
         } catch (error) {
             console.error('[MessageHandler] 处理 WebsocketMessage 时出错:', error);
+        }
+    }
+
+    static handleServerMessage(ws: WebSocket, data: Buffer): void { 
+        try {
+            // 使用 WebsocketMessage 解压
+            const wsMessageType = ProtoLoader.WebsocketMessage;
+            const wsMessage = wsMessageType.decode(data) as any;
+            
+            const uri = wsMessage.uri as string;
+            const messageType = wsMessage.message_type as string;
+            const messagePayload = new Uint8Array(wsMessage.message_payload as ArrayBuffer);
+
+            // 根据 message_type 获取对应的协议，并解析messagePayload
+
+        } catch (error) {
+            console.error('[handleServerMessage] 处理 WebsocketMessage 时出错:', error);
         }
     }
 

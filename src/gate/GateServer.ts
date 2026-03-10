@@ -186,8 +186,8 @@ export class GateServer {
             const logger = this.framework.getLogger();
             logger.debug(`收到服务器间消息`, 'GateServer');
             
-            // 处理来自其他服务器的消息
-            // 这里可以根据具体协议进行解析和处理
+            // 其他服务器发来的消息，不用转发，服务器之间发消息，都是直达的
+            MessageHandler.handleServerMessage(ws, data)
         } catch (error) {
             this.framework.getLogger().error('处理服务器间消息时出错', error as Error, 'GateServer');
         }
