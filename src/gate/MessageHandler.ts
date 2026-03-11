@@ -4,6 +4,8 @@ import { MessageRegistry } from './MessageRegistry';
 import * as protobuf from 'protobufjs';
 import { ClientManager } from './ClientManager';
 import WebSocket from 'ws';
+import { GateRouter } from './routes/gate';
+import { Session } from '../framework/network';
 
 /**
  * 消息 ID 定义（保留用于向后兼容）
@@ -33,14 +35,14 @@ export class MessageHandler {
      */
     static init(): void {
         MessageRegistry.autoRegisterFromProto(ProtoLoader, this);
-        console.log(`[MessageHandler] 消息注册完成，共注册 ${MessageRegistry.getAllMessageIds().length} 条消息`);
+        console.log(`[MessageHandler] 消息注册完成，共注册 ${MessageRegistry.getAllMessageTypes().length} 条消息`);
     }
 
     /**
      * 处理 WebsocketMessage 格式的消息
      * 根据 uri 前缀判断消息发往哪个服务器
      */
-    static handleWebsocketMessage(session: ClientSession, data: Uint8Array, onForwardToGame: (wsMessage: any) => void): void {
+    static handleClientMessage(session: ClientSession, data: Uint8Array, onForwardToGame: (wsMessage: any) => void): void {
         try {
             // 使用 WebsocketMessage 解压
             const wsMessageType = ProtoLoader.WebsocketMessage;
@@ -54,7 +56,6 @@ export class MessageHandler {
             
             // 根据 uri 判断目标服务器
             const targetServer = ProtoLoader.getTargetServer(uri);
-            
             if (targetServer === 'gate') {
                 // 发给 gate 服的消息，根据 message_type 查找处理函数
                 const handlerInfo = MessageRegistry.getHandlerByTypeName(messageType);
@@ -74,7 +75,7 @@ export class MessageHandler {
         }
     }
 
-    static handleServerMessage(ws: WebSocket, data: Buffer): void { 
+    static handleServerMessage(session: Session, data: Buffer): void { 
         try {
             // 使用 WebsocketMessage 解压
             const wsMessageType = ProtoLoader.WebsocketMessage;
@@ -85,7 +86,18 @@ export class MessageHandler {
             const messagePayload = new Uint8Array(wsMessage.message_payload as ArrayBuffer);
 
             // 根据 message_type 获取对应的协议，并解析messagePayload
+            const protoMessage = ProtoLoader.getType(messageType);
+            if (!protoMessage) {
+                throw new Error(`[GameMessageHandler] Invalid message type: ${messageType}`);
+            }
 
+            const msgObj = protoMessage.decode(messagePayload) as any;
+            const handler = MessageRegistry.getHandler(messageType);
+            if (handler) {
+                handler(session, messagePayload, protoMessage);
+            } else {
+                // 回复错误消息
+            }
         } catch (error) {
             console.error('[handleServerMessage] 处理 WebsocketMessage 时出错:', error);
         }

@@ -1,22 +1,11 @@
-import { ClientSession } from './ClientSession';
 import * as protobuf from 'protobufjs';
+import WebSocket from 'ws';
+import { Session } from '../framework/network';
 
 /**
  * 消息处理器类型定义
  */
-export type MessageHandlerFn = (session: ClientSession, data: Uint8Array, protoType: protobuf.Type) => void;
-
-/**
- * 消息 ID 配置
- * 在这里定义所有客户端消息的 ID
- * 命名约定：客户端消息以 C 开头，处理器方法名为 handle + 去掉首字母的消息名
- *
- * 此文件由 AutoExport.js 自动生成，请勿手动修改！
- */
-const MESSAGE_ID_CONFIG: Record<string, number> = {
-    'CLogin': 1,
-    'CEcho': 3
-};
+export type MessageHandlerFn = (session: Session, data: Uint8Array, protoType: protobuf.Type) => void;
 
 /**
  * 消息注册表
@@ -28,8 +17,7 @@ const MESSAGE_ID_CONFIG: Record<string, number> = {
  * - 处理器方法：handle + 消息名 (如 handleLogin, handleEcho)
  */
 export class MessageRegistry {
-    private static handlerMap = new Map<number, { handler: MessageHandlerFn, protoType: protobuf.Type }>();
-    private static messageIdMap = new Map<string, number>();
+    private static handlerMap = new Map<string, MessageHandlerFn>();
     private static messageNameHandlerMap = new Map<string, { handler: MessageHandlerFn, protoType: protobuf.Type }>();
 
     /**
@@ -40,22 +28,20 @@ export class MessageRegistry {
      * @param handler 处理函数
      */
     static register(
-        messageId: number,
         protoTypeName: string,
         protoType: protobuf.Type,
         handler: MessageHandlerFn
     ): void {
-        this.handlerMap.set(messageId, { handler, protoType });
-        this.messageIdMap.set(protoTypeName, messageId);
+        this.handlerMap.set(protoTypeName, handler);
         this.messageNameHandlerMap.set(protoTypeName, { handler, protoType });
-        console.log(`[MessageRegistry] 注册消息：${protoTypeName} -> ID:${messageId}`);
+        console.log(`[MessageRegistry] 注册消息：${protoTypeName}`);
     }
 
     /**
-     * 根据消息 ID 获取处理器
+     * 根据消息类型名获取处理器
      */
-    static getHandler(messageId: number): { handler: MessageHandlerFn, protoType: protobuf.Type } | null {
-        return this.handlerMap.get(messageId) || null;
+    static getHandler(messageType: string): MessageHandlerFn | null {
+        return this.handlerMap.get(messageType) || null;
     }
 
     /**
@@ -63,13 +49,6 @@ export class MessageRegistry {
      */
     static getHandlerByTypeName(typeName: string): { handler: MessageHandlerFn, protoType: protobuf.Type } | null {
         return this.messageNameHandlerMap.get(typeName) || null;
-    }
-
-    /**
-     * 根据 Proto 类型名获取消息 ID
-     */
-    static getMessageId(protoTypeName: string): number | undefined {
-        return this.messageIdMap.get(protoTypeName);
     }
 
     /**
@@ -96,15 +75,7 @@ export class MessageRegistry {
                 const handlerMethod = (handlerClass as any)[handlerMethodName];
                 if (handlerMethod) {
                     const protoType = protoLoader.getType(typeName);
-                    
-                    // 从配置中获取消息 ID
-                    const messageId = MESSAGE_ID_CONFIG[typeName];
-                    
-                    if (messageId !== undefined) {
-                        this.register(messageId, typeName, protoType, handlerMethod.bind(handlerClass));
-                    } else {
-                        console.warn(`[MessageRegistry] 消息 ${typeName} 未在 MESSAGE_ID_CONFIG 中定义 ID`);
-                    }
+                    this.register(typeName, protoType, handlerMethod.bind(handlerClass));
                 } else {
                     console.warn(`[MessageRegistry] 未找到处理器方法：${handlerMethodName}，消息：${typeName}`);
                 }
@@ -113,9 +84,9 @@ export class MessageRegistry {
     }
 
     /**
-     * 获取所有已注册的消息 ID
+     * 获取所有已注册的消息类型名
      */
-    static getAllMessageIds(): number[] {
+    static getAllMessageTypes(): string[] {
         return Array.from(this.handlerMap.keys());
     }
 
@@ -124,7 +95,6 @@ export class MessageRegistry {
      */
     static clear(): void {
         this.handlerMap.clear();
-        this.messageIdMap.clear();
         this.messageNameHandlerMap.clear();
     }
 }

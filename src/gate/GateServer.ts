@@ -183,11 +183,17 @@ export class GateServer {
      */
     private handleServerMessage(ws: WebSocket, data: Buffer): void {
         try {
+            const session = SessionManager.getInstance().getSessionByWs(ws);
+            if (!session) {
+                this.framework.getLogger().warn('未找到会话，忽略消息', 'GateServer');
+                return;
+            }
+            
             const logger = this.framework.getLogger();
             logger.debug(`收到服务器间消息`, 'GateServer');
             
             // 其他服务器发来的消息，不用转发，服务器之间发消息，都是直达的
-            MessageHandler.handleServerMessage(ws, data)
+            MessageHandler.handleServerMessage(session, data)
         } catch (error) {
             this.framework.getLogger().error('处理服务器间消息时出错', error as Error, 'GateServer');
         }
@@ -235,7 +241,7 @@ export class GateServer {
             const uint8Data = new Uint8Array(data);
             
             // 使用 MessageHandler 处理 WebsocketMessage
-            MessageHandler.handleWebsocketMessage(session, uint8Data, async (wsMessage) => {
+            MessageHandler.handleClientMessage(session, uint8Data, async (wsMessage) => {
                 await this.forwardToServer(session, wsMessage);
             });
         } catch (error) {

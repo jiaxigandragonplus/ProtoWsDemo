@@ -6,6 +6,7 @@
 
 import { Session } from './Session';
 import { Logger } from '../logger/Logger';
+import WebSocket from 'ws';
 
 /**
  * 服务器会话信息接口
@@ -35,6 +36,8 @@ export class SessionManager {
     
     /** 通过 Session ID 查找会话 */
     private sessionById: Map<number | string, ServerSessionInfo> = new Map();
+
+    private sessionMap: Map<WebSocket, ServerSessionInfo> = new Map();
     
     private logger: Logger;
 
@@ -83,6 +86,8 @@ export class SessionManager {
 
         typeMap.set(serverId, sessionInfo);
         this.sessionById.set(session.getSessionId(), sessionInfo);
+
+        this.sessionMap.set(session.getWebSocket(), sessionInfo);
 
         this.logger.info(
             `注册服务器会话 - serverType: ${serverType}, serverId: ${serverId}, sessionId: ${session.getSessionId()}`,
@@ -136,6 +141,10 @@ export class SessionManager {
         const typeMap = this.sessions.get(serverType);
         const sessionInfo = typeMap?.get(serverId);
         return sessionInfo?.session || null;
+    }
+
+    public getSessionByWs(ws: WebSocket) : Session | null{
+        return this.sessionMap.get(ws).session;
     }
 
     /**
