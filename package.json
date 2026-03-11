@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc && mkdir -p dist/protobuf/proto dist/config && cp -r src/protobuf/proto/* dist/protobuf/proto/ && cp -r src/config/* dist/config/",
     "start": "node dist/gate/GateServer.js",
-    "start:gate": "node dist/gate/GateServer.js",
+    "start:gate": "SERVER_ID=1 node dist/gate/GateServer.js",
     "start:game": "node dist/game/GameServer.js",
     "dev": "tsc && node dist/gate/GateServer.js",
     "proto": "node protobuf/AutoExport.js",

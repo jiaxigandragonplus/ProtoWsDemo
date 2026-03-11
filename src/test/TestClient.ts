@@ -112,7 +112,7 @@ class TestClient {
      */
     sendLogin(name: string, password: string): void {
         // 编码 CLogin 消息
-        const cloginType = ProtoLoader.getType("CLogin");
+        const cloginType = ProtoLoader.getType("CLoginGame");
         const loginRequest = cloginType.create({ name, password });
         const loginEncoded = cloginType.encode(loginRequest).finish();
 
@@ -121,7 +121,7 @@ class TestClient {
         const wsMessage = wsMessageType.create({
             uri: '/game/game/login',
             method: 'POST',
-            message_type: 'CLogin',
+            message_type: 'CLoginGame',
             message_payload: loginEncoded,
             uuid: generateUUID(),
             errno: 0,
