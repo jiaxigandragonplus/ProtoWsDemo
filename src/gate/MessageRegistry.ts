@@ -84,6 +84,36 @@ export class MessageRegistry {
     }
 
     /**
+     * 从 Router 类自动注册消息处理器
+     * Router 类中的静态方法名与 proto 消息类型名相同（如 CKickPlayer）
+     * @param protoLoader ProtoLoader 类
+     * @param routerClass Router 类（如 GateRouter）
+     */
+    static registerRouter(
+        protoLoader: typeof import('../framework/network/ProtoLoader').ProtoLoader,
+        routerClass: any
+    ): void {
+        // 获取所有消息类型名称
+        const typeNames = protoLoader.getAllMessageTypes();
+        
+        // 遍历所有消息类型
+        for (const typeName of typeNames) {
+            // 只处理客户端消息（以 C 开头）
+            if (typeName.startsWith('C') && typeName.length > 1) {
+                // 直接使用方法名与 proto 名相同的方式
+                // 例如：CKickPlayer -> CKickPlayer
+                const routerMethod = routerClass[typeName];
+                
+                if (routerMethod) {
+                    const protoType = protoLoader.getType(typeName);
+                    this.register(typeName, protoType, routerMethod.bind(routerClass));
+                }
+                // 注意：Router 中可能只处理部分消息，所以不存在的消息不警告
+            }
+        }
+    }
+
+    /**
      * 获取所有已注册的消息类型名
      */
     static getAllMessageTypes(): string[] {

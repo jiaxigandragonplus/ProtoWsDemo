@@ -34,7 +34,10 @@ export class MessageHandler {
      * 必须在服务器启动时调用
      */
     static init(): void {
+        // 注册 MessageHandler 中的 handleXxx 方法
         MessageRegistry.autoRegisterFromProto(ProtoLoader, this);
+        // 注册 GateRouter 中的路由方法（方法名与 proto 名相同）
+        MessageRegistry.registerRouter(ProtoLoader, GateRouter);
         console.log(`[MessageHandler] 消息注册完成，共注册 ${MessageRegistry.getAllMessageTypes().length} 条消息`);
     }
 
