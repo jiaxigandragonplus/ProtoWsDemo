@@ -80,7 +80,7 @@ class TestClient {
             // 根据消息类型处理
             switch (innerMessageType) {
                 case 'SLogin':
-                    const loginResponseType = ProtoLoader.SLogin;
+                    const loginResponseType = ProtoLoader.getType("SLogin");
                     const loginResponse = loginResponseType.decode(innerPayload) as any;
                     console.log(`收到登录响应 - 玩家 ID: ${loginResponse.player_id}`);
                     
@@ -89,7 +89,7 @@ class TestClient {
                     break;
 
                 case 'SEcho':
-                    const echoResponseType = ProtoLoader.SEcho;
+                    const echoResponseType = ProtoLoader.getType("SEcho");
                     const echoResponse = echoResponseType.decode(innerPayload) as any;
                     console.log(`收到回显响应 - 消息：${echoResponse.msg}`);
                     
@@ -112,7 +112,7 @@ class TestClient {
      */
     sendLogin(name: string, password: string): void {
         // 编码 CLogin 消息
-        const cloginType = ProtoLoader.CLogin;
+        const cloginType = ProtoLoader.getType("CLogin");
         const loginRequest = cloginType.create({ name, password });
         const loginEncoded = cloginType.encode(loginRequest).finish();
 
@@ -139,7 +139,7 @@ class TestClient {
      */
     sendEcho(msg: string): void {
         // 编码 CEcho 消息
-        const cechoType = ProtoLoader.CEcho;
+        const cechoType = ProtoLoader.getType("CEcho");
         const echoRequest = cechoType.create({ msg });
         const echoEncoded = cechoType.encode(echoRequest).finish();
 

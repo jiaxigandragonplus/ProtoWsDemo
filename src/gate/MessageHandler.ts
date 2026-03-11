@@ -107,7 +107,7 @@ export class MessageHandler {
                 session.setLogin(playerId, loginRequest.name);
 
                 // 发送登录响应
-                const sLoginType = ProtoLoader.SLogin;
+                const sLoginType = ProtoLoader.getType('SLogin');
                 const loginResponse = sLoginType.create({ playerId });
                 const encoded = sLoginType.encode(loginResponse).finish();
                 
@@ -138,7 +138,7 @@ export class MessageHandler {
             console.log(`收到回显请求 - 消息：${echoRequest.msg}, 玩家：${session.getName()}`);
 
             // 发送回显响应
-            const sEchoType = ProtoLoader.SEcho;
+            const sEchoType = ProtoLoader.getType('SEcho');
             const echoResponse = sEchoType.create({ msg: echoRequest.msg });
             const encoded = sEchoType.encode(echoResponse).finish();
             

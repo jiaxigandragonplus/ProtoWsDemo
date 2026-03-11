@@ -24,27 +24,6 @@ export class ProtoLoader {
     private static protoRootDir: string;
 
     /**
-     * 获取 proto 文件路径
-     */
-    private static getProtoPaths(): { game: string, common: string, protocolMap: string } {
-        if (!this.gameProtoPath) {
-            // __dirname 在编译后是 dist/src/framework/network，需要向上三层到项目根目录
-            this.gameProtoPath = path.join(__dirname, '../../../protobuf/proto/game/game.proto');
-        }
-        if (!this.commonProtoPath) {
-            this.commonProtoPath = path.join(__dirname, '../../../protobuf/proto/common/common.proto');
-        }
-        if (!this.protocolMapPath) {
-            this.protocolMapPath = path.join(__dirname, '../../../protobuf/proto/protocol_map.json');
-        }
-        return { 
-            game: this.gameProtoPath, 
-            common: this.commonProtoPath,
-            protocolMap: this.protocolMapPath
-        };
-    }
-
-    /**
      * 设置 resolvePath 函数
      */
     private static setupResolvePath(root: protobuf.Root): void {
@@ -78,15 +57,16 @@ export class ProtoLoader {
      * 加载 protocol_map.json
      */
     static loadProtocolMap(): void {
-        if (Object.keys(this.protocolMap).length === 0) {
-            const paths = this.getProtoPaths();
-            try {
-                const content = fs.readFileSync(paths.protocolMap, 'utf-8');
-                this.protocolMap = JSON.parse(content);
-                console.log(`[ProtoLoader] 协议映射加载完成，共 ${Object.keys(this.protocolMap).length} 条协议`);
-            } catch (error) {
-                console.error('[ProtoLoader] 加载协议映射失败:', error);
-            }
+        if (!this.protocolMapPath) {
+            this.protocolMapPath = path.join(__dirname, '../../protobuf/proto/protocol_map.json');
+        }
+
+        try {
+            const content = fs.readFileSync(this.protocolMapPath, 'utf-8');
+            this.protocolMap = JSON.parse(content);
+            console.log(`[ProtoLoader] 协议映射加载完成，共 ${Object.keys(this.protocolMap).length} 条协议`);
+        } catch (error) {
+            console.error('[ProtoLoader] 加载协议映射失败:', error);
         }
     }
 
